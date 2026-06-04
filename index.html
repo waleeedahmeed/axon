@@ -1,0 +1,2484 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UXT / XTMT Product Roadmap</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1d2633;
+      --muted: #667085;
+      --line: #d9dee8;
+      --panel: #ffffff;
+      --soft: #f5f7fb;
+      --brand: #2557a7;
+      --brand-2: #16856d;
+      --warning: #b86e00;
+      --danger: #ba2d2d;
+      --violet: #6a4bbc;
+      --teal: #128477;
+      --shadow: 0 16px 45px rgba(29, 38, 51, 0.10);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(245, 247, 251, 1) 42%),
+        repeating-linear-gradient(90deg, rgba(37, 87, 167, 0.05) 0 1px, transparent 1px 92px);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-width: 320px;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      margin-left: -12px;
+      margin-right: -12px;
+    }
+
+    .row>* {
+      width: 100%;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    .col-lg-5,
+    .col-lg-7 {
+      flex: 0 0 auto;
+      width: 100%;
+    }
+
+    .g-4 {
+      row-gap: 1.5rem;
+    }
+
+    .align-items-end {
+      align-items: flex-end;
+    }
+
+    .d-flex {
+      display: flex;
+    }
+
+    .flex-wrap {
+      flex-wrap: wrap;
+    }
+
+    .justify-content-between {
+      justify-content: space-between;
+    }
+
+    .gap-2 {
+      gap: 0.5rem;
+    }
+
+    .gap-3 {
+      gap: 0.75rem;
+    }
+
+    .mt-1 {
+      margin-top: 0.25rem;
+    }
+
+    .mt-2 {
+      margin-top: 0.5rem;
+    }
+
+    .mt-3 {
+      margin-top: 0.75rem;
+    }
+
+    .small {
+      font-size: 0.82rem;
+    }
+
+    .text-secondary {
+      color: #667085;
+    }
+
+    a {
+      color: #2459b8;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page-shell {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 24px clamp(14px, 3vw, 32px) 56px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      color: #ffffff;
+      background: linear-gradient(135deg, #2557a7, #16856d);
+      border-radius: 8px;
+      font-weight: 800;
+      letter-spacing: 0;
+      flex: 0 0 auto;
+    }
+
+    .brand-text {
+      min-width: 0;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-size: 0.98rem;
+      line-height: 1.1;
+    }
+
+    .brand-text span {
+      color: var(--muted);
+      display: block;
+      font-size: 0.82rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .hero {
+      background: linear-gradient(120deg, #ffffff 0%, #eef5ff 48%, #eef9f5 100%);
+      border: 1px solid rgba(37, 87, 167, 0.14);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: clamp(22px, 3vw, 34px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #2459b8;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 4.2vw, 4rem);
+      line-height: 1.02;
+      font-weight: 820;
+      letter-spacing: 0;
+      color: #182230;
+    }
+
+    .hero-copy {
+      margin: 0;
+      color: #536273;
+      font-size: 1rem;
+      max-width: 840px;
+      line-height: 1.6;
+    }
+
+    .meta-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255, 255, 255, 0.72);
+      color: #344054;
+      border: 1px solid rgba(102, 112, 133, 0.18);
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 0.82rem;
+      max-width: 100%;
+    }
+
+    .meta-pill span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .stat-tile {
+      background: rgba(255, 255, 255, 0.74);
+      border: 1px solid rgba(102, 112, 133, 0.16);
+      border-radius: 8px;
+      padding: 16px;
+      min-height: 112px;
+    }
+
+    .stat-tile span {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .stat-tile strong {
+      display: block;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      line-height: 1;
+      margin-top: 12px;
+      color: #182230;
+    }
+
+    .stat-tile em {
+      color: #64748b;
+      display: block;
+      font-size: 0.82rem;
+      font-style: normal;
+      margin-top: 8px;
+    }
+
+    .toolbar-band,
+    .summary-band,
+    .content-band {
+      margin-top: 22px;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(102, 112, 133, 0.18);
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(29, 38, 51, 0.06);
+    }
+
+    .toolbar-band {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      padding: 14px;
+      backdrop-filter: blur(16px);
+    }
+
+    .toolbar-grid {
+      display: grid;
+      grid-template-columns: minmax(220px, 1.4fr) repeat(4, minmax(130px, 0.68fr)) auto auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .form-control,
+    .form-select,
+    .btn {
+      border-radius: 8px;
+    }
+
+    .form-control,
+    .form-select {
+      width: 100%;
+      min-height: 40px;
+      border: 1px solid #d0d5dd;
+      background-color: #ffffff;
+      color: #344054;
+      padding: 8px 12px;
+      font: inherit;
+    }
+
+    .input-group {
+      display: flex;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    .input-group .form-control {
+      flex: 1 1 auto;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    .input-group-text {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      border: 1px solid #d0d5dd;
+      border-right: 0;
+      padding: 8px 12px;
+      border-radius: 8px 0 0 8px;
+      background: #ffffff;
+      color: #667085;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 40px;
+      border: 1px solid transparent;
+      padding: 8px 12px;
+      font: inherit;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 140ms ease, border-color 140ms ease, color 140ms ease;
+    }
+
+    .btn-sm {
+      min-height: 34px;
+      padding: 6px 10px;
+      font-size: 0.86rem;
+    }
+
+    .btn-primary {
+      color: #ffffff;
+      background: #2557a7;
+      border-color: #2557a7;
+    }
+
+    .btn-primary:hover {
+      background: #1f4d96;
+      border-color: #1f4d96;
+      text-decoration: none;
+    }
+
+    .btn-outline-secondary {
+      color: #475467;
+      background: #ffffff;
+      border-color: #cfd6e2;
+    }
+
+    .btn-outline-secondary:hover {
+      color: #182230;
+      background: #f3f6fa;
+      text-decoration: none;
+    }
+
+    .filter-count {
+      color: var(--muted);
+      font-size: 0.84rem;
+      margin-top: 10px;
+    }
+
+    .summary-band {
+      padding: 18px;
+    }
+
+    .release-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .release-summary {
+      border: 1px solid rgba(102, 112, 133, 0.16);
+      border-radius: 8px;
+      padding: 14px;
+      background: #ffffff;
+      min-height: 162px;
+    }
+
+    .release-summary h2 {
+      font-size: 1rem;
+      margin: 0;
+      font-weight: 760;
+    }
+
+    .release-summary .release-meta {
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-top: 4px;
+    }
+
+    .progress {
+      height: 8px;
+      border-radius: 999px;
+      background: #e8edf5;
+    }
+
+    .progress-bar {
+      background: linear-gradient(90deg, #16856d, #2557a7);
+    }
+
+    .mini-bars {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .mini-row {
+      display: grid;
+      grid-template-columns: minmax(88px, 1fr) minmax(70px, 1.1fr) 28px;
+      gap: 8px;
+      align-items: center;
+      font-size: 0.78rem;
+      color: #475467;
+    }
+
+    .mini-track {
+      height: 6px;
+      border-radius: 999px;
+      background: #eef2f7;
+      overflow: hidden;
+    }
+
+    .mini-fill {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: #2557a7;
+    }
+
+    .nav-pills {
+      display: flex;
+      flex-wrap: wrap;
+      list-style: none;
+      margin: 0;
+      gap: 8px;
+      padding: 16px 16px 0;
+    }
+
+    .nav-item {
+      display: block;
+    }
+
+    .nav-pills .nav-link {
+      color: #475467;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-pills .nav-link.active {
+      background: #2557a7;
+      color: #ffffff;
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active.show {
+      display: block;
+    }
+
+    .tab-content {
+      padding: 16px;
+    }
+
+    .release-lane {
+      border: 1px solid rgba(102, 112, 133, 0.18);
+      border-radius: 8px;
+      background: #fbfcfe;
+      margin-bottom: 18px;
+      overflow: hidden;
+    }
+
+    .release-lane-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 14px 16px;
+      background: #ffffff;
+      border-bottom: 1px solid rgba(102, 112, 133, 0.16);
+    }
+
+    .release-lane-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .release-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: #2557a7;
+      box-shadow: 0 0 0 5px rgba(37, 87, 167, 0.10);
+      flex: 0 0 auto;
+    }
+
+    .release-lane h2 {
+      font-size: 1.08rem;
+      margin: 0;
+      font-weight: 760;
+    }
+
+    .release-lane-sub {
+      color: var(--muted);
+      font-size: 0.82rem;
+      white-space: nowrap;
+    }
+
+    .item-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+      padding: 14px;
+    }
+
+    .item-card {
+      background: #ffffff;
+      border: 1px solid rgba(102, 112, 133, 0.17);
+      border-left: 4px solid #98a2b3;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(29, 38, 51, 0.05);
+      padding: 14px;
+      min-height: 252px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+    }
+
+    .item-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px rgba(29, 38, 51, 0.10);
+    }
+
+    .item-card.priority-p0 {
+      border-left-color: #ba2d2d;
+    }
+
+    .item-card.priority-p1 {
+      border-left-color: #b86e00;
+    }
+
+    .item-card.priority-p2 {
+      border-left-color: #2557a7;
+    }
+
+    .item-card.priority-p3 {
+      border-left-color: #667085;
+    }
+
+    .card-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      align-items: center;
+    }
+
+    .roadmap-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 999px;
+      padding: 5px 8px;
+      font-size: 0.74rem;
+      font-weight: 760;
+      line-height: 1;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .badge-p0 {
+      color: #8a1f1f;
+      background: #fff1f0;
+      border-color: #ffd5d2;
+    }
+
+    .badge-p1 {
+      color: #8a5100;
+      background: #fff5df;
+      border-color: #ffe1a8;
+    }
+
+    .badge-p2 {
+      color: #174a91;
+      background: #edf4ff;
+      border-color: #cfe1ff;
+    }
+
+    .badge-p3,
+    .badge-empty {
+      color: #475467;
+      background: #f2f4f7;
+      border-color: #e4e7ec;
+    }
+
+    .badge-completed {
+      color: #067647;
+      background: #e7f7ef;
+      border-color: #bfead3;
+    }
+
+    .badge-progress,
+    .badge-testing {
+      color: #155eef;
+      background: #eef4ff;
+      border-color: #c7d7fe;
+    }
+
+    .badge-designing {
+      color: #5f328a;
+      background: #f4eafd;
+      border-color: #dfc5fb;
+    }
+
+    .badge-discovery {
+      color: #8a5100;
+      background: #fff7e6;
+      border-color: #ffdfa3;
+    }
+
+    .badge-blocked {
+      color: #9e2424;
+      background: #fff0f0;
+      border-color: #ffc9c9;
+    }
+
+    .badge-todo {
+      color: #475467;
+      background: #f7f8fa;
+      border-color: #e4e7ec;
+    }
+
+    .scope-chip {
+      color: #24595a;
+      background: #edf8f6;
+      border-color: #c8ebe4;
+    }
+
+    .item-title {
+      color: #182230;
+      font-size: 1rem;
+      font-weight: 780;
+      line-height: 1.35;
+      margin: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .item-preview {
+      color: #586474;
+      font-size: 0.88rem;
+      line-height: 1.48;
+      margin: 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .item-preview.empty {
+      color: #98a2b3;
+      font-style: italic;
+    }
+
+    .item-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .meta-box {
+      border: 1px solid #edf0f5;
+      border-radius: 8px;
+      background: #fbfcfe;
+      padding: 8px;
+      min-width: 0;
+    }
+
+    .meta-box span {
+      display: block;
+      color: #98a2b3;
+      font-size: 0.69rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      margin-bottom: 2px;
+    }
+
+    .meta-box strong {
+      display: block;
+      color: #344054;
+      font-size: 0.82rem;
+      font-weight: 700;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .details-body {
+      color: #475467;
+      background: #fbfcfe;
+      border: 1px solid #edf0f5;
+      border-radius: 8px;
+      padding: 11px;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      max-height: 260px;
+      overflow: auto;
+    }
+
+    .collapse {
+      display: none;
+    }
+
+    .collapse.show {
+      display: block;
+    }
+
+    .table-wrap {
+      border: 1px solid rgba(102, 112, 133, 0.18);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .roadmap-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      min-width: 1040px;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    .roadmap-table th,
+    .roadmap-table td {
+      padding: 12px;
+      border-bottom: 1px solid #edf0f5;
+    }
+
+    .roadmap-table thead th {
+      background: #f7f9fc;
+      color: #475467;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      border-bottom: 1px solid #d9dee8;
+      white-space: nowrap;
+    }
+
+    .roadmap-table th button {
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-transform: inherit;
+      letter-spacing: inherit;
+    }
+
+    .roadmap-table td {
+      vertical-align: top;
+      color: #344054;
+      font-size: 0.88rem;
+    }
+
+    .table-title {
+      font-weight: 760;
+      color: #182230;
+      max-width: 360px;
+      overflow-wrap: anywhere;
+    }
+
+    .table-detail {
+      max-width: 460px;
+      color: #667085;
+      line-height: 1.45;
+    }
+
+    .analytics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .analytics-panel {
+      border: 1px solid rgba(102, 112, 133, 0.16);
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 16px;
+    }
+
+    .analytics-panel h2 {
+      font-size: 1rem;
+      margin: 0 0 14px;
+      font-weight: 760;
+    }
+
+    .bar-list {
+      display: grid;
+      gap: 11px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: minmax(120px, 1fr) minmax(130px, 1.4fr) 34px;
+      gap: 10px;
+      align-items: center;
+      color: #475467;
+      font-size: 0.84rem;
+    }
+
+    .bar-track {
+      height: 9px;
+      border-radius: 999px;
+      background: #edf1f7;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #2557a7, #16856d);
+    }
+
+    .empty-state {
+      padding: 36px 18px;
+      text-align: center;
+      color: #667085;
+      border: 1px dashed #cbd5e1;
+      border-radius: 8px;
+      background: #fbfcfe;
+    }
+
+    .footer-note {
+      color: #667085;
+      font-size: 0.82rem;
+      margin-top: 18px;
+      text-align: center;
+    }
+
+    .auth-controls {
+      align-items: center;
+      justify-content: flex-end;
+      min-width: min(100%, 520px);
+    }
+
+    .auth-email {
+      max-width: 260px;
+    }
+
+    .auth-status,
+    .data-status {
+      color: #aaa7b2;
+      font-size: 0.82rem;
+      min-height: 1.2em;
+    }
+
+    .data-status.error {
+      color: #ffd7d4;
+    }
+
+    .data-status.success {
+      color: #aaf0cf;
+    }
+
+    .toolbar-grid {
+      grid-template-columns: minmax(220px, 1.4fr) repeat(4, minmax(130px, 0.68fr)) auto auto auto;
+    }
+
+    .editor-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 2px;
+    }
+
+    .editor-actions[hidden],
+    .auth-controls [hidden],
+    #addItemBtn[hidden] {
+      display: none !important;
+    }
+
+    .roadmap-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: rgba(10, 9, 12, 0.78);
+      backdrop-filter: blur(8px);
+    }
+
+    .roadmap-modal[hidden] {
+      display: none;
+    }
+
+    .roadmap-modal-dialog {
+      width: min(880px, 100%);
+      max-height: min(92vh, 920px);
+      overflow: auto;
+      background: #1d1a22;
+      border: 1px solid #38333f;
+      border-radius: 8px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+    }
+
+    .roadmap-modal-header,
+    .roadmap-modal-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 18px;
+      border-bottom: 1px solid #302b37;
+    }
+
+    .roadmap-modal-footer {
+      border-top: 1px solid #302b37;
+      border-bottom: 0;
+      justify-content: flex-end;
+    }
+
+    .roadmap-modal-header h2 {
+      margin: 0;
+      font-size: 1.08rem;
+      color: #f7f7f9;
+    }
+
+    .roadmap-form {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      padding: 18px;
+    }
+
+    .form-field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .form-field.full-span {
+      grid-column: 1 / -1;
+    }
+
+    .form-field label {
+      color: #c7c3ce;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .form-field textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .danger-btn {
+      color: #ffd7d4;
+      background: rgba(255, 107, 95, 0.12);
+      border-color: rgba(255, 107, 95, 0.42);
+    }
+
+    .danger-btn:hover {
+      color: #111015;
+      background: #ff6b5f;
+      border-color: #ff6b5f;
+    }
+
+    body {
+      color: #f7f7f9;
+      background:
+        linear-gradient(180deg, rgba(255, 198, 41, 0.12) 0 3px, transparent 3px),
+        linear-gradient(180deg, #161319 0%, #0f0d12 100%);
+    }
+
+    a {
+      color: #33aaff;
+    }
+
+    .text-secondary,
+    .footer-note {
+      color: #aaa7b2;
+    }
+
+    .brand-mark {
+      width: 132px;
+      height: 44px;
+      background: transparent;
+      border-radius: 0;
+      color: transparent;
+    }
+
+    .brand-logo {
+      width: 128px;
+      height: 26px;
+      object-fit: contain;
+      filter: invert(1);
+      display: block;
+    }
+
+    .brand-text strong,
+    h1,
+    .stat-tile strong,
+    .release-summary h2,
+    .release-lane h2,
+    .item-title,
+    .meta-box strong,
+    .table-title,
+    .analytics-panel h2 {
+      color: #f7f7f9;
+    }
+
+    .brand-text span,
+    .hero-copy,
+    .filter-count,
+    .release-summary .release-meta,
+    .release-lane-sub,
+    .item-preview,
+    .table-detail,
+    .bar-row,
+    .mini-row,
+    .empty-state,
+    .stat-tile em {
+      color: #aaa7b2;
+    }
+
+    .hero,
+    .toolbar-band,
+    .summary-band,
+    .content-band,
+    .release-summary,
+    .release-lane,
+    .item-card,
+    .analytics-panel,
+    .table-wrap {
+      background: #1d1a22;
+      border-color: #38333f;
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.24);
+    }
+
+    .hero {
+      background:
+        linear-gradient(135deg, rgba(255, 198, 41, 0.10), rgba(51, 170, 255, 0.04) 46%, rgba(29, 26, 34, 0.96) 100%),
+        #1d1a22;
+    }
+
+    .eyebrow,
+    .nav-pills .nav-link.active {
+      color: #111015;
+      background: #ffc629;
+    }
+
+    .eyebrow {
+      background: transparent;
+      color: #ffc629;
+    }
+
+    .meta-pill,
+    .stat-tile,
+    .release-lane-header,
+    .meta-box,
+    .details-body,
+    .empty-state {
+      background: #151318;
+      border-color: #38333f;
+      color: #f7f7f9;
+    }
+
+    .stat-tile span,
+    .meta-box span,
+    .roadmap-table thead th {
+      color: #c7c3ce;
+    }
+
+    .form-control,
+    .form-select,
+    .input-group-text {
+      background-color: #1d1a22;
+      border-color: #48434f;
+      color: #f7f7f9;
+    }
+
+    .form-control::placeholder {
+      color: #9a96a3;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      border-color: #ffc629;
+      box-shadow: 0 0 0 3px rgba(255, 198, 41, 0.16);
+      outline: none;
+    }
+
+    .btn-outline-secondary {
+      color: #f7f7f9;
+      background: #1d1a22;
+      border-color: #48434f;
+    }
+
+    .btn-outline-secondary:hover {
+      color: #111015;
+      background: #ffc629;
+      border-color: #ffc629;
+    }
+
+    .btn-primary {
+      color: #111015;
+      background: #ffc629;
+      border-color: #ffc629;
+    }
+
+    .btn-primary:hover {
+      color: #111015;
+      background: #f1b90f;
+      border-color: #f1b90f;
+    }
+
+    .progress,
+    .mini-track,
+    .bar-track {
+      background: #2a2630;
+    }
+
+    .progress-bar,
+    .mini-fill,
+    .bar-fill {
+      background: #ffc629;
+    }
+
+    .nav-pills .nav-link {
+      color: #c7c3ce;
+    }
+
+    .release-dot {
+      background: #ffc629;
+      box-shadow: 0 0 0 5px rgba(255, 198, 41, 0.16);
+    }
+
+    .item-card:hover {
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.34);
+    }
+
+    .item-card.priority-p0 {
+      border-left-color: #ff6b5f;
+    }
+
+    .item-card.priority-p1 {
+      border-left-color: #ffc629;
+    }
+
+    .item-card.priority-p2 {
+      border-left-color: #33aaff;
+    }
+
+    .item-card.priority-p3 {
+      border-left-color: #8d8798;
+    }
+
+    .badge-p0 {
+      color: #ffd7d4;
+      background: rgba(255, 107, 95, 0.14);
+      border-color: rgba(255, 107, 95, 0.44);
+    }
+
+    .badge-p1 {
+      color: #ffe7a4;
+      background: rgba(255, 198, 41, 0.13);
+      border-color: rgba(255, 198, 41, 0.44);
+    }
+
+    .badge-p2,
+    .badge-progress,
+    .badge-testing {
+      color: #bfe4ff;
+      background: rgba(51, 170, 255, 0.13);
+      border-color: rgba(51, 170, 255, 0.42);
+    }
+
+    .badge-p3,
+    .badge-empty,
+    .badge-todo {
+      color: #dedbe4;
+      background: rgba(141, 135, 152, 0.14);
+      border-color: rgba(141, 135, 152, 0.36);
+    }
+
+    .badge-completed {
+      color: #aaf0cf;
+      background: rgba(54, 196, 127, 0.13);
+      border-color: rgba(54, 196, 127, 0.42);
+    }
+
+    .badge-designing {
+      color: #dfccff;
+      background: rgba(174, 135, 255, 0.14);
+      border-color: rgba(174, 135, 255, 0.40);
+    }
+
+    .badge-discovery {
+      color: #ffe7a4;
+      background: rgba(255, 198, 41, 0.13);
+      border-color: rgba(255, 198, 41, 0.44);
+    }
+
+    .badge-blocked {
+      color: #ffd7d4;
+      background: rgba(255, 107, 95, 0.14);
+      border-color: rgba(255, 107, 95, 0.44);
+    }
+
+    .scope-chip {
+      color: #b8f3ea;
+      background: rgba(66, 211, 184, 0.12);
+      border-color: rgba(66, 211, 184, 0.38);
+    }
+
+    .item-preview.empty {
+      color: #8d8798;
+    }
+
+    .roadmap-table th,
+    .roadmap-table td {
+      border-bottom-color: #302b37;
+    }
+
+    .roadmap-table.table {
+      --bs-table-bg: #151318;
+      --bs-table-color: #dedbe4;
+      --bs-table-border-color: #302b37;
+      --bs-table-striped-bg: #1b1820;
+      --bs-table-striped-color: #f7f7f9;
+      --bs-table-hover-bg: #24202a;
+      --bs-table-hover-color: #ffffff;
+      background: #151318;
+      color: #dedbe4;
+    }
+
+    .roadmap-table.table> :not(caption)>*>* {
+      background-color: #151318;
+      color: #dedbe4;
+      border-bottom-color: #302b37;
+      box-shadow: none;
+    }
+
+    .roadmap-table thead th {
+      background: #151318;
+      border-bottom-color: #38333f;
+    }
+
+    .roadmap-table.table thead th,
+    .roadmap-table.table thead th button {
+      background-color: #111015;
+      color: #f7f7f9;
+    }
+
+    .roadmap-table.table tbody tr:hover>* {
+      background-color: #24202a;
+      color: #ffffff;
+    }
+
+    .roadmap-table td {
+      color: #dedbe4;
+    }
+
+    @media (max-width: 1180px) {
+      .toolbar-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .toolbar-grid .search-cell {
+        grid-column: 1 / -1;
+      }
+
+      .release-summary-grid,
+      .analytics-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .item-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 992px) {
+      .col-lg-7 {
+        width: 58.333333%;
+      }
+
+      .col-lg-5 {
+        width: 41.666667%;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .page-shell {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .stat-grid,
+      .toolbar-grid,
+      .release-summary-grid,
+      .analytics-grid,
+      .item-grid,
+      .item-meta {
+        grid-template-columns: 1fr;
+      }
+
+      .toolbar-band {
+        position: static;
+      }
+
+      .release-lane-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .release-lane-sub {
+        white-space: normal;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page-shell">
+    <nav class="topbar" aria-label="Roadmap header">
+      <div class="brand-lockup">
+        <div class="brand-mark"><img class="brand-logo"
+            src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNzE4IDE0MSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBjbGFzcz0idy0xMjUgb3ZlcmZsb3ctdmlzaWJsZSI+PHBhdGggZD0iTTE0NS44IDExMi41Yy41LjUgMS4zLS4xIDEtLjdMOTIuOSAxOC42IDgyLjcgMWMtLjQtLjgtMS4xLS44LTEuNS0uOC0uNCAwLTEgLjItMS4zIDFsLTE0LjYgNDljLTIuMyA3LjcgMy40IDE1LjQgMTEuNCAxNS40aDE0LjdjOC41IDAgMTYuNiAzLjcgMjIuMiAxMC4xbDMyLjIgMzYuOFoiIGZpbGw9IiMwMDAiPjwvcGF0aD48cGF0aCBkPSJtNTUuMiA1My40IDExLjQtMzguMWMuMi0uNy0uNy0xLjEtMS4xLS41TC4yIDEyNy45Yy0uNC44LS4xIDEuNC4yIDEuOC4zLjQuOS44IDEuOC40bC4yLS4xIDU3LjktMjEuM2M2LjktMi42IDkuOS0xMC43IDYuMi0xNy4ybC04LjYtMTVjLTQuMS03LTUuMS0xNS40LTIuNy0yMy4xWiIgZmlsbD0iIzAwMCI+PC9wYXRoPjxwYXRoIGQ9Ik0xMzYuMiAxMzguNmgxNy4zYy44IDAgMS4yLS42IDEuNC0uOS4xLS4zLjMtMS0uMi0xLjZsLTQzLjYtNTBjLTUuNC02LjItMTUuMi01LjItMTkuMyAxLjlsLTguMyAxNC40Yy0zLjUgNi04LjkgMTAuNS0xNS40IDEyLjlMNy40IDEzNy41Yy0uNi4yLS41IDEuMS4yIDEuMWgxMjguNlpNMjQ3LjcgNi41Yy00LjcgMC05IDIuOC0xMC44IDcuMkwxODEuNyAxMzhoMTQuMmwxNS4zLTM0LjRoNTkuM2MxLjYgMCAzLS45IDMuNi0yLjNsNC45LTExLjFoLTYxLjlsMjkuNS02Ni40Yy40LS45IDEuNy0uOSAyLjEgMEwyOTkuNSAxMzhoMTQuMkwyNTguNSAxMy43Yy0xLjgtNC40LTYtNy4yLTEwLjgtNy4yWk01MDguOCAwYy0zOC45IDAtNzAuNSAzMS42LTcwLjUgNzAuNXMzMS42IDcwLjUgNzAuNSA3MC41IDcwLjUtMzEuNiA3MC41LTcwLjVTNTQ3LjYgMCA1MDguOCAwWm01Ny43IDcwLjVjMCAzMS45LTI1LjkgNTcuOC01Ny44IDU3LjhTNDUxIDEwMi40IDQ1MSA3MC41czI1LjktNTcuOCA1Ny44LTU3LjggNTcuNyAyNiA1Ny43IDU3LjhaTTQzNC43IDMuMmgtMTUuNEwzNzkuOCA2MmMtLjggMS4yLTIuNyAxLjItMy41IDBMMzM2LjcgMy4yaC0xNS40bDQ0LjQgNjUuOWMuNi45LjYgMiAwIDIuOWwtNDQuNCA2NS45aDE1LjRsMzkuNS01OC43Yy44LTEuMiAyLjctMS4yIDMuNSAwbDM5LjUgNTguN2gxNS40TDM5MC4zIDcyYy0uNi0uOS0uNi0yIDAtMi45bDQ0LjQtNjUuOVpNNzA1LjMgMy4yVjExN0w2MjIuNSA3LjNjLTIuNy0zLjQtNi45LTUuMS0xMS4yLTQuNi02LjIuNy0xMC45IDYuMi0xMC45IDEyLjZ2MTIyLjVoMTIuN1YxNkw3MDUgMTM3LjhoMTNWMy4yaC0xMi43WiIgZmlsbD0iIzAwMCI+PC9wYXRoPjwvc3ZnPg=="
+            alt="Axon"></div>
+        <div class="brand-text">
+          <strong>UploadXT / XTMT</strong>
+          <span id="sourceFileName"></span>
+        </div>
+      </div>
+      <div class="auth-controls d-flex flex-wrap gap-2" aria-label="Editor access">
+        <input class="form-control auth-email" id="authEmail" type="email" placeholder="Editor email">
+        <button class="btn btn-outline-secondary btn-sm" id="signInBtn" type="button"><i class="bi bi-envelope"></i>
+          Sign in</button>
+        <button class="btn btn-outline-secondary btn-sm" id="signOutBtn" type="button" hidden><i
+            class="bi bi-box-arrow-right"></i> Sign out</button>
+        <span class="auth-status" id="authStatus">Viewer mode</span>
+      </div>
+    </nav>
+
+    <section class="hero" aria-labelledby="pageTitle">
+      <div class="row g-4 align-items-end">
+        <div class="col-lg-7">
+          <div class="eyebrow"><i class="bi bi-signpost-2"></i> Product Roadmap</div>
+          <h1 id="pageTitle">UXT / XTMT Product Roadmap</h1>
+          <p class="hero-copy">Release planning view for completed work, committed delivery, active discovery, and
+            backlog candidates across UploadXT, XTMT, migrations, and full-app initiatives.</p>
+          <div class="meta-strip">
+            <span class="meta-pill"><i class="bi bi-file-earmark-spreadsheet"></i><span id="sourceMeta"></span></span>
+            <span class="meta-pill"><i class="bi bi-calendar3"></i><span id="generatedMeta"></span></span>
+            <span class="meta-pill"><i class="bi bi-ticket-perforated"></i><span id="ticketMeta"></span></span>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="stat-grid">
+            <div class="stat-tile"><span>Total initiatives</span><strong id="statTotal">0</strong><em
+                id="statReleaseText"></em></div>
+            <div class="stat-tile"><span>Completed</span><strong id="statCompleted">0</strong><em
+                id="statCompletedText"></em></div>
+            <div class="stat-tile"><span>Active</span><strong id="statActive">0</strong><em>Discovery, design, testing,
+                or in progress</em></div>
+            <div class="stat-tile"><span>P0 / P1</span><strong id="statP0P1">0</strong><em>Highest priority items</em>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="toolbar-band" aria-label="Roadmap filters">
+      <div class="toolbar-grid">
+        <div class="search-cell">
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-search"></i></span>
+            <input class="form-control" id="searchInput" type="search"
+              placeholder="Search initiatives, details, tickets" autocomplete="off">
+          </div>
+        </div>
+        <select class="form-select" id="releaseFilter" aria-label="Release filter"></select>
+        <select class="form-select" id="scopeFilter" aria-label="Scope filter"></select>
+        <select class="form-select" id="statusFilter" aria-label="Status filter"></select>
+        <select class="form-select" id="priorityFilter" aria-label="Priority filter"></select>
+        <button class="btn btn-outline-secondary" id="resetBtn" type="button"><i
+            class="bi bi-arrow-counterclockwise"></i> Reset</button>
+        <button class="btn btn-primary" id="exportBtn" type="button"><i class="bi bi-download"></i> CSV</button>
+        <button class="btn btn-primary" id="addItemBtn" type="button" hidden><i class="bi bi-plus-lg"></i> Add
+          Item</button>
+      </div>
+      <div class="filter-count" id="filterCount"></div>
+      <div class="data-status" id="dataStatus"></div>
+    </section>
+
+    <section class="summary-band" aria-label="Release summary">
+      <div class="release-summary-grid" id="releaseSummaryGrid"></div>
+    </section>
+
+    <section class="content-band" id="roadmapContent">
+      <ul class="nav nav-pills" id="roadmapTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="cards-tab" data-bs-toggle="pill" data-bs-target="#cardsPane" type="button"
+            role="tab" aria-controls="cardsPane" aria-selected="true"><i class="bi bi-kanban"></i> Roadmap</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="table-tab" data-bs-toggle="pill" data-bs-target="#tablePane" type="button"
+            role="tab" aria-controls="tablePane" aria-selected="false"><i class="bi bi-table"></i> Table</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="insights-tab" data-bs-toggle="pill" data-bs-target="#insightsPane" type="button"
+            role="tab" aria-controls="insightsPane" aria-selected="false"><i class="bi bi-bar-chart"></i>
+            Insights</button>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="cardsPane" role="tabpanel" aria-labelledby="cards-tab" tabindex="0">
+          <div id="cardsByRelease"></div>
+        </div>
+        <div class="tab-pane fade" id="tablePane" role="tabpanel" aria-labelledby="table-tab" tabindex="0">
+          <div class="table-wrap">
+            <div class="table-responsive">
+              <table class="table table-hover roadmap-table" id="roadmapTable">
+                <thead>
+                  <tr>
+                    <th><button type="button" data-sort="Target Release">Release <i
+                          class="bi bi-arrow-down-up"></i></button></th>
+                    <th><button type="button" data-sort="Priority">Priority <i class="bi bi-arrow-down-up"></i></button>
+                    </th>
+                    <th><button type="button" data-sort="Status">Status <i class="bi bi-arrow-down-up"></i></button>
+                    </th>
+                    <th><button type="button" data-sort="Feature Scope">Scope <i
+                          class="bi bi-arrow-down-up"></i></button></th>
+                    <th><button type="button" data-sort="title">Initiative <i class="bi bi-arrow-down-up"></i></button>
+                    </th>
+                    <th>Details</th>
+                    <th><button type="button" data-sort="ADO Ticket">ADO <i class="bi bi-arrow-down-up"></i></button>
+                    </th>
+                    <th><button type="button" data-sort="T-shirt Size">Size <i class="bi bi-arrow-down-up"></i></button>
+                    </th>
+                    <th><button type="button" data-sort="Estimate">Estimate <i class="bi bi-arrow-down-up"></i></button>
+                    </th>
+                    <th class="editor-column">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="insightsPane" role="tabpanel" aria-labelledby="insights-tab" tabindex="0">
+          <div class="analytics-grid">
+            <div class="analytics-panel">
+              <h2>Status Mix</h2>
+              <div class="bar-list" id="statusBars"></div>
+            </div>
+            <div class="analytics-panel">
+              <h2>Priority Mix</h2>
+              <div class="bar-list" id="priorityBars"></div>
+            </div>
+            <div class="analytics-panel">
+              <h2>Scope Mix</h2>
+              <div class="bar-list" id="scopeBars"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer-note">Source rows are preserved through the Excel row number shown on each card and table entry.
+    </div>
+  </main>
+
+  <div class="roadmap-modal" id="itemModal" hidden role="dialog" aria-modal="true" aria-labelledby="itemModalTitle">
+    <div class="roadmap-modal-dialog">
+      <form id="itemForm">
+        <div class="roadmap-modal-header">
+          <h2 id="itemModalTitle">Add roadmap item</h2>
+          <button class="btn btn-outline-secondary btn-sm" id="closeModalBtn" type="button" aria-label="Close form"><i
+              class="bi bi-x-lg"></i></button>
+        </div>
+        <input id="itemId" type="hidden">
+        <div class="roadmap-form">
+          <div class="form-field">
+            <label for="itemRelease">Target Release</label>
+            <select class="form-select" id="itemRelease" name="target_release">
+              <option value="Release 1">Release 1</option>
+              <option value="Release 2">Release 2</option>
+              <option value="Release 3">Release 3</option>
+              <option value="Backlog">Backlog</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="itemScope">Feature Scope</label>
+            <input class="form-control" id="itemScope" name="feature_scope" list="scopeOptions" required>
+            <datalist id="scopeOptions"></datalist>
+          </div>
+          <div class="form-field full-span">
+            <label for="itemInitiative">Initiative Name</label>
+            <input class="form-control" id="itemInitiative" name="initiative_name">
+          </div>
+          <div class="form-field full-span">
+            <label for="itemDetails">Details</label>
+            <textarea class="form-control" id="itemDetails" name="details"></textarea>
+          </div>
+          <div class="form-field">
+            <label for="itemPriority">Priority</label>
+            <select class="form-select" id="itemPriority" name="priority">
+              <option value=""></option>
+              <option value="P0">P0</option>
+              <option value="P1">P1</option>
+              <option value="P2">P2</option>
+              <option value="P3">P3</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="itemStatus">Status</label>
+            <select class="form-select" id="itemStatus" name="status">
+              <option value="To Do">To Do</option>
+              <option value="Discovery/Research">Discovery/Research</option>
+              <option value="Designing">Designing</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Testing">Testing</option>
+              <option value="Blocked">Blocked</option>
+              <option value="Completed">Completed</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="itemAdo">ADO Ticket</label>
+            <input class="form-control" id="itemAdo" name="ado_ticket">
+          </div>
+          <div class="form-field">
+            <label for="itemSize">T-shirt Size</label>
+            <select class="form-select" id="itemSize" name="tshirt_size">
+              <option value=""></option>
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+              <option value="XXL">XXL</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="itemEstimate">Estimate</label>
+            <input class="form-control" id="itemEstimate" name="estimate">
+          </div>
+          <div class="form-field">
+            <label for="itemSortOrder">Sort Order</label>
+            <input class="form-control" id="itemSortOrder" name="sort_order" type="number" min="0" step="1">
+          </div>
+        </div>
+        <div class="roadmap-modal-footer">
+          <button class="btn btn-outline-secondary" id="cancelModalBtn" type="button">Cancel</button>
+          <button class="btn btn-primary" id="saveItemBtn" type="submit"><i class="bi bi-check2"></i> Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const roadmapPayload = { "sourceFile": "Product Roadmap (UXT & XTMT)", "generatedAt": "2026-06-04 18:45", "totalItems": 71, "completedCount": 19, "activeCount": 13, "p0p1Count": 34, "withTicketCount": 41, "statusCounts": { "Completed": 19, "In Progress": 5, "To Do": 38, "Discovery/Research": 5, "Designing": 1, "Unspecified": 1, "Testing": 1, "Blocked": 1 }, "priorityCounts": { "P3": 17, "P0": 17, "P2": 19, "P1": 17, "Unspecified": 1 }, "scopeCounts": { "Full App": 35, "UploadXT": 17, "Migrations": 14, "My Axon": 2, "XTMT-CLI": 2, "DownloadXT": 1 }, "releaseCounts": { "Release 1": 17, "Release 2": 15, "Release 3": 14, "Backlog": 25 }, "releaseSummaries": [{ "release": "Release 1", "total": 17, "completed": 17, "completionPct": 100, "statusCounts": { "Completed": 17 }, "priorityCounts": { "P3": 1, "P0": 11, "P2": 1, "P1": 4 }, "scopeCounts": { "Full App": 10, "UploadXT": 1, "Migrations": 4, "My Axon": 1, "XTMT-CLI": 1 } }, { "release": "Release 2", "total": 15, "completed": 0, "completionPct": 0, "statusCounts": { "In Progress": 1, "To Do": 11, "Discovery/Research": 2, "Designing": 1 }, "priorityCounts": { "P0": 4, "P1": 5, "P2": 6 }, "scopeCounts": { "Migrations": 3, "Full App": 9, "XTMT-CLI": 1, "UploadXT": 2 } }, { "release": "Release 3", "total": 14, "completed": 1, "completionPct": 7, "statusCounts": { "To Do": 9, "Unspecified": 1, "Testing": 1, "Completed": 1, "Discovery/Research": 1, "In Progress": 1 }, "priorityCounts": { "P1": 4, "Unspecified": 1, "P0": 1, "P2": 3, "P3": 5 }, "scopeCounts": { "Full App": 7, "Migrations": 3, "UploadXT": 3, "My Axon": 1 } }, { "release": "Backlog", "total": 25, "completed": 1, "completionPct": 4, "statusCounts": { "To Do": 18, "Blocked": 1, "Discovery/Research": 2, "In Progress": 3, "Completed": 1 }, "priorityCounts": { "P2": 9, "P1": 4, "P3": 11, "P0": 1 }, "scopeCounts": { "Migrations": 4, "Full App": 9, "UploadXT": 11, "DownloadXT": 1 } }], "items": [{ "Target Release": "Release 1", "Feature Scope": "Full App", "Initiative Name": "Technical Documentation", "Details": "<a href=\"https://axon.quip.com/7sgFAf5xcbPS\">System Architecture Document</a>", "Priority": "P3", "Status": "Completed", "ADO Ticket": "1370", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-2", "row": 2, "title": "Technical Documentation", "detailsText": "System Architecture Document", "detailsHtml": "<a href=\"https://axon.quip.com/7sgFAf5xcbPS\" target=\"_blank\" rel=\"noopener noreferrer\">System Architecture Document</a>", "detailsPreview": "System Architecture Document", "releaseRank": 1, "priorityRank": 3, "statusRank": 6, "searchText": "release 1 full app technical documentation technical documentation <a href=\"https://axon.quip.com/7sgfaf5xcbps\">system architecture document</a> p3 completed 1370  " }, { "Target Release": "Release 1", "Feature Scope": "Full App", "Initiative Name": "Update Endpoint and experience as per Kristian's suggestion", "Details": "Fix Agency Universal Login Error", "Priority": "P0", "Status": "Completed", "ADO Ticket": "1646", "T-shirt Size": "S", "Estimate": "1 day", "id": "roadmap-row-3", "row": 3, "title": "Update Endpoint and experience as per Kristian's suggestion", "detailsText": "Fix Agency Universal Login Error", "detailsHtml": "Fix Agency Universal Login Error", "detailsPreview": "Fix Agency Universal Login Error", "releaseRank": 1, "priorityRank": 0, "statusRank": 6, "searchText": "release 1 full app update endpoint and experience as per kristian's suggestion update endpoint and experience as per kristian's suggestion fix agency universal login error p0 completed 1646 s 1 day" }, { "Target Release": "Release 1", "Feature Scope": "UploadXT", "Initiative Name": "Eliminate upper limit on Bandwidth Settings", "Details": "", "Priority": "P2", "Status": "Completed", "ADO Ticket": "", "T-shirt Size": "S", "Estimate": "1 Day", "id": "roadmap-row-4", "row": 4, "title": "Eliminate upper limit on Bandwidth Settings", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 1, "priorityRank": 2, "statusRank": 6, "searchText": "release 1 uploadxt eliminate upper limit on bandwidth settings eliminate upper limit on bandwidth settings  p2 completed  s 1 day" }, { "Target Release": "Release 1", "Feature Scope": "Full App", "Initiative Name": "", "Details": "Not all users with same name appear under Owner Dropdown", "Priority": "P1", "Status": "Completed", "ADO Ticket": "1563", "T-shirt Size": "S", "Estimate": "1 Day", "id": "roadmap-row-5", "row": 5, "title": "Not all users with same name appear under Owner Dropdown", "detailsText": "Not all users with same name appear under Owner Dropdown", "detailsHtml": "Not all users with same name appear under Owner Dropdown", "detailsPreview": "Not all users with same name appear under Owner Dropdown", "releaseRank": 1, "priorityRank": 1, "statusRank": 6, "searchText": "release 1 full app  not all users with same name appear under owner dropdown not all users with same name appear under owner dropdown p1 completed 1563 s 1 day" }, { "Target Release": "Release 1", "Feature Scope": "Full App", "Initiative Name": "BUGS reported by Axon", "Details": "Fix all the bugs reported by Axon Team for v2.14.1", "Priority": "P0", "Status": "Completed", "ADO Ticket": "1466", "T-shirt Size": "XL", "Estimate": "2.5 Sprints", "id": "roadmap-row-6", "row": 6, "title": "BUGS reported by Axon", "detailsText": "Fix all the bugs reported by Axon Team for v2.14.1", "detailsHtml": "Fix all the bugs reported by Axon Team for v2.14.1", "detailsPreview": "Fix all the bugs reported by Axon Team for v2.14.1", "releaseRank": 1, "priorityRank": 0, "statusRank": 6, "searchText": "release 1 full app bugs reported by axon bugs reported by axon fix all the bugs reported by axon team for v2.14.1 p0 completed 1466 xl 2.5 sprints" }, { "Target Release": "Release 1", "Feature Scope": "Full App", "Initiative Name": "Security Enhancements", "Details": "The Security Enhancements feature strengthens application and data protection by implementing critical safeguards across authentication, authorization, logging, and client communications. Enhancements include restricting sensitive data exposure (e.g., preventing PII/CJI logging and storing tokens securely), enforcing OAuth token scope and revocation on logout, sanitizing HTTP requests to block malicious content, and mandating client updates to ensure users remain on the latest secure version. Additional measures include authentication validation between client and backend services, enforcing NTFS permission restrictions on evidence databases, and maintaining compliance with security guidelines. Collectively, these improvements reduce risk of unauthorized access, prevent data misuse, and align with best practices for secure platform operation.\nAs identified in the pen-test.", "Priority": "P0", "Status": "Completed", "ADO Ticket": "1362", "T-shirt Size": "XXL", "Estimate": "4 Sprints", "id": "roadmap-row-7", "row": 7, "title": "Security Enhancements", "detailsText": "The Security Enhancements feature strengthens application and data protection by implementing critical safeguards across authentication, authorization, logging, and client communications. Enhancements include restricting sensitive data exposure (e.g., preventing PII/CJI logging and storing tokens securely), enforcing OAuth token scope and revocation on logout, sanitizing HTTP requests to block malicious content, and mandating client updates to ensure users remain on the latest secure version. Additional measures include authentication validation between client and backend services, enforcing NTFS permission restrictions on evidence databases, and maintaining compliance with security guidelines. Collectively, these improvements reduce risk of unauthorized access, prevent data misuse, and align with best practices for secure platform operation.\nAs identified in the pen-test.", "detailsHtml": "The Security Enhancements feature strengthens application and data protection by implementing critical safeguards across authentication, authorization, logging, and client communications. Enhancements include restricting sensitive data exposure (e.g., preventing PII/CJI logging and storing tokens securely), enforcing OAuth token scope and revocation on logout, sanitizing HTTP requests to block malicious content, and mandating client updates to ensure users remain on the latest secure version. Additional measures include authentication validation between client and backend services, enforcing NTFS permission restrictions on evidence databases, and maintaining compliance with security guidelines. Collectively, these improvements reduce risk of unauthorized access, prevent data misuse, and align with best practices for secure platform operation.<br>As identified in the pen-test.", "detailsPreview": "The Security Enhancements feature strengthens application and data protection by implementing critical safeguards across authentication, authorization, logging, and client communications. E...", "releaseRank": 1, "priorityRank": 0, "statusRank": 6, "searchText": "release 1 full app security enhancements security enhancements the security enhancements feature strengthens application and data protection by implementing critical safeguards across authentication, authorization, logging, and client communications. enhancements include restricting sensitive data exposure (e.g., preventing pii/cji logging and storing tokens securely), enforcing oauth token scope and revocation on logout, sanitizing http requests to block malicious content, and mandating client updates to ensure users remain on the latest secure version. additional measures include authentication validation between client and backend services, enforcing ntfs permission restrictions on evidence databases, and maintaining compliance with security guidelines. collectively, these improvements reduce risk of unauthorized access, prevent data misuse, and align with best practices for secure platform operation.\nas identified in the pen-test. p0 completed 1362 xxl 4 sprints" }, { "Target Release": "Release 1", "Feature Scope": "Migrations", "Initiative Name": "Support Channel Service Packages (For non-file system source)", "Details": "To support Customer Led migration and to burn down PSO's backlog, utilize PSO's existing Channel Package Library to run as one off executable to extract and Map the data for XTMT to Upload.", "Priority": "P0", "Status": "Completed", "ADO Ticket": "1624", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-8", "row": 8, "title": "Support Channel Service Packages (For non-file system source)", "detailsText": "To support Customer Led migration and to burn down PSO's backlog, utilize PSO's existing Channel Package Library to run as one off executable to extract and Map the data for XTMT to Upload.", "detailsHtml": "To support Customer Led migration and to burn down PSO's backlog, utilize PSO's existing Channel Package Library to run as one off executable to extract and Map the data for XTMT to Upload.", "detailsPreview": "To support Customer Led migration and to burn down PSO's backlog, utilize PSO's existing Channel Package Library to run as one off executable to extract and Map the data for XTMT to Upload.", "releaseRank": 1, "priorityRank": 0, "statusRank": 6, "searchText": "release 1 migrations support channel service packages (for non-file system source) support channel service packages (for non-file system source) to support customer led migration and to burn down pso's backlog, utilize pso's existing channel package library to run as one off executable to extract and map the data for xtmt to upload. p0 completed 1624  " }, { "Target Release": "Release 1", "Feature Scope": "Migrations", "Initiative Name": "Support Channel Service Packages (For non-file system source)", "Details": "To support Customer Led migration and to burn down PSO's backlog, utilize PSO's existing Channel Package Library to run as one off executable to extract and Map the data for XTMT to Upload.", "Priority": "P0", "Status": "Completed", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-9", "row": 9, "title": "Support Channel Service Packages (For non-file system source)", "detailsText": "To support Customer Led migration and to burn down PSO's backlog, utilize PSO's existing Channel Package Library to run as one off executable to extract and Map the data for XTMT to Upload.", "detailsHtml": "To support Customer Led migration and to burn down PSO's backlog, utilize PSO's existing Channel Package Library to run as one off executable to extract and Map the data for XTMT to Upload.", "detailsPreview": "To support Customer Led migration and to burn down PSO's backlog, utilize PSO's existing Channel Package Library to run as one off executable to extract and Map the data for XTMT to Upload.", "releaseRank": 1, "priorityRank": 0, "statusRank": 6, "searchText": "release 1 migrations support channel service packages (for non-file system source) support channel service packages (for non-file system source) to support customer led migration and to burn down pso's backlog, utilize pso's existing channel package library to run as one off executable to extract and map the data for xtmt to upload. p0 completed   " }, { "Target Release": "Release 1", "Feature Scope": "Migrations", "Initiative Name": "Support Channel Service Packages (For non-file system source)", "Details": "To support Customer Led migration and to burn down PSO's backlog, utilize PSO's existing Channel Package Library to run as one off executable to extract and Map the data for XTMT to Upload.", "Priority": "P0", "Status": "Completed", "ADO Ticket": "1624", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-10", "row": 10, "title": "Support Channel Service Packages (For non-file system source)", "detailsText": "To support Customer Led migration and to burn down PSO's backlog, utilize PSO's existing Channel Package Library to run as one off executable to extract and Map the data for XTMT to Upload.", "detailsHtml": "To support Customer Led migration and to burn down PSO's backlog, utilize PSO's existing Channel Package Library to run as one off executable to extract and Map the data for XTMT to Upload.", "detailsPreview": "To support Customer Led migration and to burn down PSO's backlog, utilize PSO's existing Channel Package Library to run as one off executable to extract and Map the data for XTMT to Upload.", "releaseRank": 1, "priorityRank": 0, "statusRank": 6, "searchText": "release 1 migrations support channel service packages (for non-file system source) support channel service packages (for non-file system source) to support customer led migration and to burn down pso's backlog, utilize pso's existing channel package library to run as one off executable to extract and map the data for xtmt to upload. p0 completed 1624  " }, { "Target Release": "Release 1", "Feature Scope": "Full App", "Initiative Name": "Custom Metadata in UI", "Details": "Support displaying agency CMD fields of all types and configurations (text, drop down, multi-select, Reg ex, manditory fields). (Baltimore)", "Priority": "P0", "Status": "Completed", "ADO Ticket": "1311 / 1187 / 1776", "T-shirt Size": "M", "Estimate": "0.5 Sprint", "id": "roadmap-row-11", "row": 11, "title": "Custom Metadata in UI", "detailsText": "Support displaying agency CMD fields of all types and configurations (text, drop down, multi-select, Reg ex, manditory fields). (Baltimore)", "detailsHtml": "Support displaying agency CMD fields of all types and configurations (text, drop down, multi-select, Reg ex, manditory fields). (Baltimore)", "detailsPreview": "Support displaying agency CMD fields of all types and configurations (text, drop down, multi-select, Reg ex, manditory fields). (Baltimore)", "releaseRank": 1, "priorityRank": 0, "statusRank": 6, "searchText": "release 1 full app custom metadata in ui custom metadata in ui support displaying agency cmd fields of all types and configurations (text, drop down, multi-select, reg ex, manditory fields). (baltimore) p0 completed 1311 / 1187 / 1776 m 0.5 sprint" }, { "Target Release": "Release 1", "Feature Scope": "Full App", "Initiative Name": "Access Class", "Details": "", "Priority": "P0", "Status": "Completed", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-12", "row": 12, "title": "Access Class", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 1, "priorityRank": 0, "statusRank": 6, "searchText": "release 1 full app access class access class  p0 completed   " }, { "Target Release": "Release 1", "Feature Scope": "Full App", "Initiative Name": "Tags metadata", "Details": "As a crime lab tech I have hundreds of images to upload into e.com which I use UploadXT for. However, while I can add an ID I can't add the additional tags I need to help investigations keep all the pieces straight when they take over the case. This creates a workflow issue for Crime Lab. (London)\n\nSupport “Bundles” concepts — e.g. help associate evidence to logical groups that can be managed as a unit. UX offers users options for what they’re uploading instead of just discreet files by setting tag across evidence (e.g. \"Cell phone 24-03-23 01\")\n\nOption to zip evidence with a certain tag, e.g. cell OS-level files (reduces ~10k files totally 55MB into one, in some cases)", "Priority": "P1", "Status": "Completed", "ADO Ticket": "1192", "T-shirt Size": "M", "Estimate": "1 Sprint", "id": "roadmap-row-13", "row": 13, "title": "Tags metadata", "detailsText": "As a crime lab tech I have hundreds of images to upload into e.com which I use UploadXT for. However, while I can add an ID I can't add the additional tags I need to help investigations keep all the pieces straight when they take over the case. This creates a workflow issue for Crime Lab. (London)\n\nSupport “Bundles” concepts — e.g. help associate evidence to logical groups that can be managed as a unit. UX offers users options for what they’re uploading instead of just discreet files by setting tag across evidence (e.g. \"Cell phone 24-03-23 01\")\n\nOption to zip evidence with a certain tag, e.g. cell OS-level files (reduces ~10k files totally 55MB into one, in some cases)", "detailsHtml": "As a crime lab tech I have hundreds of images to upload into e.com which I use UploadXT for. However, while I can add an ID I can't add the additional tags I need to help investigations keep all the pieces straight when they take over the case. This creates a workflow issue for Crime Lab. (London)<br><br>Support “Bundles” concepts — e.g. help associate evidence to logical groups that can be managed as a unit. UX offers users options for what they’re uploading instead of just discreet files by setting tag across evidence (e.g. \"Cell phone 24-03-23 01\")<br><br>Option to zip evidence with a certain tag, e.g. cell OS-level files (reduces ~10k files totally 55MB into one, in some cases)", "detailsPreview": "As a crime lab tech I have hundreds of images to upload into e.com which I use UploadXT for. However, while I can add an ID I can't add the additional tags I need to help investigations kee...", "releaseRank": 1, "priorityRank": 1, "statusRank": 6, "searchText": "release 1 full app tags metadata tags metadata as a crime lab tech i have hundreds of images to upload into e.com which i use uploadxt for. however, while i can add an id i can't add the additional tags i need to help investigations keep all the pieces straight when they take over the case. this creates a workflow issue for crime lab. (london)\n\nsupport “bundles” concepts — e.g. help associate evidence to logical groups that can be managed as a unit. ux offers users options for what they’re uploading instead of just discreet files by setting tag across evidence (e.g. \"cell phone 24-03-23 01\")\n\noption to zip evidence with a certain tag, e.g. cell os-level files (reduces ~10k files totally 55mb into one, in some cases) p1 completed 1192 m 1 sprint" }, { "Target Release": "Release 1", "Feature Scope": "Full App", "Initiative Name": "Set location (GPS) metadata", "Details": "As an ECOM user, I want to be able to bulk update the location for digital evidence so that I may save time in not having to update each piece of evidence one by one and realize parity from non-Axon software allowing me to more fully utlize Axon's DEMS solution. (London?)", "Priority": "P1", "Status": "Completed", "ADO Ticket": "1992", "T-shirt Size": "S", "Estimate": "0.5 Sprint", "id": "roadmap-row-14", "row": 14, "title": "Set location (GPS) metadata", "detailsText": "As an ECOM user, I want to be able to bulk update the location for digital evidence so that I may save time in not having to update each piece of evidence one by one and realize parity from non-Axon software allowing me to more fully utlize Axon's DEMS solution. (London?)", "detailsHtml": "As an ECOM user, I want to be able to bulk update the location for digital evidence so that I may save time in not having to update each piece of evidence one by one and realize parity from non-Axon software allowing me to more fully utlize Axon's DEMS solution. (London?)", "detailsPreview": "As an ECOM user, I want to be able to bulk update the location for digital evidence so that I may save time in not having to update each piece of evidence one by one and realize parity from...", "releaseRank": 1, "priorityRank": 1, "statusRank": 6, "searchText": "release 1 full app set location (gps) metadata set location (gps) metadata as an ecom user, i want to be able to bulk update the location for digital evidence so that i may save time in not having to update each piece of evidence one by one and realize parity from non-axon software allowing me to more fully utlize axon's dems solution. (london?) p1 completed 1992 s 0.5 sprint" }, { "Target Release": "Release 1", "Feature Scope": "My Axon", "Initiative Name": "Update Documentation", "Details": "", "Priority": "P1", "Status": "Completed", "ADO Ticket": "1954", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-15", "row": 15, "title": "Update Documentation", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 1, "priorityRank": 1, "statusRank": 6, "searchText": "release 1 my axon update documentation update documentation  p1 completed 1954  " }, { "Target Release": "Release 1", "Feature Scope": "Full App", "Initiative Name": "Show user \"Shared By\" in case selection", "Details": "This is a deal that is being done with Alaska DPS which is sizable.  Alaska Department of Law is requesting we contractually obligate including \"received from\" into the Upload XT metadata. I dont think this will be an immediate need as the LEA can upload into their ingest portal and then partner share the data to LAW.  once partner shared, LAW will be able to see where the case was shared from.  In the future, they would like to lok at allowing LEAs to connect directly to their instance via UploadXT, which is where the ask is coming from.", "Priority": "P0", "Status": "Completed", "ADO Ticket": "1573", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-16", "row": 16, "title": "Show user \"Shared By\" in case selection", "detailsText": "This is a deal that is being done with Alaska DPS which is sizable.  Alaska Department of Law is requesting we contractually obligate including \"received from\" into the Upload XT metadata. I dont think this will be an immediate need as the LEA can upload into their ingest portal and then partner share the data to LAW.  once partner shared, LAW will be able to see where the case was shared from.  In the future, they would like to lok at allowing LEAs to connect directly to their instance via UploadXT, which is where the ask is coming from.", "detailsHtml": "This is a deal that is being done with Alaska DPS which is sizable.  Alaska Department of Law is requesting we contractually obligate including \"received from\" into the Upload XT metadata. I dont think this will be an immediate need as the LEA can upload into their ingest portal and then partner share the data to LAW.  once partner shared, LAW will be able to see where the case was shared from.  In the future, they would like to lok at allowing LEAs to connect directly to their instance via UploadXT, which is where the ask is coming from.", "detailsPreview": "This is a deal that is being done with Alaska DPS which is sizable. Alaska Department of Law is requesting we contractually obligate including \"received from\" into the Upload XT metadata. I...", "releaseRank": 1, "priorityRank": 0, "statusRank": 6, "searchText": "release 1 full app show user \"shared by\" in case selection show user \"shared by\" in case selection this is a deal that is being done with alaska dps which is sizable.  alaska department of law is requesting we contractually obligate including \"received from\" into the upload xt metadata. i dont think this will be an immediate need as the lea can upload into their ingest portal and then partner share the data to law.  once partner shared, law will be able to see where the case was shared from.  in the future, they would like to lok at allowing leas to connect directly to their instance via uploadxt, which is where the ask is coming from. p0 completed 1573  " }, { "Target Release": "Release 1", "Feature Scope": "XTMT-CLI", "Initiative Name": "XTMT performance and CX enhancements", "Details": "", "Priority": "P0", "Status": "Completed", "ADO Ticket": "1634", "T-shirt Size": "XXL", "Estimate": "4 Sprints(2 HC)", "id": "roadmap-row-17", "row": 17, "title": "XTMT performance and CX enhancements", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 1, "priorityRank": 0, "statusRank": 6, "searchText": "release 1 xtmt-cli xtmt performance and cx enhancements xtmt performance and cx enhancements  p0 completed 1634 xxl 4 sprints(2 hc)" }, { "Target Release": "Release 1", "Feature Scope": "Migrations", "Initiative Name": "Support Channel Service Packages (For non-file system source)", "Details": "To support Customer Led migration and to burn down PSO's backlog, utilize PSO's existing Channel Package Library to run as one off executable to extract and Map the data for XTMT to Upload.", "Priority": "P0", "Status": "Completed", "ADO Ticket": "1624", "T-shirt Size": "L", "Estimate": "2 Sprints", "id": "roadmap-row-18", "row": 18, "title": "Support Channel Service Packages (For non-file system source)", "detailsText": "To support Customer Led migration and to burn down PSO's backlog, utilize PSO's existing Channel Package Library to run as one off executable to extract and Map the data for XTMT to Upload.", "detailsHtml": "To support Customer Led migration and to burn down PSO's backlog, utilize PSO's existing Channel Package Library to run as one off executable to extract and Map the data for XTMT to Upload.", "detailsPreview": "To support Customer Led migration and to burn down PSO's backlog, utilize PSO's existing Channel Package Library to run as one off executable to extract and Map the data for XTMT to Upload.", "releaseRank": 1, "priorityRank": 0, "statusRank": 6, "searchText": "release 1 migrations support channel service packages (for non-file system source) support channel service packages (for non-file system source) to support customer led migration and to burn down pso's backlog, utilize pso's existing channel package library to run as one off executable to extract and map the data for xtmt to upload. p0 completed 1624 l 2 sprints" }, { "Target Release": "Release 2", "Feature Scope": "Migrations", "Initiative Name": "Implement Migration's 3rd Scenario in UI (Specified metadata per file or folder) aka Import TSV support", "Details": "Allow user to upload TSV and kick-off Migration from within Upload XT UI", "Priority": "P0", "Status": "In Progress", "ADO Ticket": "1327", "T-shirt Size": "XL", "Estimate": "2 Sprint", "id": "roadmap-row-19", "row": 19, "title": "Implement Migration's 3rd Scenario in UI (Specified metadata per file or folder) aka Import TSV support", "detailsText": "Allow user to upload TSV and kick-off Migration from within Upload XT UI", "detailsHtml": "Allow user to upload TSV and kick-off Migration from within Upload XT UI", "detailsPreview": "Allow user to upload TSV and kick-off Migration from within Upload XT UI", "releaseRank": 2, "priorityRank": 0, "statusRank": 1, "searchText": "release 2 migrations implement migration's 3rd scenario in ui (specified metadata per file or folder) aka import tsv support implement migration's 3rd scenario in ui (specified metadata per file or folder) aka import tsv support allow user to upload tsv and kick-off migration from within upload xt ui p0 in progress 1327 xl 2 sprint" }, { "Target Release": "Release 2", "Feature Scope": "Migrations", "Initiative Name": "Bundle TSV Generator in Upload XT Installer", "Details": "", "Priority": "P0", "Status": "To Do", "ADO Ticket": "2048", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-20", "row": 20, "title": "Bundle TSV Generator in Upload XT Installer", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 2, "priorityRank": 0, "statusRank": 4, "searchText": "release 2 migrations bundle tsv generator in upload xt installer bundle tsv generator in upload xt installer  p0 to do 2048  " }, { "Target Release": "Release 2", "Feature Scope": "Full App", "Initiative Name": "Support Evidence Group", "Details": "", "Priority": "P0", "Status": "To Do", "ADO Ticket": "2043", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-21", "row": 21, "title": "Support Evidence Group", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 2, "priorityRank": 0, "statusRank": 4, "searchText": "release 2 full app support evidence group support evidence group  p0 to do 2043  " }, { "Target Release": "Release 2", "Feature Scope": "XTMT-CLI", "Initiative Name": "Add evidence to a folder when case exist", "Details": "", "Priority": "P0", "Status": "Discovery/Research", "ADO Ticket": "2046", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-22", "row": 22, "title": "Add evidence to a folder when case exist", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 2, "priorityRank": 0, "statusRank": 3, "searchText": "release 2 xtmt-cli add evidence to a folder when case exist add evidence to a folder when case exist  p0 discovery/research 2046  " }, { "Target Release": "Release 2", "Feature Scope": "Full App", "Initiative Name": "Bug Bash Feedback accomodate", "Details": "", "Priority": "P1", "Status": "To Do", "ADO Ticket": "1653", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-23", "row": 23, "title": "Bug Bash Feedback accomodate", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 2, "priorityRank": 1, "statusRank": 4, "searchText": "release 2 full app bug bash feedback accomodate bug bash feedback accomodate  p1 to do 1653  " }, { "Target Release": "Release 2", "Feature Scope": "Full App", "Initiative Name": "Implement DEMS 2.0 UI for Full UploadXT", "Details": "", "Priority": "P1", "Status": "Designing", "ADO Ticket": "1997", "T-shirt Size": "XL", "Estimate": "3 Sprints", "id": "roadmap-row-24", "row": 24, "title": "Implement DEMS 2.0 UI for Full UploadXT", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 2, "priorityRank": 1, "statusRank": 2, "searchText": "release 2 full app implement dems 2.0 ui for full uploadxt implement dems 2.0 ui for full uploadxt  p1 designing 1997 xl 3 sprints" }, { "Target Release": "Release 2", "Feature Scope": "Full App", "Initiative Name": "Sensitivity label metadata", "Details": "Members need to be able to clarify content as sensitive in Capture and/or Upload XT so that the photos automatically have the sensitive content warning when loaded. (London?)", "Priority": "P2", "Status": "To Do", "ADO Ticket": "1993", "T-shirt Size": "M", "Estimate": "1 Sprint", "id": "roadmap-row-25", "row": 25, "title": "Sensitivity label metadata", "detailsText": "Members need to be able to clarify content as sensitive in Capture and/or Upload XT so that the photos automatically have the sensitive content warning when loaded. (London?)", "detailsHtml": "Members need to be able to clarify content as sensitive in Capture and/or Upload XT so that the photos automatically have the sensitive content warning when loaded. (London?)", "detailsPreview": "Members need to be able to clarify content as sensitive in Capture and/or Upload XT so that the photos automatically have the sensitive content warning when loaded. (London?)", "releaseRank": 2, "priorityRank": 2, "statusRank": 4, "searchText": "release 2 full app sensitivity label metadata sensitivity label metadata members need to be able to clarify content as sensitive in capture and/or upload xt so that the photos automatically have the sensitive content warning when loaded. (london?) p2 to do 1993 m 1 sprint" }, { "Target Release": "Release 2", "Feature Scope": "Full App", "Initiative Name": "Add MixPanel Telemetry to entire application", "Details": "Implement a library for Mixpanel that can be called async across UX and app functionality to measure user behavior across usage lifecycles, workflows, and stats on features and UX surfaces used the most frequently. Support the default Mixpanel event properties such as agency, etc.", "Priority": "P1", "Status": "To Do", "ADO Ticket": "1310", "T-shirt Size": "L", "Estimate": "1.5 Sprints", "id": "roadmap-row-26", "row": 26, "title": "Add MixPanel Telemetry to entire application", "detailsText": "Implement a library for Mixpanel that can be called async across UX and app functionality to measure user behavior across usage lifecycles, workflows, and stats on features and UX surfaces used the most frequently. Support the default Mixpanel event properties such as agency, etc.", "detailsHtml": "Implement a library for Mixpanel that can be called async across UX and app functionality to measure user behavior across usage lifecycles, workflows, and stats on features and UX surfaces used the most frequently. Support the default Mixpanel event properties such as agency, etc.", "detailsPreview": "Implement a library for Mixpanel that can be called async across UX and app functionality to measure user behavior across usage lifecycles, workflows, and stats on features and UX surfaces...", "releaseRank": 2, "priorityRank": 1, "statusRank": 4, "searchText": "release 2 full app add mixpanel telemetry to entire application add mixpanel telemetry to entire application implement a library for mixpanel that can be called async across ux and app functionality to measure user behavior across usage lifecycles, workflows, and stats on features and ux surfaces used the most frequently. support the default mixpanel event properties such as agency, etc. p1 to do 1310 l 1.5 sprints" }, { "Target Release": "Release 2", "Feature Scope": "UploadXT", "Initiative Name": "TSV Builder", "Details": "Shared by <a href=\"https://axon.quip.com/fPIAEA5rYiz\">Chris Stevens</a>", "Priority": "P1", "Status": "To Do", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-27", "row": 27, "title": "TSV Builder", "detailsText": "Shared by Chris Stevens", "detailsHtml": "Shared by <a href=\"https://axon.quip.com/fPIAEA5rYiz\" target=\"_blank\" rel=\"noopener noreferrer\">Chris Stevens</a>", "detailsPreview": "Shared by Chris Stevens", "releaseRank": 2, "priorityRank": 1, "statusRank": 4, "searchText": "release 2 uploadxt tsv builder tsv builder shared by <a href=\"https://axon.quip.com/fpiaea5ryiz\">chris stevens</a> p1 to do   " }, { "Target Release": "Release 2", "Feature Scope": "Migrations", "Initiative Name": "XTMT Legacy Audit Trail Support", "Details": "", "Priority": "P2", "Status": "Discovery/Research", "ADO Ticket": "1309 / 1219", "T-shirt Size": "M", "Estimate": "0.5 Sprint", "id": "roadmap-row-28", "row": 28, "title": "XTMT Legacy Audit Trail Support", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 2, "priorityRank": 2, "statusRank": 3, "searchText": "release 2 migrations xtmt legacy audit trail support xtmt legacy audit trail support  p2 discovery/research 1309 / 1219 m 0.5 sprint" }, { "Target Release": "Release 2", "Feature Scope": "Full App", "Initiative Name": "Banner for poor internet speed", "Details": "", "Priority": "P2", "Status": "To Do", "ADO Ticket": "", "T-shirt Size": "S", "Estimate": "", "id": "roadmap-row-29", "row": 29, "title": "Banner for poor internet speed", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 2, "priorityRank": 2, "statusRank": 4, "searchText": "release 2 full app banner for poor internet speed banner for poor internet speed  p2 to do  s " }, { "Target Release": "Release 2", "Feature Scope": "Full App", "Initiative Name": "Banner for new version available", "Details": "", "Priority": "P2", "Status": "To Do", "ADO Ticket": "", "T-shirt Size": "S", "Estimate": "", "id": "roadmap-row-30", "row": 30, "title": "Banner for new version available", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 2, "priorityRank": 2, "statusRank": 4, "searchText": "release 2 full app banner for new version available banner for new version available  p2 to do  s " }, { "Target Release": "Release 2", "Feature Scope": "UploadXT", "Initiative Name": "Download XT", "Details": "Shared by <a href=\"https://axon.quip.com/IIMAEAisgYs\">Anthony Macaluso</a>", "Priority": "P2", "Status": "To Do", "ADO Ticket": "2008", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-31", "row": 31, "title": "Download XT", "detailsText": "Shared by Anthony Macaluso", "detailsHtml": "Shared by <a href=\"https://axon.quip.com/IIMAEAisgYs\" target=\"_blank\" rel=\"noopener noreferrer\">Anthony Macaluso</a>", "detailsPreview": "Shared by Anthony Macaluso", "releaseRank": 2, "priorityRank": 2, "statusRank": 4, "searchText": "release 2 uploadxt download xt download xt shared by <a href=\"https://axon.quip.com/iimaeaisgys\">anthony macaluso</a> p2 to do 2008  " }, { "Target Release": "Release 2", "Feature Scope": "Full App", "Initiative Name": "Support 429 response", "Details": "", "Priority": "P2", "Status": "To Do", "ADO Ticket": "2003", "T-shirt Size": "S", "Estimate": "2 Days", "id": "roadmap-row-32", "row": 32, "title": "Support 429 response", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 2, "priorityRank": 2, "statusRank": 4, "searchText": "release 2 full app support 429 response support 429 response  p2 to do 2003 s 2 days" }, { "Target Release": "Release 2", "Feature Scope": "Full App", "Initiative Name": "User Permission Aware Application", "Details": "Upong logging, application should enable/disable the features based on user's permission. With hover over to inform customer.", "Priority": "P1", "Status": "To Do", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-33", "row": 33, "title": "User Permission Aware Application", "detailsText": "Upong logging, application should enable/disable the features based on user's permission. With hover over to inform customer.", "detailsHtml": "Upong logging, application should enable/disable the features based on user's permission. With hover over to inform customer.", "detailsPreview": "Upong logging, application should enable/disable the features based on user's permission. With hover over to inform customer.", "releaseRank": 2, "priorityRank": 1, "statusRank": 4, "searchText": "release 2 full app user permission aware application user permission aware application upong logging, application should enable/disable the features based on user's permission. with hover over to inform customer. p1 to do   " }, { "Target Release": "Release 3", "Feature Scope": "Full App", "Initiative Name": "Proxy awareness at OS level", "Details": "Customers would like proxy support to be built into Upload XT due to their tight security requirements meaning bypassing this isn't a suitable option for them.\nBe able to support customer's network proxy values by setting them in the app and as a config set for deployment. (London?)\nIssue 456 Proxy when configured at OS level, Upload XT v2 is not working\nProxy info for spec: https://axon.quip.com/0kxyA5wkYAir/Upload-XT-v2-Resource-Kit#temp:C:WNReaf6e25be27e42868926f1588", "Priority": "P1", "Status": "To Do", "ADO Ticket": "1191", "T-shirt Size": "M", "Estimate": "0.5 Sprint", "id": "roadmap-row-34", "row": 34, "title": "Proxy awareness at OS level", "detailsText": "Customers would like proxy support to be built into Upload XT due to their tight security requirements meaning bypassing this isn't a suitable option for them.\nBe able to support customer's network proxy values by setting them in the app and as a config set for deployment. (London?)\nIssue 456 Proxy when configured at OS level, Upload XT v2 is not working\nProxy info for spec: https://axon.quip.com/0kxyA5wkYAir/Upload-XT-v2-Resource-Kit#temp:C:WNReaf6e25be27e42868926f1588", "detailsHtml": "Customers would like proxy support to be built into Upload XT due to their tight security requirements meaning bypassing this isn't a suitable option for them.<br>Be able to support customer's network proxy values by setting them in the app and as a config set for deployment. (London?)<br>Issue 456 Proxy when configured at OS level, Upload XT v2 is not working<br>Proxy info for spec: <a href=\"https://axon.quip.com/0kxyA5wkYAir/Upload-XT-v2-Resource-Kit#temp:C:WNReaf6e25be27e42868926f1588\" target=\"_blank\" rel=\"noopener noreferrer\">https://axon.quip.com/0kxyA5wkYAir/Upload-XT-v2-Resource-Kit#temp:C:WNReaf6e25be27e42868926f1588</a>", "detailsPreview": "Customers would like proxy support to be built into Upload XT due to their tight security requirements meaning bypassing this isn't a suitable option for them. Be able to support customer's...", "releaseRank": 3, "priorityRank": 1, "statusRank": 4, "searchText": "release 3 full app proxy awareness at os level proxy awareness at os level customers would like proxy support to be built into upload xt due to their tight security requirements meaning bypassing this isn't a suitable option for them.\nbe able to support customer's network proxy values by setting them in the app and as a config set for deployment. (london?)\nissue 456 proxy when configured at os level, upload xt v2 is not working\nproxy info for spec: https://axon.quip.com/0kxya5wkyair/upload-xt-v2-resource-kit#temp:c:wnreaf6e25be27e42868926f1588 p1 to do 1191 m 0.5 sprint" }, { "Target Release": "Release 3", "Feature Scope": "Migrations", "Initiative Name": "Trigger Audit Event with migration details at the end of migration completion", "Details": "", "Priority": "", "Status": "", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-35", "row": 35, "title": "Trigger Audit Event with migration details at the end of migration completion", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 3, "priorityRank": 9, "statusRank": 7, "searchText": "release 3 migrations trigger audit event with migration details at the end of migration completion trigger audit event with migration details at the end of migration completion      " }, { "Target Release": "Release 3", "Feature Scope": "Full App", "Initiative Name": "Configure application settings pre-deployment", "Details": "Admins want to configure the inputs and ability for user-overrides in Settings when they plan the deployment. Settings include:\n- Bandwidth throttling\n- Agency domain\n- Disable auto-download folders (P0)\n- Temp directory\n- Proxy settings\n- ASP service settings (e.g. performance tweaks)\n- Date retention preferences (e.g. Uploaded On)\n- Folder upload default (Case with folders, or zip archive)\n- Auto-launch app on Windows start up", "Priority": "P1", "Status": "To Do", "ADO Ticket": "2001", "T-shirt Size": "L", "Estimate": "2 Sprints", "id": "roadmap-row-36", "row": 36, "title": "Configure application settings pre-deployment", "detailsText": "Admins want to configure the inputs and ability for user-overrides in Settings when they plan the deployment. Settings include:\n- Bandwidth throttling\n- Agency domain\n- Disable auto-download folders (P0)\n- Temp directory\n- Proxy settings\n- ASP service settings (e.g. performance tweaks)\n- Date retention preferences (e.g. Uploaded On)\n- Folder upload default (Case with folders, or zip archive)\n- Auto-launch app on Windows start up", "detailsHtml": "Admins want to configure the inputs and ability for user-overrides in Settings when they plan the deployment. Settings include:<br>- Bandwidth throttling<br>- Agency domain<br>- Disable auto-download folders (P0)<br>- Temp directory<br>- Proxy settings<br>- ASP service settings (e.g. performance tweaks)<br>- Date retention preferences (e.g. Uploaded On)<br>- Folder upload default (Case with folders, or zip archive)<br>- Auto-launch app on Windows start up", "detailsPreview": "Admins want to configure the inputs and ability for user-overrides in Settings when they plan the deployment. Settings include: - Bandwidth throttling - Agency domain - Disable auto-downloa...", "releaseRank": 3, "priorityRank": 1, "statusRank": 4, "searchText": "release 3 full app configure application settings pre-deployment configure application settings pre-deployment admins want to configure the inputs and ability for user-overrides in settings when they plan the deployment. settings include:\n- bandwidth throttling\n- agency domain\n- disable auto-download folders (p0)\n- temp directory\n- proxy settings\n- asp service settings (e.g. performance tweaks)\n- date retention preferences (e.g. uploaded on)\n- folder upload default (case with folders, or zip archive)\n- auto-launch app on windows start up p1 to do 2001 l 2 sprints" }, { "Target Release": "Release 3", "Feature Scope": "Migrations", "Initiative Name": "Introduce Migration Tab in Upload XT App", "Details": "", "Priority": "P0", "Status": "Testing", "ADO Ticket": "1312", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-37", "row": 37, "title": "Introduce Migration Tab in Upload XT App", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 3, "priorityRank": 0, "statusRank": 0, "searchText": "release 3 migrations introduce migration tab in upload xt app introduce migration tab in upload xt app  p0 testing 1312  " }, { "Target Release": "Release 3", "Feature Scope": "Migrations", "Initiative Name": "Evidence ID in the Report", "Details": "Ask is from PSO, to include evidenceID of all the evidence that are migrated under a migration.", "Priority": "P1", "Status": "To Do", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-38", "row": 38, "title": "Evidence ID in the Report", "detailsText": "Ask is from PSO, to include evidenceID of all the evidence that are migrated under a migration.", "detailsHtml": "Ask is from PSO, to include evidenceID of all the evidence that are migrated under a migration.", "detailsPreview": "Ask is from PSO, to include evidenceID of all the evidence that are migrated under a migration.", "releaseRank": 3, "priorityRank": 1, "statusRank": 4, "searchText": "release 3 migrations evidence id in the report evidence id in the report ask is from pso, to include evidenceid of all the evidence that are migrated under a migration. p1 to do   " }, { "Target Release": "Release 3", "Feature Scope": "Full App", "Initiative Name": "Migrate from VN Azure to Axon Azure", "Details": "We instead have a sync between VN azure and Git Enterprise", "Priority": "P1", "Status": "Completed", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-39", "row": 39, "title": "Migrate from VN Azure to Axon Azure", "detailsText": "We instead have a sync between VN azure and Git Enterprise", "detailsHtml": "We instead have a sync between VN azure and Git Enterprise", "detailsPreview": "We instead have a sync between VN azure and Git Enterprise", "releaseRank": 3, "priorityRank": 1, "statusRank": 6, "searchText": "release 3 full app migrate from vn azure to axon azure migrate from vn azure to axon azure we instead have a sync between vn azure and git enterprise p1 completed   " }, { "Target Release": "Release 3", "Feature Scope": "Full App", "Initiative Name": "Introduce InApp feedback mechanism", "Details": "", "Priority": "P2", "Status": "To Do", "ADO Ticket": "1998", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-40", "row": 40, "title": "Introduce InApp feedback mechanism", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 3, "priorityRank": 2, "statusRank": 4, "searchText": "release 3 full app introduce inapp feedback mechanism introduce inapp feedback mechanism  p2 to do 1998  " }, { "Target Release": "Release 3", "Feature Scope": "UploadXT", "Initiative Name": "Bulk title definition with date or ID option", "Details": "Bulk set Title including append date time and/or numerical id (e.g. 001 - 0xx) similar to Capture: <a href=\"https://axon.quip.com/ThR7AilKb7Op\">Capture Bulk Title Updates</a>. Also align UXT metadata UX with other UI’s (e.g. order of fields in Capture and Ecom are different).", "Priority": "P2", "Status": "To Do", "ADO Ticket": "1994", "T-shirt Size": "M", "Estimate": "0.5 Sprint", "id": "roadmap-row-41", "row": 41, "title": "Bulk title definition with date or ID option", "detailsText": "Bulk set Title including append date time and/or numerical id (e.g. 001 - 0xx) similar to Capture: Capture Bulk Title Updates. Also align UXT metadata UX with other UI’s (e.g. order of fields in Capture and Ecom are different).", "detailsHtml": "Bulk set Title including append date time and/or numerical id (e.g. 001 - 0xx) similar to Capture: <a href=\"https://axon.quip.com/ThR7AilKb7Op\" target=\"_blank\" rel=\"noopener noreferrer\">Capture Bulk Title Updates</a>. Also align UXT metadata UX with other UI’s (e.g. order of fields in Capture and Ecom are different).", "detailsPreview": "Bulk set Title including append date time and/or numerical id (e.g. 001 - 0xx) similar to Capture: Capture Bulk Title Updates. Also align UXT metadata UX with other UI’s (e.g. order of fiel...", "releaseRank": 3, "priorityRank": 2, "statusRank": 4, "searchText": "release 3 uploadxt bulk title definition with date or id option bulk title definition with date or id option bulk set title including append date time and/or numerical id (e.g. 001 - 0xx) similar to capture: <a href=\"https://axon.quip.com/thr7ailkb7op\">capture bulk title updates</a>. also align uxt metadata ux with other ui’s (e.g. order of fields in capture and ecom are different). p2 to do 1994 m 0.5 sprint" }, { "Target Release": "Release 3", "Feature Scope": "Full App", "Initiative Name": "Better in-app user education", "Details": "First Run Experience, and in-app hooks to resources e.g. animated visual showing what they do in UXT and the resulting experience in Ecom (e.g. help encourage users to leverage cases and folders).\nIn app, indicate to the user if their agency has Unlimited 3P Storage.\nBetter in-app user messaging and discovery of resources to improve usability and best practices. For example, contextual links explaining Cases, and using them for folders. Links to documentation, training, tips and tricks within the frequent workflows.\nLink to XTMT resources from app.", "Priority": "P2", "Status": "Discovery/Research", "ADO Ticket": "1999", "T-shirt Size": "L", "Estimate": "2 Sprints", "id": "roadmap-row-42", "row": 42, "title": "Better in-app user education", "detailsText": "First Run Experience, and in-app hooks to resources e.g. animated visual showing what they do in UXT and the resulting experience in Ecom (e.g. help encourage users to leverage cases and folders).\nIn app, indicate to the user if their agency has Unlimited 3P Storage.\nBetter in-app user messaging and discovery of resources to improve usability and best practices. For example, contextual links explaining Cases, and using them for folders. Links to documentation, training, tips and tricks within the frequent workflows.\nLink to XTMT resources from app.", "detailsHtml": "First Run Experience, and in-app hooks to resources e.g. animated visual showing what they do in UXT and the resulting experience in Ecom (e.g. help encourage users to leverage cases and folders).<br>In app, indicate to the user if their agency has Unlimited 3P Storage.<br>Better in-app user messaging and discovery of resources to improve usability and best practices. For example, contextual links explaining Cases, and using them for folders. Links to documentation, training, tips and tricks within the frequent workflows.<br>Link to XTMT resources from app.", "detailsPreview": "First Run Experience, and in-app hooks to resources e.g. animated visual showing what they do in UXT and the resulting experience in Ecom (e.g. help encourage users to leverage cases and fo...", "releaseRank": 3, "priorityRank": 2, "statusRank": 3, "searchText": "release 3 full app better in-app user education better in-app user education first run experience, and in-app hooks to resources e.g. animated visual showing what they do in uxt and the resulting experience in ecom (e.g. help encourage users to leverage cases and folders).\nin app, indicate to the user if their agency has unlimited 3p storage.\nbetter in-app user messaging and discovery of resources to improve usability and best practices. for example, contextual links explaining cases, and using them for folders. links to documentation, training, tips and tricks within the frequent workflows.\nlink to xtmt resources from app. p2 discovery/research 1999 l 2 sprints" }, { "Target Release": "Release 3", "Feature Scope": "My Axon", "Initiative Name": "XTMT Toolkit", "Details": "", "Priority": "P3", "Status": "In Progress", "ADO Ticket": "NA", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-43", "row": 43, "title": "XTMT Toolkit", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 3, "priorityRank": 3, "statusRank": 1, "searchText": "release 3 my axon xtmt toolkit xtmt toolkit  p3 in progress na  " }, { "Target Release": "Release 3", "Feature Scope": "UploadXT", "Initiative Name": "Metadata-enabled auto-folder schema XTMT, automate etc", "Details": "Auto folder enhancements e.g.  set category or case\n\\cases\\23-35023 =  create\\use case called \"23-35023\"\n\\categories\\foobar\nNeed to de-dupe existing  files?", "Priority": "P3", "Status": "To Do", "ADO Ticket": "2005", "T-shirt Size": "M", "Estimate": "0.5 Sprint", "id": "roadmap-row-44", "row": 44, "title": "Metadata-enabled auto-folder schema XTMT, automate etc", "detailsText": "Auto folder enhancements e.g.  set category or case\n\\cases\\23-35023 =  create\\use case called \"23-35023\"\n\\categories\\foobar\nNeed to de-dupe existing  files?", "detailsHtml": "Auto folder enhancements e.g.  set category or case<br>\\cases\\23-35023 =  create\\use case called \"23-35023\"<br>\\categories\\foobar<br>Need to de-dupe existing  files?", "detailsPreview": "Auto folder enhancements e.g. set category or case \\cases\\23-35023 = create\\use case called \"23-35023\" \\categories\\foobar Need to de-dupe existing files?", "releaseRank": 3, "priorityRank": 3, "statusRank": 4, "searchText": "release 3 uploadxt metadata-enabled auto-folder schema xtmt, automate etc metadata-enabled auto-folder schema xtmt, automate etc auto folder enhancements e.g.  set category or case\n\\cases\\23-35023 =  create\\use case called \"23-35023\"\n\\categories\\foobar\nneed to de-dupe existing  files? p3 to do 2005 m 0.5 sprint" }, { "Target Release": "Release 3", "Feature Scope": "Full App", "Initiative Name": "Improve network file performance", "Details": "Pre-copy and cache files locally before uploading", "Priority": "P3", "Status": "To Do", "ADO Ticket": "", "T-shirt Size": "L", "Estimate": "2 Sprint", "id": "roadmap-row-45", "row": 45, "title": "Improve network file performance", "detailsText": "Pre-copy and cache files locally before uploading", "detailsHtml": "Pre-copy and cache files locally before uploading", "detailsPreview": "Pre-copy and cache files locally before uploading", "releaseRank": 3, "priorityRank": 3, "statusRank": 4, "searchText": "release 3 full app improve network file performance improve network file performance pre-copy and cache files locally before uploading p3 to do  l 2 sprint" }, { "Target Release": "Release 3", "Feature Scope": "UploadXT", "Initiative Name": "Shared device security and separation", "Details": "Multiple users / shared  devices (still signed in as other user) vs auto sign out when close app.  ADO - <Issue> # ⁠⁠<328>\nEnable users to be signed on to multiple devices for uploads at once.", "Priority": "P3", "Status": "To Do", "ADO Ticket": "1194", "T-shirt Size": "M", "Estimate": "1 Sprint", "id": "roadmap-row-46", "row": 46, "title": "Shared device security and separation", "detailsText": "Multiple users / shared  devices (still signed in as other user) vs auto sign out when close app.  ADO -  # ⁠⁠\nEnable users to be signed on to multiple devices for uploads at once.", "detailsHtml": "Multiple users / shared  devices (still signed in as other user) vs auto sign out when close app.  ADO - &lt;Issue&gt; # ⁠⁠&lt;328&gt;<br>Enable users to be signed on to multiple devices for uploads at once.", "detailsPreview": "Multiple users / shared devices (still signed in as other user) vs auto sign out when close app. ADO - # ⁠⁠ Enable users to be signed on to multiple devices for uploads at once.", "releaseRank": 3, "priorityRank": 3, "statusRank": 4, "searchText": "release 3 uploadxt shared device security and separation shared device security and separation multiple users / shared  devices (still signed in as other user) vs auto sign out when close app.  ado - <issue> # ⁠⁠<328>\nenable users to be signed on to multiple devices for uploads at once. p3 to do 1194 m 1 sprint" }, { "Target Release": "Release 3", "Feature Scope": "Full App", "Initiative Name": "Display metadata pre-upload when adding files and folders", "Details": "For media with EXIF metadata embedded, display the parsed or calculated date in the UX so the user can tell if it's the intended or expected date for Recorded On / Taken On\nAbility to set a default uploaded on preference (including at deployment) to determine if use Uploaded On, or EXIF date if available\n\"Add to case\" dialog should show case ID as well as name (separate with \" — \" and label ID, e.g. \"ID: 24523 — Case description\")\nUser should be able to drag/drop files multiple times. Keep the drag/drop UI visible below the list of evidence", "Priority": "P3", "Status": "To Do", "ADO Ticket": "1995", "T-shirt Size": "L", "Estimate": "2 Sprints", "id": "roadmap-row-47", "row": 47, "title": "Display metadata pre-upload when adding files and folders", "detailsText": "For media with EXIF metadata embedded, display the parsed or calculated date in the UX so the user can tell if it's the intended or expected date for Recorded On / Taken On\nAbility to set a default uploaded on preference (including at deployment) to determine if use Uploaded On, or EXIF date if available\n\"Add to case\" dialog should show case ID as well as name (separate with \" — \" and label ID, e.g. \"ID: 24523 — Case description\")\nUser should be able to drag/drop files multiple times. Keep the drag/drop UI visible below the list of evidence", "detailsHtml": "For media with EXIF metadata embedded, display the parsed or calculated date in the UX so the user can tell if it's the intended or expected date for Recorded On / Taken On<br>Ability to set a default uploaded on preference (including at deployment) to determine if use Uploaded On, or EXIF date if available<br>\"Add to case\" dialog should show case ID as well as name (separate with \" — \" and label ID, e.g. \"ID: 24523 — Case description\")<br>User should be able to drag/drop files multiple times. Keep the drag/drop UI visible below the list of evidence", "detailsPreview": "For media with EXIF metadata embedded, display the parsed or calculated date in the UX so the user can tell if it's the intended or expected date for Recorded On / Taken On Ability to set a...", "releaseRank": 3, "priorityRank": 3, "statusRank": 4, "searchText": "release 3 full app display metadata pre-upload when adding files and folders display metadata pre-upload when adding files and folders for media with exif metadata embedded, display the parsed or calculated date in the ux so the user can tell if it's the intended or expected date for recorded on / taken on\nability to set a default uploaded on preference (including at deployment) to determine if use uploaded on, or exif date if available\n\"add to case\" dialog should show case id as well as name (separate with \" — \" and label id, e.g. \"id: 24523 — case description\")\nuser should be able to drag/drop files multiple times. keep the drag/drop ui visible below the list of evidence p3 to do 1995 l 2 sprints" }, { "Target Release": "Backlog", "Feature Scope": "Migrations", "Initiative Name": "Archive after Upload", "Details": "", "Priority": "P2", "Status": "To Do", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-48", "row": 48, "title": "Archive after Upload", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 4, "priorityRank": 2, "statusRank": 4, "searchText": "backlog migrations archive after upload archive after upload  p2 to do   " }, { "Target Release": "Backlog", "Feature Scope": "Full App", "Initiative Name": "Deployment supports auto-updates", "Details": "Use EDCA's application download system to deploy UXT via Ecom Help tab (no MyAxon) including automatically pushing updates through it to the user or admin if gated by deployment tools.", "Priority": "P1", "Status": "Blocked", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-49", "row": 49, "title": "Deployment supports auto-updates", "detailsText": "Use EDCA's application download system to deploy UXT via Ecom Help tab (no MyAxon) including automatically pushing updates through it to the user or admin if gated by deployment tools.", "detailsHtml": "Use EDCA's application download system to deploy UXT via Ecom Help tab (no MyAxon) including automatically pushing updates through it to the user or admin if gated by deployment tools.", "detailsPreview": "Use EDCA's application download system to deploy UXT via Ecom Help tab (no MyAxon) including automatically pushing updates through it to the user or admin if gated by deployment tools.", "releaseRank": 4, "priorityRank": 1, "statusRank": 5, "searchText": "backlog full app deployment supports auto-updates deployment supports auto-updates use edca's application download system to deploy uxt via ecom help tab (no myaxon) including automatically pushing updates through it to the user or admin if gated by deployment tools. p1 blocked   " }, { "Target Release": "Backlog", "Feature Scope": "Full App", "Initiative Name": "Activity Tab", "Details": "", "Priority": "P2", "Status": "Discovery/Research", "ADO Ticket": "NA", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-50", "row": 50, "title": "Activity Tab", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 4, "priorityRank": 2, "statusRank": 3, "searchText": "backlog full app activity tab activity tab  p2 discovery/research na  " }, { "Target Release": "Backlog", "Feature Scope": "UploadXT", "Initiative Name": "Remove Bandwidth setting page in e.com for Upload XT", "Details": "", "Priority": "P2", "Status": "To Do", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-51", "row": 51, "title": "Remove Bandwidth setting page in e.com for Upload XT", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 4, "priorityRank": 2, "statusRank": 4, "searchText": "backlog uploadxt remove bandwidth setting page in e.com for upload xt remove bandwidth setting page in e.com for upload xt  p2 to do   " }, { "Target Release": "Backlog", "Feature Scope": "UploadXT", "Initiative Name": "Folder as archive or files - default config setting", "Details": "The agency would like to have a setting added to be able to change the default folder upload method to \"Separate folder\" having to manually do this with each upload is inconvenient and officers may forget which would cause problems for them.\nThis also needs to be configurable at deployment to set the default, and whether or not the user can override the setting in UXT at an app level.", "Priority": "P2", "Status": "To Do", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-52", "row": 52, "title": "Folder as archive or files - default config setting", "detailsText": "The agency would like to have a setting added to be able to change the default folder upload method to \"Separate folder\" having to manually do this with each upload is inconvenient and officers may forget which would cause problems for them.\nThis also needs to be configurable at deployment to set the default, and whether or not the user can override the setting in UXT at an app level.", "detailsHtml": "The agency would like to have a setting added to be able to change the default folder upload method to \"Separate folder\" having to manually do this with each upload is inconvenient and officers may forget which would cause problems for them.<br>This also needs to be configurable at deployment to set the default, and whether or not the user can override the setting in UXT at an app level.", "detailsPreview": "The agency would like to have a setting added to be able to change the default folder upload method to \"Separate folder\" having to manually do this with each upload is inconvenient and offi...", "releaseRank": 4, "priorityRank": 2, "statusRank": 4, "searchText": "backlog uploadxt folder as archive or files - default config setting folder as archive or files - default config setting the agency would like to have a setting added to be able to change the default folder upload method to \"separate folder\" having to manually do this with each upload is inconvenient and officers may forget which would cause problems for them.\nthis also needs to be configurable at deployment to set the default, and whether or not the user can override the setting in uxt at an app level. p2 to do   " }, { "Target Release": "Backlog", "Feature Scope": "Full App", "Initiative Name": "Architecture/Design & Code Quality", "Details": "", "Priority": "P2", "Status": "In Progress", "ADO Ticket": "1350", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-53", "row": 53, "title": "Architecture/Design & Code Quality", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 4, "priorityRank": 2, "statusRank": 1, "searchText": "backlog full app architecture/design & code quality architecture/design & code quality  p2 in progress 1350  " }, { "Target Release": "Backlog", "Feature Scope": "Full App", "Initiative Name": "DevOps & Development Lifecycle", "Details": "", "Priority": "P2", "Status": "In Progress", "ADO Ticket": "1356", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-54", "row": 54, "title": "DevOps & Development Lifecycle", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 4, "priorityRank": 2, "statusRank": 1, "searchText": "backlog full app devops & development lifecycle devops & development lifecycle  p2 in progress 1356  " }, { "Target Release": "Backlog", "Feature Scope": "Full App", "Initiative Name": "", "Details": "Windows User Profile based access and permissions (e.g. move SQLite DB files out of Windows directory; block other users from submitting requests to Windows Service as other user)", "Priority": "P2", "Status": "To Do", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-55", "row": 55, "title": "Windows User Profile based access and permissions (e.g. move SQLite DB files out...", "detailsText": "Windows User Profile based access and permissions (e.g. move SQLite DB files out of Windows directory; block other users from submitting requests to Windows Service as other user)", "detailsHtml": "Windows User Profile based access and permissions (e.g. move SQLite DB files out of Windows directory; block other users from submitting requests to Windows Service as other user)", "detailsPreview": "Windows User Profile based access and permissions (e.g. move SQLite DB files out of Windows directory; block other users from submitting requests to Windows Service as other user)", "releaseRank": 4, "priorityRank": 2, "statusRank": 4, "searchText": "backlog full app  windows user profile based access and permissions (e.g. move sqlite db files out... windows user profile based access and permissions (e.g. move sqlite db files out of windows directory; block other users from submitting requests to windows service as other user) p2 to do   " }, { "Target Release": "Backlog", "Feature Scope": "Full App", "Initiative Name": "", "Details": "UX support for very long pre-auth agency messages (Bug 191)", "Priority": "P2", "Status": "To Do", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-56", "row": 56, "title": "UX support for very long pre-auth agency messages (Bug 191)", "detailsText": "UX support for very long pre-auth agency messages (Bug 191)", "detailsHtml": "UX support for very long pre-auth agency messages (Bug 191)", "detailsPreview": "UX support for very long pre-auth agency messages (Bug 191)", "releaseRank": 4, "priorityRank": 2, "statusRank": 4, "searchText": "backlog full app  ux support for very long pre-auth agency messages (bug 191) ux support for very long pre-auth agency messages (bug 191) p2 to do   " }, { "Target Release": "Backlog", "Feature Scope": "Full App", "Initiative Name": "Maintenance", "Details": "", "Priority": "P3", "Status": "In Progress", "ADO Ticket": "1380", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-57", "row": 57, "title": "Maintenance", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 4, "priorityRank": 3, "statusRank": 1, "searchText": "backlog full app maintenance maintenance  p3 in progress 1380  " }, { "Target Release": "Backlog", "Feature Scope": "Migrations", "Initiative Name": "XTMT for DSEs", "Details": "Auth by app token for XTMT instead of user-auth credentials", "Priority": "P3", "Status": "To Do", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-58", "row": 58, "title": "XTMT for DSEs", "detailsText": "Auth by app token for XTMT instead of user-auth credentials", "detailsHtml": "Auth by app token for XTMT instead of user-auth credentials", "detailsPreview": "Auth by app token for XTMT instead of user-auth credentials", "releaseRank": 4, "priorityRank": 3, "statusRank": 4, "searchText": "backlog migrations xtmt for dses xtmt for dses auth by app token for xtmt instead of user-auth credentials p3 to do   " }, { "Target Release": "Backlog", "Feature Scope": "Migrations", "Initiative Name": "XTMT Evidence owner improvements", "Details": "", "Priority": "P3", "Status": "To Do", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-59", "row": 59, "title": "XTMT Evidence owner improvements", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 4, "priorityRank": 3, "statusRank": 4, "searchText": "backlog migrations xtmt evidence owner improvements xtmt evidence owner improvements  p3 to do   " }, { "Target Release": "Backlog", "Feature Scope": "Full App", "Initiative Name": "Unit Testing & Code Coverage", "Details": "", "Priority": "P1", "Status": "Completed", "ADO Ticket": "1376", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-60", "row": 60, "title": "Unit Testing & Code Coverage", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 4, "priorityRank": 1, "statusRank": 6, "searchText": "backlog full app unit testing & code coverage unit testing & code coverage  p1 completed 1376  " }, { "Target Release": "Backlog", "Feature Scope": "Migrations", "Initiative Name": "Zip folder of path pre-upload in XTMT", "Details": "", "Priority": "P3", "Status": "Discovery/Research", "ADO Ticket": "1307", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-61", "row": 61, "title": "Zip folder of path pre-upload in XTMT", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 4, "priorityRank": 3, "statusRank": 3, "searchText": "backlog migrations zip folder of path pre-upload in xtmt zip folder of path pre-upload in xtmt  p3 discovery/research 1307  " }, { "Target Release": "Backlog", "Feature Scope": "UploadXT", "Initiative Name": "Upload status and time remaining in UI", "Details": "", "Priority": "P3", "Status": "To Do", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-62", "row": 62, "title": "Upload status and time remaining in UI", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 4, "priorityRank": 3, "statusRank": 4, "searchText": "backlog uploadxt upload status and time remaining in ui upload status and time remaining in ui  p3 to do   " }, { "Target Release": "Backlog", "Feature Scope": "UploadXT", "Initiative Name": "\"Send to Upload XT\" Windows Explorer menu shortcut", "Details": "Sub-menu options for auto-categorization options to", "Priority": "P3", "Status": "To Do", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-63", "row": 63, "title": "\"Send to Upload XT\" Windows Explorer menu shortcut", "detailsText": "Sub-menu options for auto-categorization options to", "detailsHtml": "Sub-menu options for auto-categorization options to", "detailsPreview": "Sub-menu options for auto-categorization options to", "releaseRank": 4, "priorityRank": 3, "statusRank": 4, "searchText": "backlog uploadxt \"send to upload xt\" windows explorer menu shortcut \"send to upload xt\" windows explorer menu shortcut sub-menu options for auto-categorization options to p3 to do   " }, { "Target Release": "Backlog", "Feature Scope": "UploadXT", "Initiative Name": "Auto-run in Windows on USB or xHD plug in", "Details": "Launch UXT UI for the drive and show folder selection options to import and upload from UXT.", "Priority": "P3", "Status": "To Do", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-64", "row": 64, "title": "Auto-run in Windows on USB or xHD plug in", "detailsText": "Launch UXT UI for the drive and show folder selection options to import and upload from UXT.", "detailsHtml": "Launch UXT UI for the drive and show folder selection options to import and upload from UXT.", "detailsPreview": "Launch UXT UI for the drive and show folder selection options to import and upload from UXT.", "releaseRank": 4, "priorityRank": 3, "statusRank": 4, "searchText": "backlog uploadxt auto-run in windows on usb or xhd plug in auto-run in windows on usb or xhd plug in launch uxt ui for the drive and show folder selection options to import and upload from uxt. p3 to do   " }, { "Target Release": "Backlog", "Feature Scope": "Full App", "Initiative Name": "Add download link on Ecom Upload evidence page", "Details": "", "Priority": "P3", "Status": "To Do", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-65", "row": 65, "title": "Add download link on Ecom Upload evidence page", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 4, "priorityRank": 3, "statusRank": 4, "searchText": "backlog full app add download link on ecom upload evidence page add download link on ecom upload evidence page  p3 to do   " }, { "Target Release": "Backlog", "Feature Scope": "DownloadXT", "Initiative Name": "Implement Sync Tab(replace Auto Folder) in UploadXT App", "Details": "", "Priority": "P3", "Status": "To Do", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-66", "row": 66, "title": "Implement Sync Tab(replace Auto Folder) in UploadXT App", "detailsText": "", "detailsHtml": "", "detailsPreview": "", "releaseRank": 4, "priorityRank": 3, "statusRank": 4, "searchText": "backlog downloadxt implement sync tab(replace auto folder) in uploadxt app implement sync tab(replace auto folder) in uploadxt app  p3 to do   " }, { "Target Release": "Backlog", "Feature Scope": "UploadXT", "Initiative Name": "Mobile Companion App", "Details": "Real-time monitoring, alerts, and limited remote control for ongoing uploads/migrations", "Priority": "P3", "Status": "To Do", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-67", "row": 67, "title": "Mobile Companion App", "detailsText": "Real-time monitoring, alerts, and limited remote control for ongoing uploads/migrations", "detailsHtml": "Real-time monitoring, alerts, and limited remote control for ongoing uploads/migrations", "detailsPreview": "Real-time monitoring, alerts, and limited remote control for ongoing uploads/migrations", "releaseRank": 4, "priorityRank": 3, "statusRank": 4, "searchText": "backlog uploadxt mobile companion app mobile companion app real-time monitoring, alerts, and limited remote control for ongoing uploads/migrations p3 to do   " }, { "Target Release": "Backlog", "Feature Scope": "UploadXT", "Initiative Name": "Smart Drop Zone", "Details": "Watched folder-based automated ingestion with metadata mapping via folder structure and metadata.json", "Priority": "P2", "Status": "To Do", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-68", "row": 68, "title": "Smart Drop Zone", "detailsText": "Watched folder-based automated ingestion with metadata mapping via folder structure and metadata.json", "detailsHtml": "Watched folder-based automated ingestion with metadata mapping via folder structure and metadata.json", "detailsPreview": "Watched folder-based automated ingestion with metadata mapping via folder structure and metadata.json", "releaseRank": 4, "priorityRank": 2, "statusRank": 4, "searchText": "backlog uploadxt smart drop zone smart drop zone watched folder-based automated ingestion with metadata mapping via folder structure and metadata.json p2 to do   " }, { "Target Release": "Backlog", "Feature Scope": "UploadXT", "Initiative Name": "Observability & Monitoring", "Details": "Centralized logs, metrics, dashboards, traces, and alerting for upload pipeline visibility", "Priority": "P0", "Status": "To Do", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-69", "row": 69, "title": "Observability & Monitoring", "detailsText": "Centralized logs, metrics, dashboards, traces, and alerting for upload pipeline visibility", "detailsHtml": "Centralized logs, metrics, dashboards, traces, and alerting for upload pipeline visibility", "detailsPreview": "Centralized logs, metrics, dashboards, traces, and alerting for upload pipeline visibility", "releaseRank": 4, "priorityRank": 0, "statusRank": 4, "searchText": "backlog uploadxt observability & monitoring observability & monitoring centralized logs, metrics, dashboards, traces, and alerting for upload pipeline visibility p0 to do   " }, { "Target Release": "Backlog", "Feature Scope": "UploadXT", "Initiative Name": "Recovery Agent", "Details": "Automatic recovery of interrupted uploads due to restart, session expiry, or connectivity issues", "Priority": "P1", "Status": "To Do", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-70", "row": 70, "title": "Recovery Agent", "detailsText": "Automatic recovery of interrupted uploads due to restart, session expiry, or connectivity issues", "detailsHtml": "Automatic recovery of interrupted uploads due to restart, session expiry, or connectivity issues", "detailsPreview": "Automatic recovery of interrupted uploads due to restart, session expiry, or connectivity issues", "releaseRank": 4, "priorityRank": 1, "statusRank": 4, "searchText": "backlog uploadxt recovery agent recovery agent automatic recovery of interrupted uploads due to restart, session expiry, or connectivity issues p1 to do   " }, { "Target Release": "Backlog", "Feature Scope": "UploadXT", "Initiative Name": "Intelligent Upload Prioritization", "Details": "Metadata-driven prioritization of uploads with manual override for urgent evidence", "Priority": "P3", "Status": "To Do", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-71", "row": 71, "title": "Intelligent Upload Prioritization", "detailsText": "Metadata-driven prioritization of uploads with manual override for urgent evidence", "detailsHtml": "Metadata-driven prioritization of uploads with manual override for urgent evidence", "detailsPreview": "Metadata-driven prioritization of uploads with manual override for urgent evidence", "releaseRank": 4, "priorityRank": 3, "statusRank": 4, "searchText": "backlog uploadxt intelligent upload prioritization intelligent upload prioritization metadata-driven prioritization of uploads with manual override for urgent evidence p3 to do   " }, { "Target Release": "Backlog", "Feature Scope": "UploadXT", "Initiative Name": "Adaptive Upload Orchestration", "Details": "Dynamic adjustment of upload flow based on system load, file size, and network conditions", "Priority": "P1", "Status": "To Do", "ADO Ticket": "", "T-shirt Size": "", "Estimate": "", "id": "roadmap-row-72", "row": 72, "title": "Adaptive Upload Orchestration", "detailsText": "Dynamic adjustment of upload flow based on system load, file size, and network conditions", "detailsHtml": "Dynamic adjustment of upload flow based on system load, file size, and network conditions", "detailsPreview": "Dynamic adjustment of upload flow based on system load, file size, and network conditions", "releaseRank": 4, "priorityRank": 1, "statusRank": 4, "searchText": "backlog uploadxt adaptive upload orchestration adaptive upload orchestration dynamic adjustment of upload flow based on system load, file size, and network conditions p1 to do   " }] };
+    // Supabase setup: replace only the key below with Project Settings > API > anon/public key.
+    // Never paste the service_role key into this browser-based HTML file.
+    const SUPABASE_URL = "https://pywpycurpzawznkiludr.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_34GgjLcelIDzXHPNiK-_vQ_vL0yhNDP";
+    const SUPABASE_TABLE = "roadmap_items";
+    const SUPABASE_AUTH_REDIRECT_URL = window.location.href.split("#")[0];
+    const EMBEDDED_ITEMS = roadmapPayload.items;
+    let roadmapItems = [...EMBEDDED_ITEMS];
+    let supabaseClient = null;
+    let currentUser = null;
+    let realtimeChannel = null;
+    let isLoadingRemoteData = false;
+    const releaseOrder = { "Release 1": 1, "Release 2": 2, "Release 3": 3, "Backlog": 4 };
+    const priorityOrder = { "P0": 0, "P1": 1, "P2": 2, "P3": 3, "": 9 };
+    const statusOrder = { "Testing": 0, "In Progress": 1, "Designing": 2, "Discovery/Research": 3, "To Do": 4, "Blocked": 5, "Completed": 6, "": 7 };
+    const state = {
+      query: "",
+      release: "all",
+      scope: "all",
+      status: "all",
+      priority: "all",
+      sortKey: "row",
+      sortDir: "asc"
+    };
+
+    const elements = {
+      sourceFileName: document.getElementById("sourceFileName"),
+      sourceMeta: document.getElementById("sourceMeta"),
+      generatedMeta: document.getElementById("generatedMeta"),
+      ticketMeta: document.getElementById("ticketMeta"),
+      statTotal: document.getElementById("statTotal"),
+      statCompleted: document.getElementById("statCompleted"),
+      statCompletedText: document.getElementById("statCompletedText"),
+      statReleaseText: document.getElementById("statReleaseText"),
+      statActive: document.getElementById("statActive"),
+      statP0P1: document.getElementById("statP0P1"),
+      searchInput: document.getElementById("searchInput"),
+      releaseFilter: document.getElementById("releaseFilter"),
+      scopeFilter: document.getElementById("scopeFilter"),
+      statusFilter: document.getElementById("statusFilter"),
+      priorityFilter: document.getElementById("priorityFilter"),
+      resetBtn: document.getElementById("resetBtn"),
+      exportBtn: document.getElementById("exportBtn"),
+      addItemBtn: document.getElementById("addItemBtn"),
+      filterCount: document.getElementById("filterCount"),
+      dataStatus: document.getElementById("dataStatus"),
+      releaseSummaryGrid: document.getElementById("releaseSummaryGrid"),
+      cardsByRelease: document.getElementById("cardsByRelease"),
+      tableBody: document.getElementById("tableBody"),
+      statusBars: document.getElementById("statusBars"),
+      priorityBars: document.getElementById("priorityBars"),
+      scopeBars: document.getElementById("scopeBars"),
+      authEmail: document.getElementById("authEmail"),
+      signInBtn: document.getElementById("signInBtn"),
+      signOutBtn: document.getElementById("signOutBtn"),
+      authStatus: document.getElementById("authStatus"),
+      itemModal: document.getElementById("itemModal"),
+      itemForm: document.getElementById("itemForm"),
+      itemModalTitle: document.getElementById("itemModalTitle"),
+      itemId: document.getElementById("itemId"),
+      closeModalBtn: document.getElementById("closeModalBtn"),
+      cancelModalBtn: document.getElementById("cancelModalBtn"),
+      saveItemBtn: document.getElementById("saveItemBtn"),
+      scopeOptions: document.getElementById("scopeOptions")
+    };
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function stripHtml(value) {
+      const wrapper = document.createElement("div");
+      wrapper.innerHTML = String(value ?? "");
+      return wrapper.textContent || wrapper.innerText || "";
+    }
+
+    function truncateText(value, maxChars = 190) {
+      const text = stripHtml(value).replace(/\s+/g, " ").trim();
+      if (text.length <= maxChars) return text;
+      return `${text.slice(0, maxChars - 1).trim()}...`;
+    }
+
+    function titleForItem(item) {
+      if (item["Initiative Name"]) return item["Initiative Name"];
+      if (item.Details) return truncateText(item.Details, 82);
+      return "Untitled roadmap item";
+    }
+
+    function escapeAndLinkify(value) {
+      const escaped = escapeHtml(value);
+      return escaped
+        .replace(/(https?:\/\/[^\s<>"']+)/g, url => {
+          let cleanUrl = url;
+          let trailing = "";
+          while (/[.,);]$/.test(cleanUrl)) {
+            trailing = cleanUrl.slice(-1) + trailing;
+            cleanUrl = cleanUrl.slice(0, -1);
+          }
+          return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer">${cleanUrl}</a>${trailing}`;
+        })
+        .replace(/\n/g, "<br>");
+    }
+
+    function renderDetailsHtml(value) {
+      const text = String(value ?? "");
+      const anchorPattern = /<a\s+href=["']([^"']+)["']\s*>(.*?)<\/a>/gi;
+      let html = "";
+      let lastIndex = 0;
+      let match;
+      while ((match = anchorPattern.exec(text)) !== null) {
+        html += escapeAndLinkify(text.slice(lastIndex, match.index));
+        const href = String(match[1] || "");
+        const label = stripHtml(match[2]) || href;
+        if (/^https?:\/\//i.test(href)) {
+          html += `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`;
+        } else {
+          html += escapeHtml(label);
+        }
+        lastIndex = anchorPattern.lastIndex;
+      }
+      html += escapeAndLinkify(text.slice(lastIndex));
+      return html;
+    }
+
+    function normalizeItem(item) {
+      const normalized = {
+        ...item,
+        "Target Release": item["Target Release"] ?? "",
+        "Feature Scope": item["Feature Scope"] ?? "",
+        "Initiative Name": item["Initiative Name"] ?? "",
+        Details: item.Details ?? "",
+        Priority: item.Priority ?? "",
+        Status: item.Status ?? "",
+        "ADO Ticket": item["ADO Ticket"] ?? "",
+        "T-shirt Size": item["T-shirt Size"] ?? "",
+        Estimate: item.Estimate ?? "",
+        row: item.row ?? ""
+      };
+      normalized.title = titleForItem(normalized);
+      normalized.detailsText = stripHtml(normalized.Details);
+      normalized.detailsHtml = renderDetailsHtml(normalized.Details);
+      normalized.detailsPreview = truncateText(normalized.Details, 190);
+      normalized.releaseRank = releaseOrder[normalized["Target Release"]] ?? 99;
+      normalized.priorityRank = priorityOrder[normalized.Priority] ?? 9;
+      normalized.statusRank = statusOrder[normalized.Status] ?? 9;
+      normalized.searchText = [
+        normalized["Target Release"],
+        normalized["Feature Scope"],
+        normalized["Initiative Name"],
+        normalized.title,
+        normalized.Details,
+        normalized.Priority,
+        normalized.Status,
+        normalized["ADO Ticket"],
+        normalized["T-shirt Size"],
+        normalized.Estimate
+      ].join(" ").toLowerCase();
+      return normalized;
+    }
+
+    function dbRowToRoadmapItem(row) {
+      return normalizeItem({
+        id: row.id,
+        dbId: row.id,
+        "Target Release": row.target_release ?? "",
+        "Feature Scope": row.feature_scope ?? "",
+        "Initiative Name": row.initiative_name ?? "",
+        Details: row.details ?? "",
+        Priority: row.priority ?? "",
+        Status: row.status ?? "",
+        "ADO Ticket": row.ado_ticket ?? "",
+        "T-shirt Size": row.tshirt_size ?? "",
+        Estimate: row.estimate ?? "",
+        sortOrder: row.sort_order ?? 0,
+        row: row.source_row ?? row.sort_order ?? "",
+        createdAt: row.created_at ?? "",
+        updatedAt: row.updated_at ?? ""
+      });
+    }
+
+    function roadmapItemToDbPayload(formValues) {
+      return {
+        target_release: formValues.target_release || "",
+        feature_scope: formValues.feature_scope || "",
+        initiative_name: formValues.initiative_name || "",
+        details: formValues.details || "",
+        priority: formValues.priority || "",
+        status: formValues.status || "",
+        ado_ticket: formValues.ado_ticket || "",
+        tshirt_size: formValues.tshirt_size || "",
+        estimate: formValues.estimate || "",
+        sort_order: Number.parseInt(formValues.sort_order, 10) || roadmapItems.length + 1
+      };
+    }
+
+    function plural(count, singular, pluralForm) {
+      return `${count} ${count === 1 ? singular : (pluralForm || `${singular}s`)}`;
+    }
+
+    function getUnique(field, orderMap = null) {
+      const values = [...new Set(roadmapItems.map(item => item[field]).filter(Boolean))];
+      return values.sort((a, b) => {
+        if (orderMap) return (orderMap[a] ?? 99) - (orderMap[b] ?? 99);
+        return String(a).localeCompare(String(b));
+      });
+    }
+
+    function optionHtml(value) {
+      return `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`;
+    }
+
+    function buildSelect(select, label, values) {
+      select.innerHTML = `<option value="all">${label}</option>` + values.map(optionHtml).join("");
+    }
+
+    function statusClass(status) {
+      const normalized = String(status || "empty").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+      if (normalized === "in-progress") return "badge-progress";
+      if (normalized === "discovery-research") return "badge-discovery";
+      if (normalized === "to-do") return "badge-todo";
+      return `badge-${normalized || "empty"}`;
+    }
+
+    function priorityClass(priority) {
+      return `badge-${String(priority || "empty").toLowerCase()}`;
+    }
+
+    function cardPriorityClass(priority) {
+      return `priority-${String(priority || "empty").toLowerCase()}`;
+    }
+
+    function badge(label, cls, icon = "") {
+      const iconHtml = icon ? `<i class="bi ${icon}"></i>` : "";
+      return `<span class="roadmap-badge ${cls}">${iconHtml}${escapeHtml(label || "Unspecified")}</span>`;
+    }
+
+    function filteredItems() {
+      const query = state.query.trim().toLowerCase();
+      return roadmapItems.filter(item => {
+        if (state.release !== "all" && item["Target Release"] !== state.release) return false;
+        if (state.scope !== "all" && item["Feature Scope"] !== state.scope) return false;
+        if (state.status !== "all" && item.Status !== state.status) return false;
+        if (state.priority !== "all" && item.Priority !== state.priority) return false;
+        if (query && !item.searchText.includes(query)) return false;
+        return true;
+      });
+    }
+
+    function sortedForTable(items) {
+      return [...items].sort((a, b) => {
+        let av = a[state.sortKey] ?? "";
+        let bv = b[state.sortKey] ?? "";
+        if (state.sortKey === "Target Release") {
+          av = releaseOrder[av] ?? 99;
+          bv = releaseOrder[bv] ?? 99;
+        } else if (state.sortKey === "Priority") {
+          av = priorityOrder[av] ?? 99;
+          bv = priorityOrder[bv] ?? 99;
+        } else if (state.sortKey === "Status") {
+          av = statusOrder[av] ?? 99;
+          bv = statusOrder[bv] ?? 99;
+        }
+        if (typeof av === "number" && typeof bv === "number") {
+          return state.sortDir === "asc" ? av - bv : bv - av;
+        }
+        const result = String(av).localeCompare(String(bv), undefined, { numeric: true, sensitivity: "base" });
+        return state.sortDir === "asc" ? result : -result;
+      });
+    }
+
+    function sortedForCards(items) {
+      return [...items].sort((a, b) => {
+        return (a.releaseRank - b.releaseRank) || (a.priorityRank - b.priorityRank) || (a.statusRank - b.statusRank) || (a.row - b.row);
+      });
+    }
+
+    function countBy(items, field) {
+      return items.reduce((acc, item) => {
+        const key = item[field] || "Unspecified";
+        acc[key] = (acc[key] || 0) + 1;
+        return acc;
+      }, {});
+    }
+
+    function countMap(items, field) {
+      return items.reduce((acc, item) => {
+        const key = item[field] || "Unspecified";
+        acc[key] = (acc[key] || 0) + 1;
+        return acc;
+      }, {});
+    }
+
+    function buildStatsPayload(items) {
+      const releaseCounts = countMap(items, "Target Release");
+      const completedCount = items.filter(item => item.Status === "Completed").length;
+      const activeStatuses = new Set(["In Progress", "Testing", "Designing", "Discovery/Research", "Blocked"]);
+      const activeCount = items.filter(item => activeStatuses.has(item.Status)).length;
+      const p0p1Count = items.filter(item => item.Priority === "P0" || item.Priority === "P1").length;
+      const withTicketCount = items.filter(item => item["ADO Ticket"]).length;
+      return {
+        totalItems: items.length,
+        completedCount,
+        activeCount,
+        p0p1Count,
+        withTicketCount,
+        releaseCounts
+      };
+    }
+
+    function renderStaticMeta() {
+      const stats = buildStatsPayload(roadmapItems);
+      elements.sourceFileName.textContent = supabaseClient ? "Supabase roadmap_items" : roadmapPayload.sourceFile;
+      elements.sourceMeta.textContent = supabaseClient ? "Supabase: roadmap_items" : roadmapPayload.sourceFile;
+      elements.generatedMeta.textContent = supabaseClient ? "Live database connection" : `Generated ${roadmapPayload.generatedAt}`;
+      elements.ticketMeta.textContent = `${stats.withTicketCount} items linked to ADO references`;
+      elements.statTotal.textContent = stats.totalItems;
+      elements.statCompleted.textContent = stats.completedCount;
+      elements.statActive.textContent = stats.activeCount;
+      elements.statP0P1.textContent = stats.p0p1Count;
+      elements.statReleaseText.textContent = plural(Object.keys(stats.releaseCounts).length, "release bucket");
+      const pct = stats.totalItems ? Math.round((stats.completedCount / stats.totalItems) * 100) : 0;
+      elements.statCompletedText.textContent = `${pct}% of the roadmap`;
+    }
+
+    function renderReleaseSummary(items) {
+      const grouped = new Map();
+      for (const item of sortedForCards(items)) {
+        const release = item["Target Release"] || "Unspecified";
+        if (!grouped.has(release)) grouped.set(release, []);
+        grouped.get(release).push(item);
+      }
+      const releases = [...grouped.entries()].sort((a, b) => (releaseOrder[a[0]] ?? 99) - (releaseOrder[b[0]] ?? 99));
+      if (!releases.length) {
+        elements.releaseSummaryGrid.innerHTML = `<div class="empty-state">No release summary for the current selection.</div>`;
+        return;
+      }
+      elements.releaseSummaryGrid.innerHTML = releases.map(([release, releaseItems]) => {
+        const total = releaseItems.length;
+        const completed = releaseItems.filter(item => item.Status === "Completed").length;
+        const pct = total ? Math.round((completed / total) * 100) : 0;
+        const priorityCounts = countBy(releaseItems, "Priority");
+        const topPriorities = ["P0", "P1", "P2"].map(priority => {
+          const count = priorityCounts[priority] || 0;
+          const width = total ? Math.round((count / total) * 100) : 0;
+          return `
+            <div class="mini-row">
+              <span>${escapeHtml(priority)}</span>
+              <div class="mini-track"><span class="mini-fill" style="width:${width}%"></span></div>
+              <strong>${count}</strong>
+            </div>`;
+        }).join("");
+        return `
+          <article class="release-summary">
+            <div class="d-flex justify-content-between gap-3">
+              <div>
+                <h2>${escapeHtml(release)}</h2>
+                <div class="release-meta">${plural(total, "initiative")} · ${completed} completed</div>
+              </div>
+              <strong>${pct}%</strong>
+            </div>
+            <div class="progress mt-3" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100">
+              <div class="progress-bar" style="width:${pct}%"></div>
+            </div>
+            <div class="mini-bars">${topPriorities}</div>
+          </article>`;
+      }).join("");
+    }
+
+    function renderCards(items) {
+      const grouped = new Map();
+      for (const item of sortedForCards(items)) {
+        const release = item["Target Release"] || "Unspecified";
+        if (!grouped.has(release)) grouped.set(release, []);
+        grouped.get(release).push(item);
+      }
+      const releases = [...grouped.entries()].sort((a, b) => (releaseOrder[a[0]] ?? 99) - (releaseOrder[b[0]] ?? 99));
+      if (!releases.length) {
+        elements.cardsByRelease.innerHTML = `<div class="empty-state"><i class="bi bi-search"></i><div class="mt-2">No roadmap items match the current selection.</div></div>`;
+        return;
+      }
+      elements.cardsByRelease.innerHTML = releases.map(([release, releaseItems]) => {
+        const completed = releaseItems.filter(item => item.Status === "Completed").length;
+        const cardHtml = releaseItems.map(item => {
+          const detailsId = `details-${item.id}`;
+          const preview = item.detailsPreview || "No additional detail in the source sheet.";
+          return `
+            <article class="item-card ${cardPriorityClass(item.Priority)}">
+              <div class="card-badges">
+                ${badge(item.Priority || "Unspecified", priorityClass(item.Priority), "bi-flag")}
+                ${badge(item.Status || "Unspecified", statusClass(item.Status), "bi-circle-fill")}
+                ${badge(item["Feature Scope"] || "Unspecified", "scope-chip", "bi-box")}
+              </div>
+              <h3 class="item-title">${escapeHtml(item.title)}</h3>
+              <p class="item-preview ${item.detailsPreview ? "" : "empty"}">${escapeHtml(preview)}</p>
+              <div class="item-meta">
+                <div class="meta-box"><span>ADO</span><strong>${escapeHtml(item["ADO Ticket"] || "None")}</strong></div>
+                <div class="meta-box"><span>Size</span><strong>${escapeHtml(item["T-shirt Size"] || "Unscored")}</strong></div>
+                <div class="meta-box"><span>Estimate</span><strong>${escapeHtml(item.Estimate || "Not set")}</strong></div>
+                <div class="meta-box"><span>Excel Row</span><strong>${escapeHtml(item.row)}</strong></div>
+              </div>
+              <button class="btn btn-sm btn-outline-secondary mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#${detailsId}" aria-expanded="false" aria-controls="${detailsId}">
+                <i class="bi bi-card-text"></i> Details
+              </button>
+              <div class="editor-actions" ${currentUser && supabaseClient && item.dbId ? "" : "hidden"}>
+                <button class="btn btn-sm btn-outline-secondary" type="button" data-action="edit" data-id="${escapeHtml(item.dbId || item.id)}"><i class="bi bi-pencil-square"></i> Edit</button>
+                <button class="btn btn-sm danger-btn" type="button" data-action="delete" data-id="${escapeHtml(item.dbId || item.id)}"><i class="bi bi-trash3"></i> Delete</button>
+              </div>
+              <div class="collapse" id="${detailsId}">
+                <div class="details-body">${item.detailsHtml || "No additional detail in the source sheet."}</div>
+              </div>
+            </article>`;
+        }).join("");
+        return `
+          <section class="release-lane">
+            <div class="release-lane-header">
+              <div class="release-lane-title">
+                <span class="release-dot"></span>
+                <h2>${escapeHtml(release)}</h2>
+              </div>
+              <div class="release-lane-sub">${plural(releaseItems.length, "initiative")} · ${completed} completed</div>
+            </div>
+            <div class="item-grid">${cardHtml}</div>
+          </section>`;
+      }).join("");
+    }
+
+    function renderTable(items) {
+      const tableItems = sortedForTable(items);
+      if (!tableItems.length) {
+        elements.tableBody.innerHTML = `<tr><td colspan="10"><div class="empty-state">No table rows match the current selection.</div></td></tr>`;
+        return;
+      }
+      elements.tableBody.innerHTML = tableItems.map(item => {
+        return `
+          <tr>
+            <td>${escapeHtml(item["Target Release"] || "Unspecified")}</td>
+            <td>${badge(item.Priority || "Unspecified", priorityClass(item.Priority))}</td>
+            <td>${badge(item.Status || "Unspecified", statusClass(item.Status))}</td>
+            <td>${escapeHtml(item["Feature Scope"] || "Unspecified")}</td>
+            <td><div class="table-title">${escapeHtml(item.title)}</div><div class="text-secondary small">Row ${escapeHtml(item.row)}</div></td>
+            <td><div class="table-detail">${escapeHtml(item.detailsPreview || "No additional detail in the source sheet.")}</div></td>
+            <td>${escapeHtml(item["ADO Ticket"] || "")}</td>
+            <td>${escapeHtml(item["T-shirt Size"] || "")}</td>
+            <td>${escapeHtml(item.Estimate || "")}</td>
+            <td class="editor-column">
+              <div class="editor-actions" ${currentUser && supabaseClient && item.dbId ? "" : "hidden"}>
+                <button class="btn btn-sm btn-outline-secondary" type="button" data-action="edit" data-id="${escapeHtml(item.dbId || item.id)}"><i class="bi bi-pencil-square"></i> Edit</button>
+                <button class="btn btn-sm danger-btn" type="button" data-action="delete" data-id="${escapeHtml(item.dbId || item.id)}"><i class="bi bi-trash3"></i> Delete</button>
+              </div>
+            </td>
+          </tr>`;
+      }).join("");
+    }
+
+    function barColor(index) {
+      return ["#2557a7", "#16856d", "#b86e00", "#6a4bbc", "#ba2d2d", "#667085", "#128477"][index % 7];
+    }
+
+    function renderBars(container, counts, order = null) {
+      const entries = Object.entries(counts).sort((a, b) => {
+        if (order) return (order[a[0]] ?? 99) - (order[b[0]] ?? 99);
+        return b[1] - a[1] || a[0].localeCompare(b[0]);
+      });
+      const max = Math.max(...entries.map(([, count]) => count), 1);
+      if (!entries.length) {
+        container.innerHTML = `<div class="empty-state">No data for the current selection.</div>`;
+        return;
+      }
+      container.innerHTML = entries.map(([label, count], index) => {
+        const pct = Math.round((count / max) * 100);
+        return `
+          <div class="bar-row">
+            <span>${escapeHtml(label || "Unspecified")}</span>
+            <div class="bar-track"><span class="bar-fill" style="width:${pct}%; background:${barColor(index)}"></span></div>
+            <strong>${count}</strong>
+          </div>`;
+      }).join("");
+    }
+
+    function renderAnalytics(items) {
+      renderBars(elements.statusBars, countBy(items, "Status"), statusOrder);
+      renderBars(elements.priorityBars, countBy(items, "Priority"), priorityOrder);
+      renderBars(elements.scopeBars, countBy(items, "Feature Scope"));
+    }
+
+    function render() {
+      renderStaticMeta();
+      updateAuthUi();
+      const items = filteredItems();
+      elements.filterCount.textContent = `${items.length} of ${roadmapItems.length} roadmap items shown`;
+      renderReleaseSummary(items);
+      renderCards(items);
+      renderTable(items);
+      renderAnalytics(items);
+    }
+
+    function exportCsv() {
+      const items = sortedForTable(filteredItems());
+      const headers = ["Target Release", "Feature Scope", "Initiative Name", "Details", "Priority", "Status", "ADO Ticket", "T-shirt Size", "Estimate", "Excel Row"];
+      const rows = items.map(item => [
+        item["Target Release"],
+        item["Feature Scope"],
+        item["Initiative Name"] || item.title,
+        item.detailsText,
+        item.Priority,
+        item.Status,
+        item["ADO Ticket"],
+        item["T-shirt Size"],
+        item.Estimate,
+        item.row
+      ]);
+      const csv = [headers, ...rows].map(row => row.map(value => {
+        const text = String(value ?? "");
+        return /[",\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+      }).join(",")).join("\n");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "uxt-xtmt-roadmap-filtered.csv";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function setDataStatus(message, type = "") {
+      elements.dataStatus.textContent = message || "";
+      elements.dataStatus.className = `data-status ${type}`.trim();
+    }
+
+    function isSupabaseConfigured() {
+      return Boolean(
+        SUPABASE_URL &&
+        SUPABASE_PUBLISHABLE_KEY &&
+        !SUPABASE_PUBLISHABLE_KEY.includes("PASTE_YOUR")
+      );
+    }
+
+    function refreshFilterOptions() {
+      const selected = {
+        release: state.release,
+        scope: state.scope,
+        status: state.status,
+        priority: state.priority
+      };
+      buildSelect(elements.releaseFilter, "All releases", getUnique("Target Release", releaseOrder));
+      buildSelect(elements.scopeFilter, "All scopes", getUnique("Feature Scope"));
+      buildSelect(elements.statusFilter, "All statuses", getUnique("Status", statusOrder));
+      buildSelect(elements.priorityFilter, "All priorities", getUnique("Priority", priorityOrder));
+      elements.releaseFilter.value = [...elements.releaseFilter.options].some(option => option.value === selected.release) ? selected.release : "all";
+      elements.scopeFilter.value = [...elements.scopeFilter.options].some(option => option.value === selected.scope) ? selected.scope : "all";
+      elements.statusFilter.value = [...elements.statusFilter.options].some(option => option.value === selected.status) ? selected.status : "all";
+      elements.priorityFilter.value = [...elements.priorityFilter.options].some(option => option.value === selected.priority) ? selected.priority : "all";
+      state.release = elements.releaseFilter.value;
+      state.scope = elements.scopeFilter.value;
+      state.status = elements.statusFilter.value;
+      state.priority = elements.priorityFilter.value;
+      elements.scopeOptions.innerHTML = getUnique("Feature Scope").map(value => `<option value="${escapeHtml(value)}"></option>`).join("");
+    }
+
+    function initializeSupabaseClient() {
+      if (!isSupabaseConfigured()) {
+        setDataStatus("Supabase key not configured. Showing embedded fallback data.", "error");
+        return null;
+      }
+      if (!window.supabase?.createClient) {
+        setDataStatus("Supabase library did not load. Showing embedded fallback data.", "error");
+        return null;
+      }
+      return window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+    }
+
+    async function loadRoadmapItems() {
+      if (!supabaseClient) {
+        roadmapItems = EMBEDDED_ITEMS.map(normalizeItem);
+        refreshFilterOptions();
+        render();
+        return;
+      }
+      isLoadingRemoteData = true;
+      setDataStatus("Loading roadmap data...");
+      const { data, error } = await supabaseClient
+        .from(SUPABASE_TABLE)
+        .select("id,target_release,feature_scope,initiative_name,details,priority,status,ado_ticket,tshirt_size,estimate,sort_order,source_row,created_at,updated_at")
+        .order("sort_order", { ascending: true })
+        .order("created_at", { ascending: true });
+
+      isLoadingRemoteData = false;
+      if (error) {
+        console.error(error);
+        roadmapItems = EMBEDDED_ITEMS.map(normalizeItem);
+        refreshFilterOptions();
+        render();
+        setDataStatus(`Could not load Supabase data: ${error.message}. Showing embedded fallback data.`, "error");
+        return;
+      }
+
+      roadmapItems = (data || []).map(dbRowToRoadmapItem);
+      refreshFilterOptions();
+      render();
+      setDataStatus(`Loaded ${roadmapItems.length} items from Supabase.`, "success");
+    }
+
+    function subscribeToRoadmapChanges() {
+      if (!supabaseClient || realtimeChannel) return;
+      realtimeChannel = supabaseClient
+        .channel("roadmap_items_changes")
+        .on(
+          "postgres_changes",
+          { event: "*", schema: "public", table: SUPABASE_TABLE },
+          () => {
+            if (!isLoadingRemoteData) loadRoadmapItems();
+          }
+        )
+        .subscribe();
+    }
+
+    async function initializeAuth() {
+      if (!supabaseClient) {
+        updateAuthUi();
+        return;
+      }
+      const { data, error } = await supabaseClient.auth.getSession();
+      if (error) console.error(error);
+      currentUser = data?.session?.user ?? null;
+      updateAuthUi();
+      supabaseClient.auth.onAuthStateChange((_event, session) => {
+        currentUser = session?.user ?? null;
+        updateAuthUi();
+        render();
+      });
+    }
+
+    function updateAuthUi() {
+      const signedIn = Boolean(currentUser);
+      elements.authEmail.hidden = signedIn;
+      elements.signInBtn.hidden = signedIn;
+      elements.signOutBtn.hidden = !signedIn;
+      elements.addItemBtn.hidden = !signedIn || !supabaseClient;
+      elements.authStatus.textContent = signedIn
+        ? `Signed in: ${currentUser.email || "editor"}`
+        : "Viewer mode";
+    }
+
+    function getFormValues() {
+      const formData = new FormData(elements.itemForm);
+      return Object.fromEntries(formData.entries());
+    }
+
+    function fillFormFromItem(item = null) {
+      elements.itemId.value = item?.dbId || "";
+      elements.itemForm.elements.target_release.value = item?.["Target Release"] || "Backlog";
+      elements.itemForm.elements.feature_scope.value = item?.["Feature Scope"] || "";
+      elements.itemForm.elements.initiative_name.value = item?.["Initiative Name"] || "";
+      elements.itemForm.elements.details.value = item?.Details || "";
+      elements.itemForm.elements.priority.value = item?.Priority || "";
+      elements.itemForm.elements.status.value = item?.Status || "To Do";
+      elements.itemForm.elements.ado_ticket.value = item?.["ADO Ticket"] || "";
+      elements.itemForm.elements.tshirt_size.value = item?.["T-shirt Size"] || "";
+      elements.itemForm.elements.estimate.value = item?.Estimate || "";
+      elements.itemForm.elements.sort_order.value = item?.sortOrder || roadmapItems.length + 1;
+    }
+
+    function openItemModal(item = null) {
+      if (!supabaseClient || !currentUser) {
+        setDataStatus("Sign in with an approved editor account before changing roadmap items.", "error");
+        return;
+      }
+      elements.itemModalTitle.textContent = item ? "Edit roadmap item" : "Add roadmap item";
+      fillFormFromItem(item);
+      elements.itemModal.hidden = false;
+      elements.itemForm.elements.initiative_name.focus();
+    }
+
+    function closeItemModal() {
+      elements.itemModal.hidden = true;
+      elements.itemForm.reset();
+      elements.itemId.value = "";
+    }
+
+    async function saveRoadmapItem(event) {
+      event.preventDefault();
+      if (!supabaseClient || !currentUser) {
+        setDataStatus("Sign in with an approved editor account before saving.", "error");
+        return;
+      }
+      const dbId = elements.itemId.value;
+      const payload = roadmapItemToDbPayload(getFormValues());
+      elements.saveItemBtn.disabled = true;
+      setDataStatus(dbId ? "Updating roadmap item..." : "Creating roadmap item...");
+      const request = dbId
+        ? supabaseClient.from(SUPABASE_TABLE).update({ ...payload, updated_at: new Date().toISOString() }).eq("id", dbId)
+        : supabaseClient.from(SUPABASE_TABLE).insert(payload);
+      const { error } = await request;
+      elements.saveItemBtn.disabled = false;
+      if (error) {
+        console.error(error);
+        setDataStatus(`Save failed: ${error.message}`, "error");
+        return;
+      }
+      closeItemModal();
+      await loadRoadmapItems();
+      setDataStatus(dbId ? "Roadmap item updated." : "Roadmap item created.", "success");
+    }
+
+    async function deleteRoadmapItem(id) {
+      if (!supabaseClient || !currentUser) {
+        setDataStatus("Sign in with an approved editor account before deleting.", "error");
+        return;
+      }
+      const item = roadmapItems.find(entry => entry.dbId === id || entry.id === id);
+      const label = item?.title || "this roadmap item";
+      if (!confirm(`Delete "${label}"? This change is saved to Supabase for everyone.`)) return;
+      setDataStatus("Deleting roadmap item...");
+      const { error } = await supabaseClient.from(SUPABASE_TABLE).delete().eq("id", id);
+      if (error) {
+        console.error(error);
+        setDataStatus(`Delete failed: ${error.message}`, "error");
+        return;
+      }
+      await loadRoadmapItems();
+      setDataStatus("Roadmap item deleted.", "success");
+    }
+
+    async function signIn() {
+      if (!supabaseClient) {
+        setDataStatus("Paste your Supabase publishable/anon key in the config block first.", "error");
+        return;
+      }
+      const email = elements.authEmail.value.trim();
+      if (!email) {
+        setDataStatus("Enter an editor email address first.", "error");
+        return;
+      }
+      const { error } = await supabaseClient.auth.signInWithOtp({
+        email,
+        options: { emailRedirectTo: SUPABASE_AUTH_REDIRECT_URL }
+      });
+      if (error) {
+        console.error(error);
+        setDataStatus(`Sign-in failed: ${error.message}`, "error");
+        return;
+      }
+      setDataStatus("Check your email for the Supabase sign-in link.", "success");
+    }
+
+    async function signOut() {
+      if (!supabaseClient) return;
+      await supabaseClient.auth.signOut();
+      currentUser = null;
+      updateAuthUi();
+      render();
+      setDataStatus("Signed out.", "success");
+    }
+
+    function bindEvents() {
+      elements.searchInput.addEventListener("input", event => {
+        state.query = event.target.value;
+        render();
+      });
+      elements.releaseFilter.addEventListener("change", event => {
+        state.release = event.target.value;
+        render();
+      });
+      elements.scopeFilter.addEventListener("change", event => {
+        state.scope = event.target.value;
+        render();
+      });
+      elements.statusFilter.addEventListener("change", event => {
+        state.status = event.target.value;
+        render();
+      });
+      elements.priorityFilter.addEventListener("change", event => {
+        state.priority = event.target.value;
+        render();
+      });
+      elements.resetBtn.addEventListener("click", () => {
+        state.query = "";
+        state.release = "all";
+        state.scope = "all";
+        state.status = "all";
+        state.priority = "all";
+        elements.searchInput.value = "";
+        elements.releaseFilter.value = "all";
+        elements.scopeFilter.value = "all";
+        elements.statusFilter.value = "all";
+        elements.priorityFilter.value = "all";
+        render();
+      });
+      elements.exportBtn.addEventListener("click", exportCsv);
+      elements.addItemBtn.addEventListener("click", () => openItemModal());
+      elements.signInBtn.addEventListener("click", signIn);
+      elements.signOutBtn.addEventListener("click", signOut);
+      elements.itemForm.addEventListener("submit", saveRoadmapItem);
+      elements.closeModalBtn.addEventListener("click", closeItemModal);
+      elements.cancelModalBtn.addEventListener("click", closeItemModal);
+      elements.itemModal.addEventListener("click", event => {
+        if (event.target === elements.itemModal) closeItemModal();
+      });
+      document.querySelectorAll("[data-sort]").forEach(button => {
+        button.addEventListener("click", () => {
+          const key = button.getAttribute("data-sort");
+          if (state.sortKey === key) {
+            state.sortDir = state.sortDir === "asc" ? "desc" : "asc";
+          } else {
+            state.sortKey = key;
+            state.sortDir = "asc";
+          }
+          renderTable(filteredItems());
+        });
+      });
+
+      document.addEventListener("click", event => {
+        const actionButton = event.target.closest("[data-action]");
+        if (actionButton) {
+          const id = actionButton.getAttribute("data-id");
+          const action = actionButton.getAttribute("data-action");
+          const item = roadmapItems.find(entry => entry.dbId === id || entry.id === id);
+          if (action === "edit" && item) openItemModal(item);
+          if (action === "delete" && id) deleteRoadmapItem(id);
+          return;
+        }
+
+        const collapseButton = event.target.closest("[data-bs-toggle='collapse']");
+        if (collapseButton) {
+          const selector = collapseButton.getAttribute("data-bs-target");
+          const target = selector ? document.querySelector(selector) : null;
+          if (target) {
+            const isOpen = target.classList.toggle("show");
+            collapseButton.setAttribute("aria-expanded", String(isOpen));
+          }
+        }
+
+        const tabButton = event.target.closest("[data-bs-toggle='pill']");
+        if (tabButton) {
+          const selector = tabButton.getAttribute("data-bs-target");
+          const target = selector ? document.querySelector(selector) : null;
+          if (!target) return;
+          document.querySelectorAll("#roadmapTabs .nav-link").forEach(button => {
+            button.classList.remove("active");
+            button.setAttribute("aria-selected", "false");
+          });
+          document.querySelectorAll(".tab-content .tab-pane").forEach(pane => {
+            pane.classList.remove("active", "show");
+          });
+          tabButton.classList.add("active");
+          tabButton.setAttribute("aria-selected", "true");
+          target.classList.add("active", "show");
+        }
+      });
+    }
+
+    async function init() {
+      supabaseClient = initializeSupabaseClient();
+      bindEvents();
+      await initializeAuth();
+      await loadRoadmapItems();
+      subscribeToRoadmapChanges();
+    }
+
+    init();
+  </script>
+</body>
+
+</html>

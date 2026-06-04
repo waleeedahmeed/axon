@@ -1993,8 +1993,8 @@
 
     function renderStaticMeta() {
       const stats = buildStatsPayload(roadmapItems);
-      elements.sourceFileName.textContent = supabaseClient ? "Roadmap 2026" : roadmapPayload.sourceFile;
-      elements.sourceMeta.textContent = supabaseClient ? "UXT & XTMT Roadmap Item 2026" : roadmapPayload.sourceFile;
+      elements.sourceFileName.textContent = "Product Roadmap 2026";
+      elements.sourceMeta.textContent = "UXT / XTMT Roadmap 2026";
       elements.generatedMeta.textContent = supabaseClient ? "Live database connection" : `Generated ${roadmapPayload.generatedAt}`;
       elements.ticketMeta.textContent = `${stats.withTicketCount} items linked to ADO references`;
       elements.statTotal.textContent = stats.totalItems;

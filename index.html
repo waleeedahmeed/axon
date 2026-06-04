@@ -886,7 +886,8 @@
       min-width: min(100%, 520px);
     }
 
-    .auth-email {
+    .auth-email,
+    .auth-password {
       max-width: 260px;
     }
 
@@ -1384,7 +1385,10 @@
       </div>
       <div class="auth-controls d-flex flex-wrap gap-2" aria-label="Editor access">
         <input class="form-control auth-email" id="authEmail" type="email" placeholder="Editor email">
-        <button class="btn btn-outline-secondary btn-sm" id="signInBtn" type="button"><i class="bi bi-envelope"></i>
+        <input class="form-control auth-password" id="authPassword" type="password" placeholder="Password"
+          autocomplete="current-password">
+        <button class="btn btn-outline-secondary btn-sm" id="signInBtn" type="button"><i
+            class="bi bi-box-arrow-in-right"></i>
           Sign in</button>
         <button class="btn btn-outline-secondary btn-sm" id="signOutBtn" type="button" hidden><i
             class="bi bi-box-arrow-right"></i> Sign out</button>
@@ -1616,7 +1620,6 @@
     const SUPABASE_URL = "https://pywpycurpzawznkiludr.supabase.co";
     const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_34GgjLcelIDzXHPNiK-_vQ_vL0yhNDP";
     const SUPABASE_TABLE = "roadmap_items";
-    const SUPABASE_AUTH_REDIRECT_URL = window.location.origin + window.location.pathname;
     const EMBEDDED_ITEMS = roadmapPayload.items;
     let roadmapItems = [...EMBEDDED_ITEMS];
     let supabaseClient = null;
@@ -1664,6 +1667,7 @@
       priorityBars: document.getElementById("priorityBars"),
       scopeBars: document.getElementById("scopeBars"),
       authEmail: document.getElementById("authEmail"),
+      authPassword: document.getElementById("authPassword"),
       signInBtn: document.getElementById("signInBtn"),
       signOutBtn: document.getElementById("signOutBtn"),
       authStatus: document.getElementById("authStatus"),
@@ -2253,6 +2257,7 @@
     function updateAuthUi() {
       const signedIn = Boolean(currentUser);
       elements.authEmail.hidden = signedIn;
+      elements.authPassword.hidden = signedIn;
       elements.signInBtn.hidden = signedIn;
       elements.signOutBtn.hidden = !signedIn;
       elements.addItemBtn.hidden = !signedIn || !supabaseClient;
@@ -2347,20 +2352,31 @@
         return;
       }
       const email = elements.authEmail.value.trim();
+      const password = elements.authPassword.value;
       if (!email) {
         setDataStatus("Enter an editor email address first.", "error");
         return;
       }
-      const { error } = await supabaseClient.auth.signInWithOtp({
+      if (!password) {
+        setDataStatus("Enter your password first.", "error");
+        return;
+      }
+      elements.signInBtn.disabled = true;
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
         email,
-        options: { emailRedirectTo: SUPABASE_AUTH_REDIRECT_URL }
+        password
       });
+      elements.signInBtn.disabled = false;
       if (error) {
         console.error(error);
         setDataStatus(`Sign-in failed: ${error.message}`, "error");
         return;
       }
-      setDataStatus("Check your email for the Supabase sign-in link.", "success");
+      currentUser = data?.user ?? null;
+      elements.authPassword.value = "";
+      updateAuthUi();
+      render();
+      setDataStatus("Signed in.", "success");
     }
 
     async function signOut() {

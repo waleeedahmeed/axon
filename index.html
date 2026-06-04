@@ -891,19 +891,71 @@
       max-width: 260px;
     }
 
-    .auth-status,
-    .data-status {
+    .auth-status {
       color: #aaa7b2;
       font-size: 0.82rem;
       min-height: 1.2em;
     }
 
+    .notification-region {
+      position: fixed;
+      top: 78px;
+      right: clamp(16px, 4vw, 40px);
+      z-index: 1080;
+      width: min(420px, calc(100vw - 32px));
+      pointer-events: none;
+    }
+
+    .data-status {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 14px;
+      color: #f7f4fb;
+      font-size: 0.86rem;
+      line-height: 1.4;
+      background: rgba(21, 19, 27, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-left: 3px solid #ffc72c;
+      border-radius: 8px;
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.36);
+      backdrop-filter: blur(12px);
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .data-status[hidden] {
+      display: none !important;
+    }
+
+    .data-status::before {
+      content: "\F431";
+      flex: 0 0 auto;
+      color: #ffc72c;
+      font-family: "bootstrap-icons";
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+
     .data-status.error {
       color: #ffd7d4;
+      border-left-color: #ff6b5f;
+    }
+
+    .data-status.error::before {
+      content: "\F333";
+      color: #ff6b5f;
     }
 
     .data-status.success {
       color: #aaf0cf;
+      border-left-color: #26d07c;
+    }
+
+    .data-status.success::before {
+      content: "\F26B";
+      color: #26d07c;
     }
 
     .toolbar-grid {
@@ -1359,6 +1411,12 @@
         position: static;
       }
 
+      .notification-region {
+        top: 70px;
+        right: 14px;
+        width: calc(100vw - 28px);
+      }
+
       .release-lane-header {
         align-items: flex-start;
         flex-direction: column;
@@ -1395,6 +1453,10 @@
         <span class="auth-status" id="authStatus">Viewer mode</span>
       </div>
     </nav>
+
+    <div class="notification-region" aria-live="polite" aria-atomic="true">
+      <div class="data-status" id="dataStatus" hidden></div>
+    </div>
 
     <section class="hero" aria-labelledby="pageTitle">
       <div class="row g-4 align-items-end">
@@ -1444,7 +1506,6 @@
           Item</button>
       </div>
       <div class="filter-count" id="filterCount"></div>
-      <div class="data-status" id="dataStatus"></div>
     </section>
 
     <section class="summary-band" aria-label="Release summary">
@@ -1626,6 +1687,7 @@
     let currentUser = null;
     let realtimeChannel = null;
     let isLoadingRemoteData = false;
+    let statusTimer = null;
     const releaseOrder = { "Release 1": 1, "Release 2": 2, "Release 3": 3, "Backlog": 4 };
     const priorityOrder = { "P0": 0, "P1": 1, "P2": 2, "P3": 3, "": 9 };
     const statusOrder = { "Testing": 0, "In Progress": 1, "Designing": 2, "Discovery/Research": 3, "To Do": 4, "Blocked": 5, "Completed": 6, "": 7 };
@@ -2147,8 +2209,17 @@
     }
 
     function setDataStatus(message, type = "") {
+      clearTimeout(statusTimer);
       elements.dataStatus.textContent = message || "";
       elements.dataStatus.className = `data-status ${type}`.trim();
+      elements.dataStatus.hidden = !message;
+
+      if (message && type !== "error") {
+        statusTimer = setTimeout(() => {
+          elements.dataStatus.hidden = true;
+          elements.dataStatus.textContent = "";
+        }, 4200);
+      }
     }
 
     function isSupabaseConfigured() {

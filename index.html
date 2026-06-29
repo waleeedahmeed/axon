@@ -1,1 +1,1914 @@
-<h1>It is down as requested :-)</h1>
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VSI BA AI Agent Ideas Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080d1a;
+      --panel: #101827;
+      --panel-2: #141f34;
+      --panel-3: #0d1423;
+      --ink: #f7f9ff;
+      --muted: #aab6ca;
+      --line: rgba(255, 255, 255, 0.12);
+      --brand-blue: #114fed;
+      --brand-magenta: #ff2980;
+      --brand-grey: #314872;
+      --cyan: #20a9d3;
+      --sky: #2792ff;
+      --violet: #5c12ff;
+      --purple: #b214a7;
+      --orange: #ff4930;
+      --success: #1e987a;
+      --warning: #ffc247;
+      --danger: #ff4930;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+      color-scheme: dark;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(17, 79, 237, 0.28), transparent 34%),
+        radial-gradient(circle at 78% 0%, rgba(255, 41, 128, 0.20), transparent 34%),
+        linear-gradient(145deg, #080d1a 0%, #10172a 48%, #0b1020 100%);
+      font-family: Arial, "SF Pro Display", "Segoe UI", sans-serif;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(30deg, rgba(255, 255, 255, 0.04) 12%, transparent 12.5%, transparent 87%, rgba(255, 255, 255, 0.04) 87.5%, rgba(255, 255, 255, 0.04)),
+        linear-gradient(150deg, rgba(255, 255, 255, 0.04) 12%, transparent 12.5%, transparent 87%, rgba(255, 255, 255, 0.04) 87.5%, rgba(255, 255, 255, 0.04));
+      background-size: 56px 98px;
+      opacity: 0.16;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.75), transparent 68%);
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    .page-shell {
+      position: relative;
+      z-index: 1;
+      width: min(1460px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 26px 0 44px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      min-width: 280px;
+    }
+
+    .brand-logo {
+      display: block;
+      width: 174px;
+      height: auto;
+    }
+
+    .brand-text {
+      display: grid;
+      gap: 2px;
+    }
+
+    .brand-text strong {
+      font-size: 1rem;
+      letter-spacing: 0;
+    }
+
+    .brand-text span {
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .auth-controls {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
+
+    .auth-email,
+    .auth-password {
+      width: min(230px, 100%);
+    }
+
+    .auth-status {
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .hero,
+    .toolbar-band,
+    .summary-band,
+    .content-band {
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(16, 24, 39, 0.95), rgba(20, 31, 52, 0.86));
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(28px, 4vw, 52px);
+      margin-bottom: 20px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(17, 79, 237, 0.16), transparent 52%),
+        radial-gradient(circle at 78% 18%, rgba(255, 41, 128, 0.16), transparent 28%),
+        radial-gradient(circle at 92% 86%, rgba(32, 169, 211, 0.12), transparent 28%);
+      pointer-events: none;
+    }
+
+    .hero > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #8db1ff;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 820px;
+      color: #ffffff;
+      font-size: clamp(2.4rem, 5.8vw, 5.8rem);
+      font-weight: 900;
+      line-height: 0.96;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      max-width: 760px;
+      margin: 20px 0 0;
+      color: #d6def0;
+      font-size: 1.06rem;
+      line-height: 1.7;
+    }
+
+    .meta-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .meta-pill,
+    .stage-pill,
+    .owner-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      background: rgba(5, 9, 18, 0.52);
+      color: #f7f9ff;
+      padding: 8px 11px;
+      font-size: 0.82rem;
+      white-space: nowrap;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .stat-tile {
+      min-height: 132px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(8, 13, 26, 0.58);
+    }
+
+    .stat-tile span {
+      color: #d8e2f5;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .stat-tile strong {
+      display: block;
+      margin-top: 12px;
+      color: #ffffff;
+      font-size: 2.8rem;
+      line-height: 1;
+    }
+
+    .stat-tile em {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-style: normal;
+      line-height: 1.4;
+    }
+
+    .toolbar-band {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+
+    .toolbar-grid {
+      display: grid;
+      grid-template-columns: minmax(260px, 1.4fr) repeat(4, minmax(130px, 0.68fr)) auto auto auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .filter-count {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .form-control,
+    .form-select,
+    .input-group-text {
+      color: #f7f9ff;
+      border-color: rgba(255, 255, 255, 0.18);
+      background-color: rgba(8, 13, 26, 0.58);
+      border-radius: 8px;
+    }
+
+    .input-group .input-group-text {
+      border-radius: 8px 0 0 8px;
+    }
+
+    .input-group .form-control {
+      border-radius: 0 8px 8px 0;
+    }
+
+    .form-control::placeholder {
+      color: rgba(214, 222, 240, 0.65);
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      color: #fff;
+      background-color: rgba(12, 19, 34, 0.94);
+      border-color: var(--brand-magenta);
+      box-shadow: 0 0 0 0.22rem rgba(255, 41, 128, 0.22);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      border-radius: 8px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      color: #fff;
+      border-color: var(--brand-blue);
+      background: linear-gradient(135deg, var(--brand-blue), var(--violet));
+    }
+
+    .btn-primary:hover {
+      border-color: #4277ff;
+      background: linear-gradient(135deg, #2764ff, #7037ff);
+    }
+
+    .btn-accent {
+      color: #fff;
+      border-color: var(--brand-magenta);
+      background: linear-gradient(135deg, var(--brand-magenta), var(--purple));
+    }
+
+    .btn-outline-secondary {
+      color: #f7f9ff;
+      border-color: rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .btn-outline-secondary:hover {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.32);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .danger-btn {
+      color: #ffd8d1;
+      border-color: rgba(255, 73, 48, 0.42);
+      background: rgba(255, 73, 48, 0.12);
+    }
+
+    .summary-band {
+      padding: 14px;
+      margin-bottom: 18px;
+    }
+
+    .stage-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .stage-summary-card {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(8, 13, 26, 0.5);
+    }
+
+    .stage-summary-card header {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+      color: #ffffff;
+      font-weight: 900;
+    }
+
+    .stage-summary-card small {
+      display: block;
+      color: var(--muted);
+      min-height: 1.2em;
+    }
+
+    .progress-track {
+      overflow: hidden;
+      height: 7px;
+      margin-top: 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.10);
+    }
+
+    .progress-fill {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--brand-blue), var(--brand-magenta));
+    }
+
+    .content-band {
+      padding: 18px;
+    }
+
+    .nav-pills {
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .nav-pills .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: #dce5f8;
+      border-radius: 8px;
+      font-weight: 800;
+    }
+
+    .nav-pills .nav-link.active {
+      color: #fff;
+      background: linear-gradient(135deg, var(--brand-blue), var(--brand-magenta));
+    }
+
+    .stage-lane {
+      margin-bottom: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(8, 13, 26, 0.42);
+    }
+
+    .stage-lane-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(90deg, rgba(17, 79, 237, 0.18), rgba(255, 41, 128, 0.08));
+    }
+
+    .stage-lane-header h2 {
+      margin: 0;
+      color: #ffffff;
+      font-size: 1.02rem;
+      font-weight: 900;
+    }
+
+    .stage-lane-header span {
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .ideas-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      padding: 14px;
+    }
+
+    .idea-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 300px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(13, 20, 35, 0.9);
+    }
+
+    .idea-card.attention {
+      border-color: rgba(255, 73, 48, 0.44);
+      box-shadow: inset 3px 0 0 rgba(255, 73, 48, 0.9);
+    }
+
+    .idea-card h3 {
+      margin: 12px 0 8px;
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+
+    .idea-purpose {
+      color: #c6d0e4;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .idea-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .meta-box {
+      min-height: 56px;
+      padding: 9px;
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .meta-box span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.69rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .meta-box strong {
+      display: block;
+      margin-top: 4px;
+      color: #ffffff;
+      font-size: 0.86rem;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+
+    .idea-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: auto;
+      padding-top: 14px;
+    }
+
+    .badge-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 5px 9px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .badge-idea-phase { color: #d5e2ff; background: rgba(17, 79, 237, 0.18); border-color: rgba(17, 79, 237, 0.38); }
+    .badge-discovery { color: #dffaff; background: rgba(32, 169, 211, 0.16); border-color: rgba(32, 169, 211, 0.38); }
+    .badge-design { color: #ece4ff; background: rgba(92, 18, 255, 0.16); border-color: rgba(92, 18, 255, 0.38); }
+    .badge-implementation-phase { color: #ffe0f0; background: rgba(255, 41, 128, 0.16); border-color: rgba(255, 41, 128, 0.38); }
+    .badge-testing, .badge-pilot { color: #fff4c7; background: rgba(255, 194, 71, 0.16); border-color: rgba(255, 194, 71, 0.38); }
+    .badge-completed { color: #c5fff0; background: rgba(30, 152, 122, 0.18); border-color: rgba(30, 152, 122, 0.42); }
+    .badge-blocked { color: #ffd8d1; background: rgba(255, 73, 48, 0.18); border-color: rgba(255, 73, 48, 0.42); }
+    .badge-on-hold { color: #d6def0; background: rgba(170, 182, 202, 0.12); border-color: rgba(170, 182, 202, 0.28); }
+    .badge-high, .badge-critical { color: #ffd8d1; background: rgba(255, 73, 48, 0.16); border-color: rgba(255, 73, 48, 0.38); }
+    .badge-medium { color: #fff4c7; background: rgba(255, 194, 71, 0.14); border-color: rgba(255, 194, 71, 0.34); }
+    .badge-low { color: #dffaff; background: rgba(32, 169, 211, 0.14); border-color: rgba(32, 169, 211, 0.34); }
+
+    .table-wrap {
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .ideas-table {
+      min-width: 1180px;
+      margin: 0;
+    }
+
+    .ideas-table.table {
+      --bs-table-bg: #0d1423;
+      --bs-table-color: #dce5f8;
+      --bs-table-border-color: rgba(255, 255, 255, 0.10);
+      --bs-table-striped-bg: #111a2d;
+      --bs-table-striped-color: #f7f9ff;
+      --bs-table-hover-bg: #17233a;
+      --bs-table-hover-color: #ffffff;
+    }
+
+    .ideas-table th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      color: #ffffff;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      background: #0a1020;
+      white-space: nowrap;
+    }
+
+    .ideas-table th button {
+      all: unset;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: inherit;
+    }
+
+    .purpose-cell {
+      max-width: 360px;
+      color: #cbd6ea;
+      line-height: 1.45;
+    }
+
+    .progress-cell {
+      min-width: 150px;
+    }
+
+    .analytics-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 16px;
+    }
+
+    .analytics-panel {
+      min-height: 260px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(8, 13, 26, 0.46);
+    }
+
+    .analytics-panel h3 {
+      margin: 0 0 14px;
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 900;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: minmax(96px, 150px) 1fr 38px;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+      color: #dce5f8;
+      font-size: 0.86rem;
+    }
+
+    .bar-track {
+      overflow: hidden;
+      height: 9px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.10);
+    }
+
+    .bar-fill {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--brand-blue), var(--brand-magenta));
+    }
+
+    .attention-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .attention-item {
+      padding: 12px;
+      border: 1px solid rgba(255, 73, 48, 0.24);
+      border-radius: 8px;
+      background: rgba(255, 73, 48, 0.07);
+    }
+
+    .attention-item strong {
+      display: block;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .attention-item span {
+      color: #ffd8d1;
+      font-size: 0.84rem;
+    }
+
+    .empty-state {
+      padding: 38px 18px;
+      text-align: center;
+      color: var(--muted);
+      border: 1px dashed rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .notification-region {
+      position: fixed;
+      top: 78px;
+      right: clamp(16px, 4vw, 40px);
+      z-index: 1080;
+      width: min(430px, calc(100vw - 32px));
+      pointer-events: none;
+    }
+
+    .data-status {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 14px;
+      color: #f7f9ff;
+      font-size: 0.86rem;
+      line-height: 1.4;
+      background: rgba(8, 13, 26, 0.97);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-left: 3px solid var(--brand-blue);
+      border-radius: 8px;
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.36);
+      backdrop-filter: blur(12px);
+    }
+
+    .data-status[hidden],
+    .auth-controls [hidden],
+    #addItemBtn[hidden],
+    .editor-only[hidden] {
+      display: none !important;
+    }
+
+    .data-status::before {
+      content: "\F431";
+      flex: 0 0 auto;
+      color: var(--brand-blue);
+      font-family: "bootstrap-icons";
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+
+    .data-status.error {
+      color: #ffd8d1;
+      border-left-color: var(--danger);
+    }
+
+    .data-status.error::before {
+      content: "\F333";
+      color: var(--danger);
+    }
+
+    .data-status.success {
+      color: #c5fff0;
+      border-left-color: var(--success);
+    }
+
+    .data-status.success::before {
+      content: "\F26B";
+      color: var(--success);
+    }
+
+    .idea-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: rgba(3, 6, 14, 0.74);
+      backdrop-filter: blur(7px);
+    }
+
+    .idea-modal[hidden] {
+      display: none !important;
+    }
+
+    .idea-modal-panel {
+      width: min(1040px, 100%);
+      max-height: min(900px, calc(100vh - 40px));
+      overflow: auto;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      background: #111827;
+      box-shadow: var(--shadow);
+    }
+
+    .idea-modal-header,
+    .idea-modal-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .idea-modal-footer {
+      justify-content: flex-end;
+      border-top: 1px solid var(--line);
+      border-bottom: 0;
+    }
+
+    .idea-modal-title {
+      margin: 0;
+      color: #ffffff;
+      font-size: 1.2rem;
+      font-weight: 900;
+    }
+
+    .idea-form-body {
+      padding: 20px;
+    }
+
+    .idea-form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .form-field.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-field label {
+      display: block;
+      margin-bottom: 7px;
+      color: #dce5f8;
+      font-size: 0.77rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    textarea.form-control {
+      min-height: 128px;
+      resize: vertical;
+    }
+
+    #ideaPurpose {
+      min-height: 170px;
+    }
+
+    .range-row {
+      display: grid;
+      grid-template-columns: 1fr 72px;
+      gap: 10px;
+      align-items: center;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--brand-magenta);
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.82rem;
+    }
+
+    @media (max-width: 1200px) {
+      .toolbar-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .toolbar-grid .search-cell {
+        grid-column: 1 / -1;
+      }
+
+      .stage-summary-grid,
+      .ideas-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .analytics-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (min-width: 992px) {
+      .col-lg-7 { width: 58.333333%; }
+      .col-lg-5 { width: 41.666667%; }
+    }
+
+    @media (max-width: 760px) {
+      .page-shell {
+        width: min(100% - 24px, 1460px);
+        padding-top: 18px;
+      }
+
+      .topbar,
+      .stage-lane-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .auth-controls {
+        justify-content: flex-start;
+      }
+
+      .brand-logo {
+        width: 140px;
+      }
+
+      .stat-grid,
+      .toolbar-grid,
+      .stage-summary-grid,
+      .ideas-grid,
+      .idea-form-grid,
+      .idea-meta {
+        grid-template-columns: 1fr;
+      }
+
+      .toolbar-band {
+        position: static;
+      }
+
+      .notification-region {
+        top: 70px;
+        right: 14px;
+        width: calc(100vw - 28px);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page-shell">
+    <nav class="topbar" aria-label="Dashboard header">
+      <div class="brand-lockup">
+        <img class="brand-logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMTAuMzI0IiBoZWlnaHQ9IjUwLjQyMyIgdmlld0JveD0iMCAwIDIxMC4zMjQgNTAuNDIzIj4KICA8ZyBpZD0idnNpLWxvZ28td2hpdGUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xLjggLTMuMTc1KSI+CiAgICA8ZyBpZD0iR3JvdXBfNzg5NTUiIGRhdGEtbmFtZT0iR3JvdXAgNzg5NTUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDg5LjA5MyA0Mi42NDkpIj4KICAgICAgPHBhdGggaWQ9IlBhdGhfNzQ2MDEiIGRhdGEtbmFtZT0iUGF0aCA3NDYwMSIgZD0iTTIzMS40LDExNi43MDhWMTA4LjhoNS4xMzN2LjgzNmgtNC4xNDR2Mi42MjNIMjM2di44NzRoLTMuNjEydjIuN2g0LjE0NHYuODM2SDIzMS40WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIzMS40IC0xMDguMTE2KSIgZmlsbD0iI2ZmZiIvPgogICAgICA8cGF0aCBpZD0iUGF0aF83NDYwMiIgZGF0YS1uYW1lPSJQYXRoIDc0NjAyIiBkPSJNMjQ5LjIsMTE5Ljg2OXYtNS44NTVoLjgzNnYuODM2aC4xMTRhMS40NDcsMS40NDcsMCwwLDEsLjM0Mi0uNDk0LDEuODI2LDEuODI2LDAsMCwxLC42MDgtLjM0MiwzLjUyNywzLjUyNywwLDAsMSwuOTg4LS4xMTQsMi41NCwyLjU0LDAsMCwxLDEuMDI3LjE1MiwxLjE3NCwxLjE3NCwwLDAsMSwuNjA4LjQxOCwxLjM3MSwxLjM3MSwwLDAsMSwuMjY2LjcyMiw4LjEsOC4xLDAsMCwxLC4wNzYsMS4wMjd2My42NWgtLjkxMnYtMy4zNDZhNi43NTYsNi43NTYsMCwwLDAtLjAzOC0uOTUsMS40MjcsMS40MjcsMCwwLDAtLjE5LS41MzIuNzUxLjc1MSwwLDAsMC0uNDE4LS4yMjgsMy45MjIsMy45MjIsMCwwLDAtLjc2LS4wNzYsMiwyLDAsMCwwLS44NzQuMTUyLjgzLjgzLDAsMCwwLS40NTYuNDE4LDEuNjE1LDEuNjE1LDAsMCwwLS4xOS42NDZ2My44NzhoLS45NVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yNDIuNDMzIC0xMTEuMjc3KSIgZmlsbD0iI2ZmZiIvPgogICAgICA8cGF0aCBpZD0iUGF0aF83NDYwMyIgZGF0YS1uYW1lPSJQYXRoIDc0NjAzIiBkPSJNMjY4Ljg3MSwxMjIuMjI2aC0uNzZhNC4zNjUsNC4zNjUsMCwwLDEtLjcyMi0uMDM4LDIuNTE3LDIuNTE3LDAsMCwxLS41Ny0uMDM4di0uNzZhMy40NzksMy40NzksMCwwLDEsLjYwOC4wMzhoMS4yNTVhMy43MjksMy43MjksMCwwLDAsMS4wMjctLjA3NiwxLjAxOCwxLjAxOCwwLDAsMCwuNTctLjMsMS4xLDEuMSwwLDAsMCwuMjI4LS42NDZjMC0uMjY2LjAzOC0uNjA4LjAzOC0xLjA2NXYtLjIyOGgtLjA3NmExLjA4NCwxLjA4NCwwLDAsMS0uNDE4LjQ5NCwyLjU0NCwyLjU0NCwwLDAsMS0uNjQ2LjI2Niw1LjI0LDUuMjQsMCwwLDEtLjgzNi4wNzYsMy4yOCwzLjI4LDAsMCwxLTEuMDY1LS4xNTIsMS4xMzQsMS4xMzQsMCwwLDEtLjY0Ni0uNDU2LDIuNTQ0LDIuNTQ0LDAsMCwxLS4zNDItLjkxMiw3LjgyMSw3LjgyMSwwLDAsMS0uMTE0LTEuNDgzLDUuNTc2LDUuNTc2LDAsMCwxLC4xMTQtMS40ODMsMi41NDQsMi41NDQsMCwwLDEsLjM0Mi0uOTEyLDEuNDEsMS40MSwwLDAsMSwuNjQ2LS40OTQsMi44NjgsMi44NjgsMCwwLDEsMS4wNjUtLjE1MiwyLjAxMSwyLjAxMSwwLDAsMSwuNzYuMDc2LDIuMTM5LDIuMTM5LDAsMCwxLC42ODQuMjY2LDEuNTEyLDEuNTEyLDAsMCwxLC40NTYuNjA4aC4wNzZ2LS44MzZoLjg3NHY1LjA5NWE4LjA2LDguMDYsMCwwLDEtLjA3NiwxLjQ0NSwyLjc2NywyLjc2NywwLDAsMS0uMzQyLjk1LDEuNzQyLDEuNzQyLDAsMCwxLS44LjUzMiw0LjY0OCw0LjY0OCwwLDAsMS0xLjQwNy4xOVptLjExNC0zLjExOGEyLjA3NywyLjA3NywwLDAsMCwuOTEyLS4xNTIsMS4wNCwxLjA0LDAsMCwwLC40OTQtLjQ5NCwxLjc5MiwxLjc5MiwwLDAsMCwuMTUyLS42NDZ2LTEuNzExYTEuNjE4LDEuNjE4LDAsMCwwLS4xNTItLjY0NiwxLjEyMSwxLjEyMSwwLDAsMC0uNDk0LS41MzIsMi4wNzcsMi4wNzcsMCwwLDAtLjkxMi0uMTUyLDIuNDgxLDIuNDgxLDAsMCwwLS44MzYuMDc2Ljc0My43NDMsMCwwLDAtLjQ5NC4zLDEuNDM4LDEuNDM4LDAsMCwwLS4yMjguNjQ2LDguNDksOC40OSwwLDAsMC0uMDc2LDEuMTQxLDQuODY1LDQuODY1LDAsMCwwLC4wNzYsMS4xNDEsMi4xMTMsMi4xMTMsMCwwLDAsLjIyOC42NDYuOTIuOTIsMCwwLDAsLjQ5NC4zQTQuODQyLDQuODQyLDAsMCwwLDI2OC45ODUsMTE5LjEwOVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yNTMuMDkzIC0xMTEuMjc3KSIgZmlsbD0iI2ZmZiIvPgogICAgICA8cGF0aCBpZD0iUGF0aF83NDYwNCIgZGF0YS1uYW1lPSJQYXRoIDc0NjA0IiBkPSJNMjg1LDEwOC4xMjdWMTA3LjFoLjk4OXYxLjAyN1ptMCw3LjUyOFYxMDkuOGguOTUxdjUuODU1WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI2NC42MjEgLTEwNy4wNjIpIiBmaWxsPSIjZmZmIi8+CiAgICAgIDxwYXRoIGlkPSJQYXRoXzc0NjA1IiBkYXRhLW5hbWU9IlBhdGggNzQ2MDUiIGQ9Ik0yOTIuNywxMTkuODY5di01Ljg1NWguODM2di44MzZoLjExNGExLjQ0NiwxLjQ0NiwwLDAsMSwuMzQyLS40OTQsMS44MjYsMS44MjYsMCwwLDEsLjYwOC0uMzQyLDMuNTI3LDMuNTI3LDAsMCwxLC45ODktLjExNCwyLjUzOSwyLjUzOSwwLDAsMSwxLjAyNy4xNTIsMS4xNzQsMS4xNzQsMCwwLDEsLjYwOC40MTgsMS4zNzEsMS4zNzEsMCwwLDEsLjI2Ni43MjIsOC4xLDguMSwwLDAsMSwuMDc2LDEuMDI3djMuNjVoLS45MTJ2LTMuMzQ2YTYuNzU2LDYuNzU2LDAsMCwwLS4wMzgtLjk1LDEuNDI3LDEuNDI3LDAsMCwwLS4xOS0uNTMyLjc1MS43NTEsMCwwLDAtLjQxOC0uMjI4LDMuOTIyLDMuOTIyLDAsMCwwLS43Ni0uMDc2LDIsMiwwLDAsMC0uODc0LjE1Mi44My44MywwLDAsMC0uNDU2LjQxOCwxLjYxNSwxLjYxNSwwLDAsMC0uMTkuNjQ2djMuODc4aC0uOTUxWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI2OS4zOTQgLTExMS4yNzcpIiBmaWxsPSIjZmZmIi8+CiAgICAgIDxwYXRoIGlkPSJQYXRoXzc0NjA2IiBkYXRhLW5hbWU9IlBhdGggNzQ2MDYiIGQ9Ik0zMTIuNzg1LDEyMC4wMDdhNS40LDUuNCwwLDAsMS0xLjE3OS0uMDc2LDEuOTkxLDEuOTkxLDAsMCwxLS43Ni0uMywxLjI0MywxLjI0MywwLDAsMS0uNDE4LS41NywyLjcwNiwyLjcwNiwwLDAsMS0uMTktLjgzNmMwLS4zNDItLjAzOC0uNzIyLS4wMzgtMS4xNzlhOC40OTQsOC40OTQsMCwwLDEsLjA3Ni0xLjQwNywyLjMzNSwyLjMzNSwwLDAsMSwuMy0uOTUxLDEuNDQ5LDEuNDQ5LDAsMCwxLC43Ni0uNTMyLDQuOCw0LjgsMCwwLDEsMS40MDctLjE1MiwyLjc0OSwyLjc0OSwwLDAsMSwxLjEuMTE0LDEuOTI2LDEuOTI2LDAsMCwxLC42ODQuMywxLjUsMS41LDAsMCwxLC4zOC41Nyw0LjU4Myw0LjU4MywwLDAsMSwuMTUyLjg3NHYxLjQ0NWgtMy45OTJhMy44NjQsMy44NjQsMCwwLDAsLjA3Ni45ODksMSwxLDAsMCwwLC4yMjguNTcsMS4wMTgsMS4wMTgsMCwwLDAsLjU3LjMsNy4yNjEsNy4yNjEsMCwwLDAsMS4wNjUuMDc2aC42MDhhMy40NzgsMy40NzgsMCwwLDAsLjY0Ni0uMDM4LDIuOTU0LDIuOTU0LDAsMCwwLC42MDgtLjA3NnYuNzZjLS4xNTIsMC0uMzQyLjA3Ni0uNjA4LjA3NmE0LjY1OCw0LjY1OCwwLDAsMC0uNzIyLjA3NmgtLjc2Wm0xLjQwNy0zLjE1NnYtLjNhMy40MiwzLjQyLDAsMCwwLS4wNzYtLjk1Ljk4Ni45ODYsMCwwLDAtLjIyOC0uNTMyLjg2Ny44NjcsMCwwLDAtLjQ1Ni0uMjI4LDMuNSwzLjUsMCwwLDAtLjcyMi0uMDc2LDMuMTIzLDMuMTIzLDAsMCwwLS44NzQuMDc2Ljg4NS44ODUsMCwwLDAtLjQ5NC4yNjYsMSwxLDAsMCwwLS4yMjguNTcsNi41MzUsNi41MzUsMCwwLDAtLjA3Ni45ODloMy4zMDhsLS4yMjguMTlaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMjgwLjI0MSAtMTExLjMzOSkiIGZpbGw9IiNmZmYiLz4KICAgICAgPHBhdGggaWQ9IlBhdGhfNzQ2MDciIGRhdGEtbmFtZT0iUGF0aCA3NDYwNyIgZD0iTTMyOS42ODUsMTIwLjAwN2E1LjQsNS40LDAsMCwxLTEuMTc5LS4wNzYsMS45OSwxLjk5LDAsMCwxLS43Ni0uMywxLjI0MywxLjI0MywwLDAsMS0uNDE4LS41NywyLjcwNiwyLjcwNiwwLDAsMS0uMTktLjgzNmMwLS4zNDItLjAzOC0uNzIyLS4wMzgtMS4xNzlhOC40OTQsOC40OTQsMCwwLDEsLjA3Ni0xLjQwNywyLjMzNSwyLjMzNSwwLDAsMSwuMy0uOTUxLDEuNDQ5LDEuNDQ5LDAsMCwxLC43Ni0uNTMyLDQuOCw0LjgsMCwwLDEsMS40MDctLjE1MiwyLjc0OSwyLjc0OSwwLDAsMSwxLjEuMTE0LDEuOTI2LDEuOTI2LDAsMCwxLC42ODQuMywxLjUsMS41LDAsMCwxLC4zOC41Nyw0LjU4LDQuNTgsMCwwLDEsLjE1Mi44NzR2MS40NDVoLTMuOTkyYTMuODY0LDMuODY0LDAsMCwwLC4wNzYuOTg5LDEsMSwwLDAsMCwuMjI4LjU3LDEuMDE4LDEuMDE4LDAsMCwwLC41Ny4zLDcuMjYyLDcuMjYyLDAsMCwwLDEuMDY1LjA3NmguNjA4YTMuNDc4LDMuNDc4LDAsMCwwLC42NDYtLjAzOCwyLjk1NCwyLjk1NCwwLDAsMCwuNjA4LS4wNzZ2Ljc2Yy0uMTUyLDAtLjM0Mi4wNzYtLjYwOC4wNzZhNC42NTgsNC42NTgsMCwwLDAtLjcyMi4wNzZoLS43NlptMS40MDctMy4xNTZ2LS4zYTMuNDE4LDMuNDE4LDAsMCwwLS4wNzYtLjk1Ljk4Ni45ODYsMCwwLDAtLjIyOC0uNTMyLjg2Ny44NjcsMCwwLDAtLjQ1Ni0uMjI4LDMuNSwzLjUsMCwwLDAtLjcyMi0uMDc2LDMuMTIzLDMuMTIzLDAsMCwwLS44NzQuMDc2Ljg4NC44ODQsMCwwLDAtLjQ5NC4yNjYsMSwxLDAsMCwwLS4yMjguNTcsNi41MzUsNi41MzUsMCwwLDAtLjA3Ni45ODloMy4zMDhsLS4yMjguMTlaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMjkwLjcxNSAtMTExLjMzOSkiIGZpbGw9IiNmZmYiLz4KICAgICAgPHBhdGggaWQ9IlBhdGhfNzQ2MDgiIGRhdGEtbmFtZT0iUGF0aCA3NDYwOCIgZD0iTTM0NC41LDExOS44Njl2LTUuODU1aC44MzZ2MS4xNDFoLjExNGExLjgwOCwxLjgwOCwwLDAsMSwuNDE4LS43NiwxLjYxNSwxLjYxNSwwLDAsMSwuNjQ2LS4zOCwzLjA0OCwzLjA0OCwwLDAsMSwuODc0LS4xMTR2LjkxMmEyLjE0MSwyLjE0MSwwLDAsMC0xLjIxNy4yNjYsMS4xNjgsMS4xNjgsMCwwLDAtLjU3LjgsNC40MTcsNC40MTcsMCwwLDAtLjE1MiwxLjMzMXYyLjY2MVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0zMDEuNSAtMTExLjI3NykiIGZpbGw9IiNmZmYiLz4KICAgICAgPHBhdGggaWQ9IlBhdGhfNzQ2MDkiIGRhdGEtbmFtZT0iUGF0aCA3NDYwOSIgZD0iTTM1NS41LDEwOC4xMjdWMTA3LjFoLjk4OXYxLjAyN1ptLjAzOCw3LjUyOFYxMDkuOGguOTUxdjUuODU1WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTMwOC4zMTggLTEwNy4wNjIpIiBmaWxsPSIjZmZmIi8+CiAgICAgIDxwYXRoIGlkPSJQYXRoXzc0NjEwIiBkYXRhLW5hbWU9IlBhdGggNzQ2MTAiIGQ9Ik0zNjMuMiwxMTkuODY5di01Ljg1NWguODM2di44MzZoLjExNGExLjQ0NywxLjQ0NywwLDAsMSwuMzQyLS40OTQsMS44MjYsMS44MjYsMCwwLDEsLjYwOC0uMzQyLDMuNTI3LDMuNTI3LDAsMCwxLC45ODgtLjExNCwyLjUzOSwyLjUzOSwwLDAsMSwxLjAyNy4xNTIsMS4xNzQsMS4xNzQsMCwwLDEsLjYwOC40MTgsMS4zNzEsMS4zNzEsMCwwLDEsLjI2Ni43MjIsOC4xLDguMSwwLDAsMSwuMDc2LDEuMDI3djMuNjVoLS45MTJ2LTMuMzQ2YTYuNzYxLDYuNzYxLDAsMCwwLS4wMzgtLjk1LDEuNDI3LDEuNDI3LDAsMCwwLS4xOS0uNTMyLjc1MS43NTEsMCwwLDAtLjQxOC0uMjI4LDMuOTIyLDMuOTIyLDAsMCwwLS43Ni0uMDc2LDIsMiwwLDAsMC0uODc0LjE1Mi44My44MywwLDAsMC0uNDU2LjQxOCwxLjYxNSwxLjYxNSwwLDAsMC0uMTkuNjQ2djMuODc4aC0uOTUxWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTMxMy4wOSAtMTExLjI3NykiIGZpbGw9IiNmZmYiLz4KICAgICAgPHBhdGggaWQ9IlBhdGhfNzQ2MTEiIGRhdGEtbmFtZT0iUGF0aCA3NDYxMSIgZD0iTTM4Mi44NzEsMTIyLjIyNmgtLjc2YTQuMzY1LDQuMzY1LDAsMCwxLS43MjItLjAzOCwyLjUxNywyLjUxNywwLDAsMS0uNTctLjAzOHYtLjc2YTMuNDc5LDMuNDc5LDAsMCwxLC42MDguMDM4LDMuNjYyLDMuNjYyLDAsMCwwLC42NDYsMGguNjA4YTMuNzI5LDMuNzI5LDAsMCwwLDEuMDI3LS4wNzYsMS4wMTgsMS4wMTgsMCwwLDAsLjU3LS4zLDEuMSwxLjEsMCwwLDAsLjIyOC0uNjQ2YzAtLjI2Ni4wMzgtLjYwOC4wMzgtMS4wNjV2LS4yMjhoLS4wNzZhMS4wODQsMS4wODQsMCwwLDEtLjQxOC40OTQsMi41NDQsMi41NDQsMCwwLDEtLjY0Ni4yNjYsNS4yNDEsNS4yNDEsMCwwLDEtLjgzNi4wNzYsMy4yOCwzLjI4LDAsMCwxLTEuMDY1LS4xNTIsMS4xMzQsMS4xMzQsMCwwLDEtLjY0Ni0uNDU2LDIuNTQ0LDIuNTQ0LDAsMCwxLS4zNDItLjkxMiw3LjgyMSw3LjgyMSwwLDAsMS0uMTE0LTEuNDgzLDUuNTc2LDUuNTc2LDAsMCwxLC4xMTQtMS40ODMsMi41NDQsMi41NDQsMCwwLDEsLjM0Mi0uOTEyLDEuNDEsMS40MSwwLDAsMSwuNjQ2LS40OTQsMi44NjgsMi44NjgsMCwwLDEsMS4wNjUtLjE1MiwyLjAxMSwyLjAxMSwwLDAsMSwuNzYuMDc2LDEuMzY2LDEuMzY2LDAsMCwxLC42ODQuMjY2LDEuNTEyLDEuNTEyLDAsMCwxLC40NTYuNjA4aC4wNzZ2LS44MzZoLjg3NHY1LjA5NWE4LjA2LDguMDYsMCwwLDEtLjA3NiwxLjQ0NSwyLjc2NywyLjc2NywwLDAsMS0uMzQyLjk1LDEuNzQyLDEuNzQyLDAsMCwxLS44LjUzMiw0LjY0OCw0LjY0OCwwLDAsMS0xLjQwNy4xOVptLjE1Mi0zLjExOGEyLjA3NywyLjA3NywwLDAsMCwuOTEyLS4xNTIsMS4wNCwxLjA0LDAsMCwwLC40OTQtLjQ5NCwxLjc5MiwxLjc5MiwwLDAsMCwuMTUyLS42NDZ2LTEuNzExYTEuNjE4LDEuNjE4LDAsMCwwLS4xNTItLjY0NiwxLjEyMSwxLjEyMSwwLDAsMC0uNDk0LS41MzIsMi4wNzcsMi4wNzcsMCwwLDAtLjkxMi0uMTUyLDIuNDgxLDIuNDgxLDAsMCwwLS44MzYuMDc2Ljc0My43NDMsMCwwLDAtLjQ5NC4zLDEuNDM3LDEuNDM3LDAsMCwwLS4yMjguNjQ2LDguOTg2LDguOTg2LDAsMCwwLS4wNzYsMS4xNDEsNC44NjUsNC44NjUsMCwwLDAsLjA3NiwxLjE0MSwxLjI4MiwxLjI4MiwwLDAsMCwuMjI4LjY0Ni45Mi45MiwwLDAsMCwuNDk0LjNBNC44NDMsNC44NDMsMCwwLDAsMzgzLjAyMywxMTkuMTA5WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTMyMy43NTEgLTExMS4yNzcpIiBmaWxsPSIjZmZmIi8+CiAgICAgIDxwYXRoIGlkPSJQYXRoXzc0NjEyIiBkYXRhLW5hbWU9IlBhdGggNzQ2MTIiIGQ9Ik0zOTguNCwxMjcuNzQxVjEyNi42aDEuMXYxLjE0MVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0zMzQuOTA3IC0xMTkuMTQ4KSIgZmlsbD0iI2ZmZiIvPgogICAgICA8cGF0aCBpZD0iUGF0aF83NDYxMyIgZGF0YS1uYW1lPSJQYXRoIDc0NjEzIiBkPSJNNDE1LjM2NiwxMTYuNzIyaC0uOTEyYTQuMzM2LDQuMzM2LDAsMCwxLS45ODgtLjA3Niw4LjE3NSw4LjE3NSwwLDAsMC0uODc0LS4wNzZ2LS44MzZhNy40MjQsNy40MjQsMCwwLDEsLjg3NC4wNzZjLjMuMDM4LjYwOC4wMzguODc0LjA3NmguNzIyYTcuMzUyLDcuMzUyLDAsMCwwLC45ODgtLjAzOCwxLjkxNCwxLjkxNCwwLDAsMCwuNjA4LS4xOS44ODguODg4LDAsMCwwLC4yNjYtLjI2NmMuMDM4LS4xMTQuMDc2LS4yNjYuMTE0LS40MThhMi4xNDEsMi4xNDEsMCwwLDAsMC0uNDk0di0uNjQ2YS41NjguNTY4LDAsMCwwLS4xMTQtLjM4LjYuNiwwLDAsMC0uMy0uMTlxLS4yMjgtLjA1Ny0uNTctLjExNGwtMS45NzctLjIyOGEyLjQyNiwyLjQyNiwwLDAsMS0uODc0LS4yMjgsMS4zNzMsMS4zNzMsMCwwLDEtLjQ5NC0uNDE4LDEuNjgsMS42OCwwLDAsMS0uMjI4LS42MDgsNC43NDUsNC43NDUsMCwwLDEtLjA3Ni0uOCwyLjk0NywyLjk0NywwLDAsMSwuMTktMS4xNDEsMS4xOTQsMS4xOTQsMCwwLDEsLjU3LS42NDYsMS45ODksMS45ODksMCwwLDEsLjg3NC0uMywxMC45NDgsMTAuOTQ4LDAsMCwxLDEuMjE3LS4wNzZoLjkxMmEzLjI2MSwzLjI2MSwwLDAsMSwuODc0LjA3NiwzLjIsMy4yLDAsMCwxLC42ODQuMTE0di44Yy0uMTksMC0uNDE4LS4wNzYtLjY4NC0uMDc2cy0uNTMyLS4wMzgtLjgtLjAzOGgtLjc2YTQuMDI4LDQuMDI4LDAsMCwwLTEuMDI3LjA3NiwxLjkxNCwxLjkxNCwwLDAsMC0uNjA4LjE5LjY3Ny42NzcsMCwwLDAtLjMuNDE4LDMuMDE1LDMuMDE1LDAsMCwwLS4wNzYuNjQ2LDEuNzg2LDEuNzg2LDAsMCwwLC4wNzYuNjg0LjYwNy42MDcsMCwwLDAsLjI2Ni4zNDIsMS43NjgsMS43NjgsMCwwLDAsLjY0Ni4xNTJsMS45LjIyOGEzLjYsMy42LDAsMCwxLC43MjIuMTE0LDEuMTM1LDEuMTM1LDAsMCwxLC41MzIuMjI4Ljk2NS45NjUsMCwwLDEsLjM0Mi40OTRsLjExNC4zNDJhMS40MjYsMS40MjYsMCwwLDEsLjAzOC40MTh2LjUzMmE0LjY4LDQuNjgsMCwwLDEtLjExNCwxLjEsMS40NDYsMS40NDYsMCwwLDEtLjM0Mi42ODQsMS41LDEuNSwwLDAsMS0uNTcuMzgsMi4yMjMsMi4yMjMsMCwwLDEtLjcyMi4xNTJoLS44NzRaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMzQzLjU4NSAtMTA4LjA1NCkiIGZpbGw9IiNmZmYiLz4KICAgICAgPHBhdGggaWQ9IlBhdGhfNzQ2MTQiIGRhdGEtbmFtZT0iUGF0aCA3NDYxNCIgZD0iTTQzMS44LDEwOC4xMjdWMTA3LjFoLjk4OXYxLjAyN1ptMCw3LjUyOFYxMDkuOGguOTUxdjUuODU1WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTM1NS42MDkgLTEwNy4wNjIpIiBmaWxsPSIjZmZmIi8+CiAgICAgIDxwYXRoIGlkPSJQYXRoXzc0NjE1IiBkYXRhLW5hbWU9IlBhdGggNzQ2MTUiIGQ9Ik00MzkuNSwxMTkuODY5di01Ljg1NWguODM2di44MzZoLjExNGEyLjE1NiwyLjE1NiwwLDAsMSwuMy0uNDk0LDEuNjIsMS42MiwwLDAsMSwuNTctLjM0MiwyLjk2NywyLjk2NywwLDAsMSwuOTEyLS4xMTQsMi4xMzcsMi4xMzcsMCwwLDEsMS4xNDEuMjI4LDEuMTgyLDEuMTgyLDAsMCwxLC41MzIuNzIyaC4wNzZhMS40NDcsMS40NDcsMCwwLDEsLjM0Mi0uNDk0LDIuMDYzLDIuMDYzLDAsMCwxLC41Ny0uMzQyLDIuOTY3LDIuOTY3LDAsMCwxLC45MTItLjExNCwyLjM5MiwyLjM5MiwwLDAsMSwxLjE3OS4yMjgsMS4yNywxLjI3LDAsMCwxLC41MzIuNzYsNi4wMjMsNi4wMjMsMCwwLDEsLjExNCwxLjI5M3YzLjY1aC0uOTEydi0zLjM0NmE2Ljc1Niw2Ljc1NiwwLDAsMC0uMDM4LS45NS45NzguOTc4LDAsMCwwLS4xOS0uNTMyLjc4OS43ODksMCwwLDAtLjM4LS4yMjgsMi44MzIsMi44MzIsMCwwLDAtLjY4NC0uMDc2LDIuNTI4LDIuNTI4LDAsMCwwLS44LjExNC44MjQuODI0LDAsMCwwLS40MTguMzgsMS40NywxLjQ3LDAsMCwwLS4xNTIuNjQ2djMuOTE2aC0uOTEydi0zLjM0NmE2Ljc2MSw2Ljc2MSwwLDAsMC0uMDM4LS45NS43NTIuNzUyLDAsMCwwLS4xOS0uNTMyLjY0Ny42NDcsMCwwLDAtLjM4LS4yMjgsMi44MzIsMi44MzIsMCwwLDAtLjY4NC0uMDc2LDEuNzYzLDEuNzYzLDAsMCwwLS44LjE1Mi43NS43NSwwLDAsMC0uNDE4LjQxOCwxLjYxOCwxLjYxOCwwLDAsMC0uMTUyLjY0NnYzLjg3OGgtLjk1MVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0zNjAuMzgxIC0xMTEuMjc3KSIgZmlsbD0iI2ZmZiIvPgogICAgICA8cGF0aCBpZD0iUGF0aF83NDYxNiIgZGF0YS1uYW1lPSJQYXRoIDc0NjE2IiBkPSJNNDY2LjEsMTIyLjE1di04LjEzNmguODM2di44MzZoLjExNGExLjUxMiwxLjUxMiwwLDAsMSwuNDU2LS42MDgsMS4zNjcsMS4zNjcsMCwwLDEsLjY4NC0uMjY2LDUuMTc2LDUuMTc2LDAsMCwxLC44LS4wNzYsMywzLDAsMCwxLDEuMDY1LjE1MiwxLjIsMS4yLDAsMCwxLC42NDYuNDk0LDIuNTQ1LDIuNTQ1LDAsMCwxLC4zNDIuOTEyLDcuODE5LDcuODE5LDAsMCwxLC4xMTQsMS40ODMsNS41NzYsNS41NzYsMCwwLDEtLjExNCwxLjQ4MywyLjU0NSwyLjU0NSwwLDAsMS0uMzQyLjkxMiwxLjQxLDEuNDEsMCwwLDEtLjY0Ni40OTQsMi42NTgsMi42NTgsMCwwLDEtMS4wMjcuMTUyLDIuNDgxLDIuNDgxLDAsMCwxLS44MzYtLjA3NiwxLjkzNywxLjkzNywwLDAsMS0uNjQ2LS4yNjYsMS4wNTEsMS4wNTEsMCwwLDEtLjQxOC0uNDk0aC0uMDc2djMuMDQyaC0uOTVabTIuNTA5LTMuMDQyYTIuNiwyLjYsMCwwLDAsLjgzNi0uMDc2Ljc0My43NDMsMCwwLDAsLjQ5NC0uMywxLjQzNywxLjQzNywwLDAsMCwuMjI4LS42NDYsOS4xNDMsOS4xNDMsMCwwLDAsLjA3Ni0xLjE3OSw1LjIyLDUuMjIsMCwwLDAtLjA3Ni0xLjE3OSwxLjI4MiwxLjI4MiwwLDAsMC0uMjI4LS42NDYuOTIuOTIsMCwwLDAtLjQ5NC0uMyw0Ljg0MSw0Ljg0MSwwLDAsMC0uODM2LS4wNzYsMi4xODUsMi4xODUsMCwwLDAtLjkxMi4xNTIuOTc0Ljk3NCwwLDAsMC0uNDk0LjUzMiwzLjIxOSwzLjIxOSwwLDAsMC0uMTUyLjY0NlYxMTcuN2ExLjQ0OCwxLjQ0OCwwLDAsMCwuMTE0LjYwOCwxLjA1NSwxLjA1NSwwLDAsMCwuNDk0LjU3LDIuMDc3LDIuMDc3LDAsMCwwLC45MTIuMTUyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTM3Ni44NjggLTExMS4yNzcpIiBmaWxsPSIjZmZmIi8+CiAgICAgIDxwYXRoIGlkPSJQYXRoXzc0NjE3IiBkYXRhLW5hbWU9IlBhdGggNzQ2MTciIGQ9Ik00ODMuOSwxMTUuNzE2VjEwNy4yaC45NTF2OC41MTZaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMzg3LjkgLTEwNy4xMjQpIiBmaWxsPSIjZmZmIi8+CiAgICAgIDxwYXRoIGlkPSJQYXRoXzc0NjE4IiBkYXRhLW5hbWU9IlBhdGggNzQ2MTgiIGQ9Ik00OTEuNSwxMDguMTI3VjEwNy4xaC45ODl2MS4wMjdabS4wMzgsNy41MjhWMTA5LjhoLjk1MXY1Ljg1NVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0zOTIuNjExIC0xMDcuMDYyKSIgZmlsbD0iI2ZmZiIvPgogICAgICA8cGF0aCBpZD0iUGF0aF83NDYxOSIgZGF0YS1uYW1lPSJQYXRoIDc0NjE5IiBkPSJNNDk4LjY3OSwxMTUuNjU0VjExMC42SDQ5Ny41di0uOGgxLjE3OXYtLjkxMmEyLjM1MywyLjM1MywwLDAsMSwuMDc2LS44Ljg4NS44ODUsMCwwLDEsLjI2Ni0uNDk0LjkxMi45MTIsMCwwLDEsLjQ1Ni0uMjY2LDEuODQyLDEuODQyLDAsMCwxLC42ODQtLjExNGguOTUxdi43MjJoLS43NmExLjMyOSwxLjMyOSwwLDAsMC0uNDU2LjExNC41MTEuNTExLDAsMCwwLS4yMjguMjY2LDEuNDE4LDEuNDE4LDAsMCwwLS4wNzYuNDU2djEuMWgxLjUyMXYuOGgtMS41MjF2NS4wNTdoLS45MTJabTMuNzI2LTcuNTI4VjEwNy4xaC45ODl2MS4wMjdabS4wMzgsNy41MjhWMTA5LjhoLjkxMnY1Ljg1NWgtLjkxMloiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0zOTYuMzMgLTEwNy4wNjIpIiBmaWxsPSIjZmZmIi8+CiAgICAgIDxwYXRoIGlkPSJQYXRoXzc0NjIwIiBkYXRhLW5hbWU9IlBhdGggNzQ2MjAiIGQ9Ik01MjAuMTg1LDEyMC4wMDdhNS40LDUuNCwwLDAsMS0xLjE3OS0uMDc2LDEuOTkxLDEuOTkxLDAsMCwxLS43Ni0uMywxLjI0MywxLjI0MywwLDAsMS0uNDE4LS41NywyLjcwNywyLjcwNywwLDAsMS0uMTktLjgzNiwxMC43MTEsMTAuNzExLDAsMCwxLS4wMzgtMS4xNzksOC40OTQsOC40OTQsMCwwLDEsLjA3Ni0xLjQwNywyLjgsMi44LDAsMCwxLC4zLS45NTEsMS40NDksMS40NDksMCwwLDEsLjc2LS41MzIsNC44LDQuOCwwLDAsMSwxLjQwNy0uMTUyLDIuNzQ5LDIuNzQ5LDAsMCwxLDEuMS4xMTQsMS45MjYsMS45MjYsMCwwLDEsLjY4NC4zLDEuNSwxLjUsMCwwLDEsLjM4LjU3LDQuNTg2LDQuNTg2LDAsMCwxLC4xNTIuODc0LDExLjM4MywxMS4zODMsMCwwLDEsMCwxLjE0MXYuM2gtMy45OTJhMy44NjQsMy44NjQsMCwwLDAsLjA3Ni45ODksMSwxLDAsMCwwLC4yMjguNTcsMS4wMTgsMS4wMTgsMCwwLDAsLjU3LjMsNC4xOTQsNC4xOTQsMCwwLDAsMS4wNjUuMDc2aC42MDhhMy40NzgsMy40NzgsMCwwLDAsLjY0Ni0uMDM4LDIuOTU0LDIuOTU0LDAsMCwwLC42MDgtLjA3NnYuNzZjLS4xNTIsMC0uMzQyLjA3Ni0uNjA4LjA3NmE0LjY1OCw0LjY1OCwwLDAsMC0uNzIyLjA3NmgtLjc2Wm0xLjQwNy0zLjE1NnYtLjNhMy40MTgsMy40MTgsMCwwLDAtLjA3Ni0uOTUuOTg3Ljk4NywwLDAsMC0uMjI4LS41MzIuODY3Ljg2NywwLDAsMC0uNDU2LS4yMjgsMy41LDMuNSwwLDAsMC0uNzIyLS4wNzYsMy4xMjQsMy4xMjQsMCwwLDAtLjg3NC4wNzYuODg0Ljg4NCwwLDAsMC0uNDk0LjI2NiwxLDEsMCwwLDAtLjIyOC41Nyw2LjEyOSw2LjEyOSwwLDAsMC0uMDc2Ljk4OWgzLjMwOGwtLjIyOC4xOVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC00MDguNzg4IC0xMTEuMzM5KSIgZmlsbD0iI2ZmZiIvPgogICAgICA8cGF0aCBpZD0iUGF0aF83NDYyMSIgZGF0YS1uYW1lPSJQYXRoIDc0NjIxIiBkPSJNNTM2LjQ2NywxMTUuNjY4YTMsMywwLDAsMS0xLjA2NS0uMTUyLDEuMiwxLjIsMCwwLDEtLjY0Ni0uNDk0LDIuNTQ0LDIuNTQ0LDAsMCwxLS4zNDItLjkxMiw3LjgxOSw3LjgxOSwwLDAsMS0uMTE0LTEuNDgzLDUuNTc0LDUuNTc0LDAsMCwxLC4xMTQtMS40ODMsMi41NDQsMi41NDQsMCwwLDEsLjM0Mi0uOTEyLDEuNDEsMS40MSwwLDAsMSwuNjQ2LS40OTQsMi42NTcsMi42NTcsMCwwLDEsMS4wMjYtLjE1MiwyLjQ4MSwyLjQ4MSwwLDAsMSwuODM2LjA3NiwxLjkzNiwxLjkzNiwwLDAsMSwuNjQ2LjI2NiwxLjMyNCwxLjMyNCwwLDAsMSwuNDE4LjQ5NGguMDc2VjEwN2guOTV2OC41MTZoLS44MzZ2LS44MzZoLS4xMTRhMS41MTMsMS41MTMsMCwwLDEtLjQ1Ni42MDgsMS4zNjcsMS4zNjcsMCwwLDEtLjY4NC4yNjYsNS4xNzUsNS4xNzUsMCwwLDEtLjguMDc2Wm0uMzgtLjgzNmEyLjA3NywyLjA3NywwLDAsMCwuOTEyLS4xNTIsMS4wNCwxLjA0LDAsMCwwLC40OTQtLjQ5NCw0LjQyLDQuNDIsMCwwLDAsLjE1Mi0uNjg0di0xLjY3M2EyLjQ3OCwyLjQ3OCwwLDAsMC0uMTE0LS42MDgsMS4wNTUsMS4wNTUsMCwwLDAtLjQ5NC0uNTcsMi4xNTUsMi4xNTUsMCwwLDAtLjk1MS0uMTUyLDIuNDgxLDIuNDgxLDAsMCwwLS44MzYuMDc2LjY2Mi42NjIsMCwwLDAtLjQ1Ni4zLDEuNDM4LDEuNDM4LDAsMCwwLS4yMjguNjQ2LDkuMTQzLDkuMTQzLDAsMCwwLS4wNzYsMS4xNzksNS4yMiw1LjIyLDAsMCwwLC4wNzYsMS4xNzksMS4yODMsMS4yODMsMCwwLDAsLjIyOC42NDYuOTIuOTIsMCwwLDAsLjQ5NC4zLDQuODQyLDQuODQyLDAsMCwwLC44MzYuMDc2WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTQxOS4xMzkgLTEwNykiIGZpbGw9IiNmZmYiLz4KICAgICAgPHBhdGggaWQ9IlBhdGhfNzQ2MjIiIGRhdGEtbmFtZT0iUGF0aCA3NDYyMiIgZD0iTTU1Mi4xLDEyNy43NDFWMTI2LjZoMS4xdjEuMTQxWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTQzMC4xNzEgLTExOS4xNDgpIiBmaWxsPSIjZmZmIi8+CiAgICA8L2c+CiAgICA8ZyBpZD0iR3JvdXBfNzg5NTYiIGRhdGEtbmFtZT0iR3JvdXAgNzg5NTYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQ0LjA0IDEyLjY4OSkiPgogICAgICA8cGF0aCBpZD0iUGF0aF83NDYyMyIgZGF0YS1uYW1lPSJQYXRoIDc0NjIzIiBkPSJNMTIxLjMsNTEuMDQxLDExMi45LDI4LjhoMy43NjRsNi45MiwxOC40NGguMTUybDYuODQ0LTE4LjQ0aDMuNzI2bC04LjQsMjIuMjQxaC00LjZaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTEyLjkgLTI4LjU3MikiIGZpbGw9IiNmZmYiLz4KICAgICAgPHBhdGggaWQ9IlBhdGhfNzQ2MjQiIGRhdGEtbmFtZT0iUGF0aCA3NDYyNCIgZD0iTTE4NC44LDUxLjFWMjguOWwzLjYxMi44NzRWNTAuMjY3bC0zLjYxMi44NzRaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTU3LjQ2NCAtMjguNjM0KSIgZmlsbD0iI2ZmZiIvPgogICAgICA8cGF0aCBpZD0iUGF0aF83NDYyNSIgZGF0YS1uYW1lPSJQYXRoIDc0NjI1IiBkPSJNMjIyLjQ5MSw1MC45MzZjLS44NzQsMC0xLjgyNSwwLTIuODg5LS4wNzYtMS4wMjctLjAzOC0yLjA1My0uMTE0LTMuMDQyLS4xOXMtMS45LS4xNTItMi43MzctLjIyOFY0Ny41MTRjLjg3NC4wNzYsMS43NDkuMTE0LDIuNy4xOXMxLjgyNS4xMTQsMi43LjE1MmMuODc0LDAsMS42LjAzOCwyLjIwNS4wMzhhMjguMjIxLDI4LjIyMSwwLDAsMCwyLjg4OS0uMTE0LDUuMDg5LDUuMDg5LDAsMCwwLDEuNzExLS40NTYsMS4zOTQsMS4zOTQsMCwwLDAsLjY4NC0uNzIyLDIuNTE2LDIuNTE2LDAsMCwwLC4yNjYtLjk4OWMwLS4zOC4wMzgtLjguMDM4LTEuMjE3YTguOTY1LDguOTY1LDAsMCwwLS4wNzYtMS40NDUsMS45ODksMS45ODksMCwwLDAtLjMtLjkxMiwxLjE4NiwxLjE4NiwwLDAsMC0uNzYtLjQ1Niw1LjY1MSw1LjY1MSwwLDAsMC0xLjM2OS0uMjI4bC01Ljg1NS0uNjA4QTkuOSw5LjksMCwwLDEsMjE1LjgsNDAuMWE0LjAxMSw0LjAxMSwwLDAsMS0xLjY3My0xLjE3OSw0LjQ1LDQuNDUsMCwwLDEtLjgtMS44MjUsMTIuMjc4LDEyLjI3OCwwLDAsMS0uMjI4LTIuNTA5LDcuNzg2LDcuNzg2LDAsMCwxLC42NDYtMy40Niw0LjMzNCw0LjMzNCwwLDAsMSwxLjc4Ny0xLjksNy45OTMsNy45OTMsMCwwLDEsMi43MzctLjgzNiwzMy4wODMsMzMuMDgzLDAsMCwxLDMuNTM2LS4xOWMxLjI5MywwLDEuODI1LDAsMi43NzUuMDc2Ljk1MS4wMzgsMS44NjMuMTE0LDIuNy4yMjhhMjAuMzMxLDIwLjMzMSwwLDAsMSwyLjEyOS4zVjMxLjdjLS42MDgtLjA3Ni0xLjI5My0uMTUyLTIuMDkxLS4yMjhzLTEuNjM1LS4xMTQtMi40NzEtLjE1MmMtLjgzNiwwLTEuNjczLS4wMzgtMi40LS4wMzgtMS4yMTcsMC0yLjE2Ny4wMzgtMi45MjguMTE0YTQuODUxLDQuODUxLDAsMCwwLTEuNzQ5LjQ1NiwxLjU2LDEuNTYsMCwwLDAtLjg3NCwxLjAyNyw2LjcsNi43LDAsMCwwLS4xNTIsMS42LDcuNTE5LDcuNTE5LDAsMCwwLC4xNTIsMS43MTEsMS4yLDEuMiwwLDAsMCwuNzYuODM2LDguMTc5LDguMTc5LDAsMCwwLDEuODI1LjQxOGw1LjkzMS42MDhjLjcyMi4wNzYsMS40MDcuMTksMS45NzcuM2E0Ljg1Myw0Ljg1MywwLDAsMSwxLjU1OS42ODQsMy4wMzEsMy4wMzEsMCwwLDEsMS4wNjUsMS4zNjksNC4wNzEsNC4wNzEsMCwwLDEsLjM0MiwxLjAyN2MuMDc2LjM4LjE1Mi44MzYuMjI4LDEuMjkzLjAzOC40NTYuMDc2Ljk4OS4wNzYsMS42YTEwLjU3MSwxMC41NzEsMCwwLDEtLjQxOCwzLjE1Niw0LjQyOCw0LjQyOCwwLDAsMS0xLjE3OSwxLjkzOSw0LjgxMiw0LjgxMiwwLDAsMS0xLjc0OSwxLjA2NSw4LjM4Niw4LjM4NiwwLDAsMS0yLjI0My40MThjLS44MzYuMDM4LTEuNjczLjA3Ni0yLjU4NS4wNzZaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTc1LjAwNCAtMjguMikiIGZpbGw9IiNmZmYiLz4KICAgICAgPHBhdGggaWQ9IlBhdGhfNzQ2MjYiIGRhdGEtbmFtZT0iUGF0aCA3NDYyNiIgZD0iTTI3OC4yLDUxLjFWMjguOWwzLjYxMi44NzRWNTAuMjY3bC0zLjYxMi44NzRaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMjE1LjM1NCAtMjguNjM0KSIgZmlsbD0iI2ZmZiIvPgogICAgICA8cGF0aCBpZD0iUGF0aF83NDYyNyIgZGF0YS1uYW1lPSJQYXRoIDc0NjI3IiBkPSJNMzE3LjMsNTAuOTM2YTMxLjg4MSwzMS44ODEsMCwwLDEtNC43MTQtLjMsNi45NSw2Ljk1LDAsMCwxLTIuOTI3LTEuMDI3LDQuMjI0LDQuMjI0LDAsMCwxLTEuNi0yLjAxNSwxMS44MTksMTEuODE5LDAsMCwxLS42NDYtMy4yN2MtLjA3Ni0xLjMzMS0uMTE0LTIuODg5LS4xMTQtNC43NTJzLjAzOC0zLjQyMi4xMTQtNC43NTJhMTAuNTc0LDEwLjU3NCwwLDAsMSwuNjQ2LTMuMjcsNC4yMjQsNC4yMjQsMCwwLDEsMS42LTIuMDE1LDcuMTUsNy4xNSwwLDAsMSwyLjkyNy0xLjAyNywzMS44ODEsMzEuODgxLDAsMCwxLDQuNzE0LS4zLDMyLjQ0NSwzMi40NDUsMCwwLDEsNC43NTIuMyw2Ljk1LDYuOTUsMCwwLDEsMi45MjgsMS4wMjcsNC4xNTUsNC4xNTUsMCwwLDEsMS41NTksMi4wMTUsMTEuODIsMTEuODIsMCwwLDEsLjY0NiwzLjI3Yy4xMTQsMS4zMzEuMTUyLDIuODg5LjE1Miw0Ljc1MnMtLjAzOCwzLjQyMi0uMTUyLDQuNzUyYTExLjgxOSwxMS44MTksMCwwLDEtLjY0NiwzLjI3LDQuMzksNC4zOSwwLDAsMS0xLjU1OSwyLjAxNSw2Ljk1LDYuOTUsMCwwLDEtMi45MjgsMS4wMjdBMzIuMDY4LDMyLjA2OCwwLDAsMSwzMTcuMyw1MC45MzZabTAtMy4wNDJhMjIuNjcxLDIyLjY3MSwwLDAsMCwzLS4xMTQsNC41NTgsNC41NTgsMCwwLDAsMS44NjMtLjQ5NCwyLjM4NywyLjM4NywwLDAsMCwxLjAyNy0xLjI5Myw3LjgxNSw3LjgxNSwwLDAsMCwuNDE4LTIuNDMzYy4wMzgtMS4wMjcuMDc2LTIuMzU3LjA3Ni0zLjk5MnMwLTIuOTY2LS4wNzYtMy45OTJhNy42MDYsNy42MDYsMCwwLDAtLjQxOC0yLjQzMywyLjM4NywyLjM4NywwLDAsMC0xLjAyNy0xLjI5Myw0LjU1OCw0LjU1OCwwLDAsMC0xLjg2My0uNDk0Yy0uOC0uMDc2LTEuNzg3LS4xMTQtMy0uMTE0YTIyLjk3LDIyLjk3LDAsMCwwLTMsLjExNCw0LjU1OCw0LjU1OCwwLDAsMC0xLjg2My40OTQsMi4zODcsMi4zODcsMCwwLDAtMS4wMjcsMS4yOTMsOS4xMiw5LjEyLDAsMCwwLS40MTgsMi40MzNxLS4xMTQsMS41NC0uMTE0LDMuOTkyYzAsMS42MzUsMCwyLjk2Ni4xMTQsMy45OTJhOC44NCw4Ljg0LDAsMCwwLC40MTgsMi40MzMsMi4zODcsMi4zODcsMCwwLDAsMS4wMjcsMS4yOTMsNC43MzgsNC43MzgsMCwwLDAsMS44NjMuNDk0QzMxNS4wOTQsNDcuODU2LDMxNi4wODMsNDcuODk0LDMxNy4zLDQ3Ljg5NFoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMzMuMzkgLTI4LjIpIiBmaWxsPSIjZmZmIi8+CiAgICAgIDxwYXRoIGlkPSJQYXRoXzc0NjI4IiBkYXRhLW5hbWU9IlBhdGggNzQ2MjgiIGQ9Ik0zNzkuNiw1MS4xVjI4LjloMy43NjRsMTEuNTU4LDE1LjkzaC4xMTRWMjguOWwzLjQ2Ljg3NFY1MS4xNDFoLTMuNDZMMzgzLjE3NCwzNC43NTVoLS4xMTRWNTAuMjY3bC0zLjQ2Ljg3NFoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yNzguMjAyIC0yOC42MzQpIiBmaWxsPSIjZmZmIi8+CiAgICAgIDxwYXRoIGlkPSJQYXRoXzc0NjI5IiBkYXRhLW5hbWU9IlBhdGggNzQ2MjkiIGQ9Ik00NTEuMSw1MS4xVjI4LjloMTYuMDA2bC0uODc0LDMuMDQySDQ1NC43NVYzOC40aDEwLjY4NGwtLjg3NCwzLjA0Mkg0NTQuNzVWNDguMWgxMi4zOTRsLS44NzQsMy4wNDJINDUxLjEzOFoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0zMjIuNTE4IC0yOC42MzQpIiBmaWxsPSIjZmZmIi8+CiAgICAgIDxwYXRoIGlkPSJQYXRoXzc0NjMwIiBkYXRhLW5hbWU9IlBhdGggNzQ2MzAiIGQ9Ik01MTIuODE0LDUxLjFWMzIuMDE4SDUwNS40VjI4LjloMTguNDRsLS44NzQsMy4xMThoLTYuNTM5VjUwLjIyOVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0zNTYuMTczIC0yOC42MzQpIiBmaWxsPSIjZmZmIi8+CiAgICA8L2c+CiAgICA8ZyBpZD0iR3JvdXBfNzg5NTciIGRhdGEtbmFtZT0iR3JvdXAgNzg5NTciIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEuOCAzLjE3NSkiPgogICAgICA8ZyBpZD0ibG9nbyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCkiPgogICAgICAgIDxwYXRoIGlkPSJQYXRoXzc0NjMxIiBkYXRhLW5hbWU9IlBhdGggNzQ2MzEiIGQ9Ik0yNi44MDcsMy45NDVhNS43MzYsNS43MzYsMCwwLDAtNS43NDEsMEw4LjksMTAuOTc5bDEuMDY1LDEuODYzTDIyLjEzMSw1Ljc3YTMuODYsMy44NiwwLDAsMSwxLjgyNS0uNDk0LDMuNDY4LDMuNDY4LDAsMCwxLDEuODI1LjQ5NGwxMi4yNDIsNy4xMSwxLjE0MS0xLjc4N1oiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC02LjIwMSAtMy4xNzUpIiBmaWxsPSIjZmZmIi8+CiAgICAgICAgPHBhdGggaWQ9IlBhdGhfNzQ2MzIiIGRhdGEtbmFtZT0iUGF0aCA3NDYzMiIgZD0iTTE0Ljk5Myw1MC44NDZsLS4xMTQtLjA3NmgwTDUuNzE2LDQ1LjQ4NWEzLjY0MywzLjY0MywwLDAsMS0xLjgyNS0zLjExOFYyOC41MjhoMGEzLjI4MiwzLjI4MiwwLDAsMSwuNTMyLTEuNzg3bC40MTgtLjUzMi42NDYtLjY0NnYtLjAzOEw0LjQ2MSwyMy43YTUuNTQ5LDUuNTQ5LDAsMCwwLTEuNiwxLjUyMUE1Ljc0NCw1Ljc0NCwwLDAsMCwxLjgsMjguNTY3VjQyLjQwNmE1Ljc0OSw1Ljc0OSwwLDAsMCwyLjg4OSw0Ljk4MWwxMS45NzYsNi45MmMuMTE0LjA3Ni4yNjYuMTUyLjM4LjIyOGwtMi4wNTMtMy42NVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xLjggLTE1Ljg5NikiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF83NDYzMyIgZGF0YS1uYW1lPSJQYXRoIDc0NjMzIiBkPSJNNjkuMjgxLDI1LjMyMWE1LjU1LDUuNTUsMCwwLDAtMS42LTEuNTIxbC0xLjAyNywxLjgyNXYuMDM4bC42NDYuNjQ2LjQxOC41MzJhMy4yODIsMy4yODIsMCwwLDEsLjUzMiwxLjc4N2gwVjQyLjQ2OGEzLjU2NCwzLjU2NCwwLDAsMS0xLjgyNSwzLjExOEw1Ny4yNjcsNTAuODdoMGwtLjExNC4wNzZMNTUuMSw1NC42YTMuMzQzLDMuMzQzLDAsMCwwLC4zOC0uMjI4bDExLjk3Ni02LjkyYTUuNzQ5LDUuNzQ5LDAsMCwwLDIuODg5LTQuOTgxVjI4LjYyOGE1Ljc0NCw1Ljc0NCwwLDAsMC0xLjA2NS0zLjM0NloiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0zNC44MzYgLTE1Ljk1OCkiIGZpbGw9IiNmZmYiLz4KICAgICAgICA8cGF0aCBpZD0iUGF0aF83NDYzNCIgZGF0YS1uYW1lPSJQYXRoIDc0NjM0IiBkPSJNNDYuNSwyOS41IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMjkuNTA1IC0xOS40OTEpIiBmaWxsPSIjZmZmIi8+CiAgICAgIDwvZz4KICAgICAgPHBhdGggaWQ9IlBhdGhfNzQ2MzUiIGRhdGEtbmFtZT0iUGF0aCA3NDYzNSIgZD0iTTI0LjM3Niw1OC4wOCwzNS42NjcsMzguNWgzLjY1TDI0LjMzOCw2NC4zMTUsOS43LDM4LjVoMy42ODhaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNi42OTYgLTI1LjA3KSIgZmlsbD0iI2ZmMjk4MCIvPgogICAgPC9nPgogIDwvZz4KPC9zdmc+Cg==" alt="Visionet">
+        <div class="brand-text">
+          <strong>BA AI Agent Ideas</strong>
+          <span>Checkpoint dashboard</span>
+        </div>
+      </div>
+      <div class="auth-controls" aria-label="Editor access">
+        <input class="form-control auth-email" id="authEmail" type="email" placeholder="Editor email">
+        <input class="form-control auth-password" id="authPassword" type="password" placeholder="Password" autocomplete="current-password">
+        <button class="btn btn-outline-secondary" id="signInBtn" type="button"><i class="bi bi-box-arrow-in-right"></i> Sign in</button>
+        <button class="btn btn-outline-secondary" id="signOutBtn" type="button" hidden><i class="bi bi-box-arrow-right"></i> Sign out</button>
+        <span class="auth-status" id="authStatus">Viewer mode</span>
+      </div>
+    </nav>
+
+    <div class="notification-region" aria-live="polite" aria-atomic="true">
+      <div class="data-status" id="dataStatus" hidden></div>
+    </div>
+
+    <section class="hero" aria-labelledby="pageTitle">
+      <div class="row g-4 align-items-end">
+        <div class="col-lg-7">
+          <div class="eyebrow"><i class="bi bi-stars"></i> Data & AI Enablement</div>
+          <h1 id="pageTitle">BA AI Agent Ideas Dashboard</h1>
+          <p class="hero-copy">A shared checkpoint board for proposed AI agent ideas from BAs, tracking ownership, stage, progress, blockers, and next steps across the 15-day review cadence.</p>
+          <div class="meta-strip">
+            <span class="meta-pill"><i class="bi bi-database"></i><span id="sourceMeta">CADM BA agent idea list</span></span>
+            <span class="meta-pill"><i class="bi bi-arrow-repeat"></i><span id="liveMeta">Live Supabase-ready dashboard</span></span>
+            <span class="meta-pill"><i class="bi bi-calendar-check"></i><span>15-day checkpoint rhythm</span></span>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="stat-grid">
+            <div class="stat-tile"><span>Total ideas</span><strong id="statTotal">0</strong><em id="statOwnersText">Across BA owners</em></div>
+            <div class="stat-tile"><span>In progress</span><strong id="statActive">0</strong><em>Discovery through implementation</em></div>
+            <div class="stat-tile"><span>Avg progress</span><strong id="statProgress">0%</strong><em>Based on progress values</em></div>
+            <div class="stat-tile"><span>Needs attention</span><strong id="statAttention">0</strong><em>Blocked, stale, or missing checkpoint notes</em></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="toolbar-band" aria-label="Dashboard filters">
+      <div class="toolbar-grid">
+        <div class="search-cell">
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-search"></i></span>
+            <input class="form-control" id="searchInput" type="search" placeholder="Search agent, purpose, owner, notes" autocomplete="off">
+          </div>
+        </div>
+        <select class="form-select" id="ownerFilter" aria-label="Owner filter"></select>
+        <select class="form-select" id="stageFilter" aria-label="Stage filter"></select>
+        <select class="form-select" id="practiceFilter" aria-label="Practice filter"></select>
+        <select class="form-select" id="priorityFilter" aria-label="Priority filter"></select>
+        <button class="btn btn-outline-secondary" id="resetBtn" type="button"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
+        <button class="btn btn-primary" id="exportBtn" type="button"><i class="bi bi-download"></i> CSV</button>
+        <button class="btn btn-accent" id="addItemBtn" type="button" hidden><i class="bi bi-plus-lg"></i> Add Idea</button>
+      </div>
+      <div class="filter-count" id="filterCount"></div>
+    </section>
+
+    <section class="summary-band" aria-label="Stage summary">
+      <div class="stage-summary-grid" id="stageSummaryGrid"></div>
+    </section>
+
+    <section class="content-band">
+      <ul class="nav nav-pills" id="dashboardTabs" role="tablist">
+        <li class="nav-item" role="presentation"><button class="nav-link active" id="cards-tab" data-bs-toggle="pill" data-bs-target="#cardsPane" type="button" role="tab" aria-controls="cardsPane" aria-selected="true"><i class="bi bi-kanban"></i> Board</button></li>
+        <li class="nav-item" role="presentation"><button class="nav-link" id="table-tab" data-bs-toggle="pill" data-bs-target="#tablePane" type="button" role="tab" aria-controls="tablePane" aria-selected="false"><i class="bi bi-table"></i> Table</button></li>
+        <li class="nav-item" role="presentation"><button class="nav-link" id="insights-tab" data-bs-toggle="pill" data-bs-target="#insightsPane" type="button" role="tab" aria-controls="insightsPane" aria-selected="false"><i class="bi bi-bar-chart"></i> Insights</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="cardsPane" role="tabpanel" aria-labelledby="cards-tab"></div>
+        <div class="tab-pane fade" id="tablePane" role="tabpanel" aria-labelledby="table-tab">
+          <div class="table-wrap">
+            <table class="table table-striped table-hover ideas-table">
+              <thead>
+                <tr>
+                  <th><button type="button" data-sort="agent_name">Agent <i class="bi bi-arrow-down-up"></i></button></th>
+                  <th><button type="button" data-sort="owner">Owner <i class="bi bi-arrow-down-up"></i></button></th>
+                  <th><button type="button" data-sort="stage">Stage <i class="bi bi-arrow-down-up"></i></button></th>
+                  <th><button type="button" data-sort="progress">Progress <i class="bi bi-arrow-down-up"></i></button></th>
+                  <th><button type="button" data-sort="priority">Priority <i class="bi bi-arrow-down-up"></i></button></th>
+                  <th>Purpose</th>
+                  <th>Checkpoint Notes</th>
+                  <th>Blockers</th>
+                  <th>Next Step</th>
+                  <th><button type="button" data-sort="target_checkpoint">Target Checkpoint <i class="bi bi-arrow-down-up"></i></button></th>
+                  <th class="editor-only" hidden>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="insightsPane" role="tabpanel" aria-labelledby="insights-tab">
+          <div class="analytics-grid">
+            <div class="analytics-panel">
+              <h3>Stage Mix</h3>
+              <div id="stageBars"></div>
+            </div>
+            <div class="analytics-panel">
+              <h3>Priority Mix</h3>
+              <div id="priorityBars"></div>
+            </div>
+            <div class="analytics-panel">
+              <h3>Owner Load</h3>
+              <div id="ownerBars"></div>
+            </div>
+            <div class="analytics-panel">
+              <h3>Checkpoint Attention Queue</h3>
+              <div class="attention-list" id="attentionList"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">Source rows are preserved from the BA agent idea workbook. Live CRUD uses the <code>ba_agent_ideas</code> Supabase table when configured.</p>
+  </main>
+
+  <div class="idea-modal" id="itemModal" hidden>
+    <div class="idea-modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <form id="itemForm">
+        <div class="idea-modal-header">
+          <h2 class="idea-modal-title" id="modalTitle">Add agent idea</h2>
+          <button class="btn btn-outline-secondary" id="closeModalBtn" type="button" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="idea-form-body">
+          <input id="itemId" name="id" type="hidden">
+          <input id="ideaSortOrder" name="sort_order" type="hidden">
+          <div class="idea-form-grid">
+            <div class="form-field full">
+              <label for="ideaName">Agent Name</label>
+              <input class="form-control" id="ideaName" name="agent_name" required>
+            </div>
+            <div class="form-field">
+              <label for="ideaOwner">Owner</label>
+              <input class="form-control" id="ideaOwner" name="owner" list="ownerOptions" required>
+            </div>
+            <div class="form-field">
+              <label for="ideaPoc">POC</label>
+              <input class="form-control" id="ideaPoc" name="poc" list="pocOptions">
+            </div>
+            <div class="form-field">
+              <label for="ideaPractice">Practice</label>
+              <input class="form-control" id="ideaPractice" name="practice" list="practiceOptions">
+            </div>
+            <div class="form-field">
+              <label for="ideaPriority">Priority</label>
+              <select class="form-select" id="ideaPriority" name="priority">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+                <option value="Critical">Critical</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="ideaStage">Stage</label>
+              <select class="form-select" id="ideaStage" name="stage">
+                <option value="Idea Phase">Idea Phase</option>
+                <option value="Discovery">Discovery</option>
+                <option value="Design">Design</option>
+                <option value="Implementation Phase">Implementation Phase</option>
+                <option value="Testing">Testing</option>
+                <option value="Pilot">Pilot</option>
+                <option value="Completed">Completed</option>
+                <option value="Blocked">Blocked</option>
+                <option value="On Hold">On Hold</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="ideaProgress">Progress</label>
+              <div class="range-row">
+                <input id="ideaProgress" name="progress" type="range" min="0" max="100" step="5">
+                <input class="form-control" id="ideaProgressNumber" type="number" min="0" max="100" step="5" aria-label="Progress percent">
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="lastCheckpoint">Last Checkpoint</label>
+              <input class="form-control" id="lastCheckpoint" name="last_checkpoint" type="date">
+            </div>
+            <div class="form-field">
+              <label for="targetCheckpoint">Target Checkpoint</label>
+              <input class="form-control" id="targetCheckpoint" name="target_checkpoint" type="date">
+            </div>
+            <div class="form-field full">
+              <label for="ideaPurpose">Purpose / Business Problem</label>
+              <textarea class="form-control" id="ideaPurpose" name="purpose"></textarea>
+            </div>
+            <div class="form-field full">
+              <label for="checkpointNotes">Checkpoint Notes</label>
+              <textarea class="form-control" id="checkpointNotes" name="checkpoint_notes" placeholder="What changed since the last checkpoint? What was discussed?"></textarea>
+            </div>
+            <div class="form-field">
+              <label for="ideaBlockers">Blockers</label>
+              <textarea class="form-control" id="ideaBlockers" name="blockers" placeholder="Stuck items, dependencies, access gaps"></textarea>
+            </div>
+            <div class="form-field">
+              <label for="ideaNextStep">Next Step</label>
+              <textarea class="form-control" id="ideaNextStep" name="next_step" placeholder="Next action before the next 15-day checkpoint"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="idea-modal-footer">
+          <button class="btn btn-outline-secondary" id="cancelModalBtn" type="button">Cancel</button>
+          <button class="btn btn-accent" id="saveItemBtn" type="submit"><i class="bi bi-check2"></i> Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <datalist id="ownerOptions"></datalist>
+  <datalist id="pocOptions"></datalist>
+  <datalist id="practiceOptions"></datalist>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const seedIdeas = [{"id": "agent-row-1", "source_row": 2, "idea_no": 1, "agent_name": "Timesheet Reconciler", "purpose": "Ensure all monthly time entries for resources on a project are accurate, complete, and free from inconsistencies.", "practice": "Enabling Services", "poc": "Arsalan Alam", "owner": "Arsalan Alam", "stage": "Implementation Phase", "priority": "Medium", "progress": 55, "checkpoint_notes": "", "blockers": "", "next_step": "", "last_checkpoint": "", "target_checkpoint": "", "sort_order": 1}, {"id": "agent-row-2", "source_row": 3, "idea_no": 2, "agent_name": "Billing Differentials", "purpose": "Ensure accurate accrual, streamline both billed and unbilled hours, and manage the billing of shadow resources effectively.", "practice": "Enabling Services", "poc": "Arsalan Alam", "owner": "Arsalan Alam", "stage": "Idea Phase", "priority": "Medium", "progress": 10, "checkpoint_notes": "", "blockers": "", "next_step": "", "last_checkpoint": "", "target_checkpoint": "", "sort_order": 2}, {"id": "agent-row-3", "source_row": 4, "idea_no": 3, "agent_name": "Fields Configuration & Mapping Agent", "purpose": "This AI agent will assist in reviewing client-provided Excel sheets and converting them into a \nstructured, standardized fields configuration file that can be used by technical teams for \ndatabase script preparation. The agent will identify duplicate fields, normalize naming \nconventions, map client fields to DocVu/system fields, highlight required versus optional \nfields, document validation rules, and capture business rules at the field level. This will \nreduce manual review effort, improve configuration accuracy, and ensure that field-level \nrequirements are clear, traceable, and ready for development and QA validation.", "practice": "Enabling Services", "poc": "Arsalan Alam", "owner": "Chaudhary Hamza Ayaz", "stage": "Idea Phase", "priority": "Medium", "progress": 10, "checkpoint_notes": "", "blockers": "", "next_step": "", "last_checkpoint": "", "target_checkpoint": "", "sort_order": 3}, {"id": "agent-row-4", "source_row": 5, "idea_no": 4, "agent_name": "Pending Files Count & SFTP Reporting Agent", "purpose": "This AI agent will support operational reporting by generating pending files count reports from SFTP or related processing sources and preparing client-ready email summaries. The agent will help identify files that are pending ingestion, processing, validation, output generation, or outbound delivery, depending on the available data. It can summarize counts by client, batch, date, file type, status, or exception category, and draft professional client communication highlighting current status, pending items, risks, and required actions. This will improve transparency, reduce manual reporting effort, and support timely client updates.", "practice": "Enabling Services", "poc": "Arsalan Alam", "owner": "Chaudhary Hamza Ayaz", "stage": "Idea Phase", "priority": "Medium", "progress": 10, "checkpoint_notes": "", "blockers": "", "next_step": "", "last_checkpoint": "", "target_checkpoint": "", "sort_order": 4}, {"id": "agent-row-5", "source_row": 6, "idea_no": 5, "agent_name": "Data Purging & Cleanup Assistant", "purpose": "This AI agent will assist with identifying redundant, obsolete, duplicate, or cleanup-eligible data within DocVu-related datasets. It can support data purging analysis by reviewing configured retention rules, detecting duplicate records, flagging unnecessary historical data, and preparing cleanup recommendations for business and technical review. The agent will help document what data should be cleaned, why it is eligible for cleanup, what dependencies or risks exist, and what approvals may be required before execution. This will improve data quality, reduce storage clutter, and support controlled data maintenance activities", "practice": "Enabling Services", "poc": "Arsalan Alam", "owner": "Chaudhary Hamza Ayaz", "stage": "Idea Phase", "priority": "Medium", "progress": 10, "checkpoint_notes": "", "blockers": "", "next_step": "", "last_checkpoint": "", "target_checkpoint": "", "sort_order": 5}, {"id": "agent-row-6", "source_row": 7, "idea_no": 6, "agent_name": "Document Search & Knowledge Retrieval Agent", "purpose": "This AI agent will help users search across connected document sources to quickly retrieve relevant files, summarize key information, and provide citations or source links where available. It can be used to answer questions from project documents, requirement files, client communication, technical notes, meeting minutes, and operational documentation. The agent will reduce time spent manually searching through multiple repositories and improve decision-making by providing concise, source-backed summaries. This is especially useful for business analysts, project managers, product owners, and support teams who frequently need to locate historical decisions, requirements, or reference materials.Document-search agent: searches across connected sources, retrieves relevant documents, summarizes the answer, and ideally shows citations or links back to the source file.", "practice": "Enabling Services", "poc": "Arsalan Alam", "owner": "Chaudhary Hamza Ayaz", "stage": "Idea Phase", "priority": "Medium", "progress": 10, "checkpoint_notes": "", "blockers": "", "next_step": "", "last_checkpoint": "", "target_checkpoint": "", "sort_order": 6}, {"id": "agent-row-7", "source_row": 8, "idea_no": 7, "agent_name": "Email-to-Task Agent", "purpose": "This AI agent will analyze emails or email threads, summarize the key points, detect commitments, identify action items, and convert them into structured tasks. It can extract owners, due dates, dependencies, pending confirmations, and follow-up requirements, then draft reminder emails or task updates for stakeholders. This will help reduce missed commitments, improve accountability, and ensure that important client or internal requests are tracked properly. The agent can be especially valuable for project coordination, stakeholder communication, delivery follow-up, and operational task management.", "practice": "Enabling Services", "poc": "Arsalan Alam", "owner": "Chaudhary Hamza Ayaz", "stage": "Idea Phase", "priority": "Medium", "progress": 10, "checkpoint_notes": "", "blockers": "", "next_step": "", "last_checkpoint": "", "target_checkpoint": "", "sort_order": 7}, {"id": "agent-row-8", "source_row": 9, "idea_no": 8, "agent_name": "Open Questions Agent", "purpose": "This AI agent will extract open questions from meeting notes, requirement documents, emails, or discussion summaries and organize them into a structured tracker. It can categorize each question by topic, assign a proposed owner, identify priority, track current status, and draft follow-up communication for pending responses. This will help project teams manage unresolved items more effectively, reduce ambiguity during requirement finalization, and ensure that blockers are visible before development, QA, or deployment activities begin. The agent will support stronger governance around requirement clarification and decision tracking", "practice": "Enabling Services", "poc": "Arsalan Alam", "owner": "Chaudhary Hamza Ayaz", "stage": "Idea Phase", "priority": "Medium", "progress": 10, "checkpoint_notes": "", "blockers": "", "next_step": "", "last_checkpoint": "", "target_checkpoint": "", "sort_order": 8}, {"id": "agent-row-9", "source_row": 10, "idea_no": 9, "agent_name": "MigrateIQ", "purpose": "An AI-powered agent that generates database migration scripts with built-in risk analysis and rollback intelligence.\"", "practice": "Enabling Services", "poc": "Arsalan Alam", "owner": "Waleed Ahmed", "stage": "Idea Phase", "priority": "Medium", "progress": 10, "checkpoint_notes": "", "blockers": "", "next_step": "", "last_checkpoint": "", "target_checkpoint": "", "sort_order": 9}, {"id": "agent-row-10", "source_row": 11, "idea_no": 10, "agent_name": "Code-to-User Manual Documentation Agent", "purpose": "Business Problem it Solves: \nBA/PM and documentation teams spend significant time understanding implemented functionality from the application/codebase and converting it into structured user manuals. This agent reverse engineers implemented features from the source code, UI routes, components, workflows, validations, permissions, and business logic to generate review-ready user manual documentation. \n\nKey Features: \nCodebase scanning, feature flow identification, UI step extraction, validation/business rule extraction, role/permission mapping, user guide generation, prerequisite and outcome documentation, and gap highlighting where behavior cannot be confidently inferred. \n\nROI: Reduces manual documentation effort, improves consistency of user manuals, accelerates release documentation, and helps BA/PM teams keep documentation aligned with actual implementation.", "practice": "Enabling Services", "poc": "Arsalan Alam", "owner": "Waleed Ahmed", "stage": "Implementation Phase", "priority": "Medium", "progress": 55, "checkpoint_notes": "", "blockers": "", "next_step": "", "last_checkpoint": "", "target_checkpoint": "", "sort_order": 10}, {"id": "agent-row-11", "source_row": 12, "idea_no": 11, "agent_name": "Requirement-to-Implementation Gap Analysis Agent", "purpose": "Business Problem it Solves: \nDuring delivery, implemented features may deviate from the originally approved BRD/FSD due to scope changes, missed requirements, technical constraints, or undocumented decisions. This agent compares the original BRD/FSD with a reverse-engineered implementation specification generated from the codebase to identify functional gaps, missing validations, changed workflows, edge-case differences, and undocumented implementation behavior. \n\nKey Features: BRD/FSD parsing, code-based feature behavior extraction, reverse-engineered FSD generation, requirement-to-code traceability mapping, gap classification, severity assessment, impacted user flows, open questions, and recommended follow-up actions. \n\nROI: Improves requirement traceability, reduces UAT surprises, helps identify missed scope earlier, supports QA planning, and gives BA/PM teams evidence-backed implementation review before release.", "practice": "Enabling Services", "poc": "Arsalan Alam", "owner": "Waleed Ahmed", "stage": "Idea Phase", "priority": "Medium", "progress": 10, "checkpoint_notes": "", "blockers": "", "next_step": "", "last_checkpoint": "", "target_checkpoint": "", "sort_order": 11}, {"id": "agent-row-12", "source_row": 13, "idea_no": 12, "agent_name": "Meeting Minutes / MOM Generation Agent", "purpose": "Business Problem it Solves: \nBA/PM teams spend significant time converting meeting transcripts, notes, and discussions into structured meeting minutes, action items, decisions, risks, dependencies, and follow-ups. This agent analyzes meeting transcripts and automatically generates professional MOMs with clear discussion summaries, decision logs, action item tables, open questions, and follow-up messages. \n\nKey Features: \nTranscript analysis, meeting summary generation, action item extraction, decision identification, risk/issue/dependency capture, owner and due-date detection where available, follow-up email/message draft, and review-ready MOM output. \n\nROI: \nReduces manual documentation effort, improves meeting traceability, prevents action items from being missed, and helps PM/BA teams maintain consistent meeting records with faster turnaround.", "practice": "Enabling Services", "poc": "Arsalan Alam", "owner": "Waleed Ahmed", "stage": "Implementation Phase", "priority": "Medium", "progress": 55, "checkpoint_notes": "", "blockers": "", "next_step": "", "last_checkpoint": "", "target_checkpoint": "", "sort_order": 12}, {"id": "agent-row-13", "source_row": 14, "idea_no": 13, "agent_name": "Meeting Transcript to BRD/FSD Agent", "purpose": "Business Problem it Solves: \nRequirements discussed during client or internal meetings are often captured in unstructured transcripts and require significant BA effort to convert into structured requirement documents. This agent analyzes meeting transcripts and generates review-ready BRD/FSD drafts, including business context, functional requirements, business rules, assumptions, dependencies, edge cases, open questions, and confirmation points. \n\nKey Features: \nRequirement extraction from transcripts, BRD/FSD draft generation, functional and non-functional requirement identification, business rule extraction, assumptions and gaps identification, user story alignment, and clarification question generation. \n\nROI: \nAccelerates requirement documentation, reduces manual BA effort, improves consistency of BRD/FSD drafts, and helps teams identify missing requirement details earlier in the requirement lifecycle.", "practice": "Enabling Services", "poc": "Arsalan Alam", "owner": "Waleed Ahmed", "stage": "Idea Phase", "priority": "Medium", "progress": 10, "checkpoint_notes": "", "blockers": "", "next_step": "", "last_checkpoint": "", "target_checkpoint": "", "sort_order": 13}, {"id": "agent-row-14", "source_row": 15, "idea_no": 14, "agent_name": "Interview Preparation & Candidate Evaluation Agent", "purpose": "Business Problem it Solves: \nInterviewers often spend significant time reviewing job descriptions, candidate resumes, and preparing role-specific interview questions, while post-interview feedback can be inconsistent or subjective. This agent analyzes the job description and candidate CV to generate a structured interview plan with competency-based, analytical, role-specific, and resume-based questions. After the interview, the transcript can be provided back to the agent to evaluate the candidate's responses against predefined measurable criteria such as technical/domain understanding, analytical thinking, communication clarity, problem-solving approach, relevant experience, role fit, and confidence level. \n\nKey Features: \nJD and CV analysis, skill-gap identification, customized question bank generation, competency-based evaluation rubric, interview scoring framework, transcript-based answer assessment, strengths and concerns summary, follow-up question recommendations, and structured interview feedback draft. \n\nROI: \nImproves interview consistency, reduces preparation time, supports fairer competency-based evaluation, helps interviewers identify role-fit gaps more clearly, and creates structured feedback for hiring discussions while keeping the final decision with the interview panel.", "practice": "Enabling Services", "poc": "Arsalan Alam", "owner": "Waleed Ahmed", "stage": "Implementation Phase", "priority": "Medium", "progress": 55, "checkpoint_notes": "", "blockers": "", "next_step": "", "last_checkpoint": "", "target_checkpoint": "", "sort_order": 14}, {"id": "agent-row-15", "source_row": 16, "idea_no": 15, "agent_name": "Release Notes Automation Agent", "purpose": "Automatically generate and publish release notes after a production deployment. The agent monitors the production deployment email, extracts the deployed JIRA ticket IDs, retrieves the relevant ticket details, generates release notes and updates the corresponding Confluence release documentation. The purpose is to eliminate manual documentation, ensure consistency, reduce errors, and speed up post-deployment communication.", "practice": "Enabling Services", "poc": "Arsalan Alam", "owner": "Bilal Khan", "stage": "Idea Phase", "priority": "Medium", "progress": 10, "checkpoint_notes": "", "blockers": "", "next_step": "", "last_checkpoint": "", "target_checkpoint": "", "sort_order": 15}, {"id": "agent-row-16", "source_row": 17, "idea_no": 16, "agent_name": "Project Monthly Progress Report Presentation Agent", "purpose": "Business Problem it Solves: \nPMs/POs spend significant time consolidating monthly project updates from multiple sources such as sprint progress, completed work, pending items, risks, issues, blockers, resource updates, timelines, and upcoming roadmap items into leadership-ready presentations. This agent intakes project-related information from the user and generates a structured monthly project progress report presentation that can be shared with higher management during review meetings. \n\nKey Features: \nMonthly progress summary, project health status, completed vs planned work analysis, sprint/release progress, key accomplishments, risks/issues/dependencies, upcoming milestones, pending decisions, resource/status highlights, metrics tables, charts, infographics, executive summary, and leadership-focused recommendations. \n\nROI: \nReduces manual reporting effort, improves consistency of project status reporting, provides faster visibility to leadership, helps PMs/POs communicate delivery progress clearly, and supports better decision-making through structured metrics and visual reporting.", "practice": "Enabling Services", "poc": "Arsalan Alam", "owner": "Waleed Ahmed", "stage": "Idea Phase", "priority": "Medium", "progress": 10, "checkpoint_notes": "", "blockers": "", "next_step": "", "last_checkpoint": "", "target_checkpoint": "", "sort_order": 16}];
+    const SUPABASE_URL = "https://pywpycurpzawznkiludr.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_34GgjLcelIDzXHPNiK-_vQ_vL0yhNDP";
+    const SUPABASE_TABLE = "ba_agent_ideas";
+    const STAGE_ORDER = ["Idea Phase", "Discovery", "Design", "Implementation Phase", "Testing", "Pilot", "Completed", "Blocked", "On Hold"];
+    const PRIORITY_ORDER = { "Critical": 0, "High": 1, "Medium": 2, "Low": 3, "": 9 };
+    const DEFAULT_PROGRESS = {
+      "Idea Phase": 10,
+      "Discovery": 20,
+      "Design": 35,
+      "Implementation Phase": 55,
+      "Testing": 75,
+      "Pilot": 85,
+      "Completed": 100,
+      "Blocked": 25,
+      "On Hold": 20
+    };
+
+    let ideas = seedIdeas.map(normalizeIdea);
+    let supabaseClient = null;
+    let currentUser = null;
+    let realtimeChannel = null;
+    let statusTimer = null;
+    let sortState = { field: "sort_order", direction: "asc" };
+    const state = {
+      search: "",
+      owner: "all",
+      stage: "all",
+      practice: "all",
+      priority: "all"
+    };
+
+    const elements = {
+      authEmail: document.getElementById("authEmail"),
+      authPassword: document.getElementById("authPassword"),
+      signInBtn: document.getElementById("signInBtn"),
+      signOutBtn: document.getElementById("signOutBtn"),
+      authStatus: document.getElementById("authStatus"),
+      dataStatus: document.getElementById("dataStatus"),
+      sourceMeta: document.getElementById("sourceMeta"),
+      liveMeta: document.getElementById("liveMeta"),
+      statTotal: document.getElementById("statTotal"),
+      statActive: document.getElementById("statActive"),
+      statProgress: document.getElementById("statProgress"),
+      statAttention: document.getElementById("statAttention"),
+      statOwnersText: document.getElementById("statOwnersText"),
+      searchInput: document.getElementById("searchInput"),
+      ownerFilter: document.getElementById("ownerFilter"),
+      stageFilter: document.getElementById("stageFilter"),
+      practiceFilter: document.getElementById("practiceFilter"),
+      priorityFilter: document.getElementById("priorityFilter"),
+      resetBtn: document.getElementById("resetBtn"),
+      exportBtn: document.getElementById("exportBtn"),
+      addItemBtn: document.getElementById("addItemBtn"),
+      filterCount: document.getElementById("filterCount"),
+      stageSummaryGrid: document.getElementById("stageSummaryGrid"),
+      cardsPane: document.getElementById("cardsPane"),
+      tableBody: document.getElementById("tableBody"),
+      stageBars: document.getElementById("stageBars"),
+      priorityBars: document.getElementById("priorityBars"),
+      ownerBars: document.getElementById("ownerBars"),
+      attentionList: document.getElementById("attentionList"),
+      itemModal: document.getElementById("itemModal"),
+      itemForm: document.getElementById("itemForm"),
+      modalTitle: document.getElementById("modalTitle"),
+      closeModalBtn: document.getElementById("closeModalBtn"),
+      cancelModalBtn: document.getElementById("cancelModalBtn"),
+      progressRange: document.getElementById("ideaProgress"),
+      progressNumber: document.getElementById("ideaProgressNumber"),
+      ownerOptions: document.getElementById("ownerOptions"),
+      pocOptions: document.getElementById("pocOptions"),
+      practiceOptions: document.getElementById("practiceOptions")
+    };
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function normalizeText(value) {
+      return String(value ?? "").trim();
+    }
+
+    function normalizeStage(value) {
+      const stage = normalizeText(value);
+      if (!stage) return "Idea Phase";
+      const lower = stage.toLowerCase();
+      if (lower === "implementation phase") return "Implementation Phase";
+      if (lower === "idea phase") return "Idea Phase";
+      return stage;
+    }
+
+    function normalizeProgress(value, stage) {
+      const number = Number.parseInt(value, 10);
+      if (Number.isFinite(number)) return Math.max(0, Math.min(100, number));
+      return DEFAULT_PROGRESS[stage] ?? 0;
+    }
+
+    function normalizeIdea(raw) {
+      const stage = normalizeStage(raw.stage);
+      const priority = normalizeText(raw.priority) || "Medium";
+      const purpose = normalizeText(raw.purpose);
+      const checkpointNotes = normalizeText(raw.checkpoint_notes);
+      const blockers = normalizeText(raw.blockers);
+      const nextStep = normalizeText(raw.next_step);
+      const idea = {
+        id: raw.id || `agent-${crypto.randomUUID?.() || Date.now()}`,
+        dbId: raw.dbId || raw.id || null,
+        source_row: raw.source_row ?? "",
+        idea_no: raw.idea_no ?? raw.sort_order ?? "",
+        agent_name: normalizeText(raw.agent_name),
+        purpose,
+        practice: normalizeText(raw.practice) || "Unspecified",
+        poc: normalizeText(raw.poc) || "Unassigned",
+        owner: normalizeText(raw.owner) || "Unassigned",
+        stage,
+        priority,
+        progress: normalizeProgress(raw.progress, stage),
+        checkpoint_notes: checkpointNotes,
+        blockers,
+        next_step: nextStep,
+        last_checkpoint: normalizeText(raw.last_checkpoint),
+        target_checkpoint: normalizeText(raw.target_checkpoint),
+        sort_order: Number.parseInt(raw.sort_order, 10) || 999,
+        created_at: raw.created_at || "",
+        updated_at: raw.updated_at || ""
+      };
+      idea.searchText = [
+        idea.agent_name,
+        idea.purpose,
+        idea.practice,
+        idea.poc,
+        idea.owner,
+        idea.stage,
+        idea.priority,
+        idea.checkpoint_notes,
+        idea.blockers,
+        idea.next_step
+      ].join(" ").toLowerCase();
+      return idea;
+    }
+
+    function dbToIdea(row) {
+      return normalizeIdea({
+        id: row.id,
+        dbId: row.id,
+        agent_name: row.agent_name,
+        purpose: row.purpose,
+        practice: row.practice,
+        poc: row.poc,
+        owner: row.owner,
+        stage: row.stage,
+        priority: row.priority,
+        progress: row.progress,
+        checkpoint_notes: row.checkpoint_notes,
+        blockers: row.blockers,
+        next_step: row.next_step,
+        last_checkpoint: row.last_checkpoint,
+        target_checkpoint: row.target_checkpoint,
+        sort_order: row.sort_order,
+        source_row: row.source_row,
+        created_at: row.created_at,
+        updated_at: row.updated_at
+      });
+    }
+
+    function ideaToDbPayload(values) {
+      return {
+        agent_name: normalizeText(values.agent_name),
+        purpose: normalizeText(values.purpose),
+        practice: normalizeText(values.practice) || "Unspecified",
+        poc: normalizeText(values.poc) || "Unassigned",
+        owner: normalizeText(values.owner) || "Unassigned",
+        stage: normalizeStage(values.stage),
+        priority: normalizeText(values.priority) || "Medium",
+        progress: normalizeProgress(values.progress, normalizeStage(values.stage)),
+        checkpoint_notes: normalizeText(values.checkpoint_notes),
+        blockers: normalizeText(values.blockers),
+        next_step: normalizeText(values.next_step),
+        last_checkpoint: normalizeText(values.last_checkpoint) || null,
+        target_checkpoint: normalizeText(values.target_checkpoint) || null,
+        sort_order: Number.parseInt(values.sort_order, 10) || ideas.length + 1,
+        source_row: Number.parseInt(values.source_row, 10) || null
+      };
+    }
+
+    function badgeClass(value) {
+      return `badge-${String(value || "empty").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
+    }
+
+    function badge(value, icon = "bi-circle-fill") {
+      return `<span class="badge-chip ${badgeClass(value)}"><i class="bi ${icon}"></i>${escapeHtml(value || "Unspecified")}</span>`;
+    }
+
+    function truncate(value, length = 210) {
+      const text = normalizeText(value);
+      return text.length > length ? `${text.slice(0, length - 3)}...` : text;
+    }
+
+    function countBy(items, field) {
+      return items.reduce((acc, item) => {
+        const key = normalizeText(item[field]) || "Unspecified";
+        acc[key] = (acc[key] || 0) + 1;
+        return acc;
+      }, {});
+    }
+
+    function uniqueValues(field) {
+      return [...new Set(ideas.map(item => normalizeText(item[field])).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+    }
+
+    function buildSelect(select, label, values) {
+      select.innerHTML = `<option value="all">${escapeHtml(label)}</option>` + values.map(value => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("");
+    }
+
+    function buildDatalist(datalist, values) {
+      datalist.innerHTML = values.map(value => `<option value="${escapeHtml(value)}"></option>`).join("");
+    }
+
+    function refreshFilters() {
+      const selected = { ...state };
+      buildSelect(elements.ownerFilter, "All owners", uniqueValues("owner"));
+      buildSelect(elements.stageFilter, "All stages", STAGE_ORDER.filter(stage => ideas.some(item => item.stage === stage)).concat(uniqueValues("stage").filter(stage => !STAGE_ORDER.includes(stage))));
+      buildSelect(elements.practiceFilter, "All practices", uniqueValues("practice"));
+      buildSelect(elements.priorityFilter, "All priorities", ["Critical", "High", "Medium", "Low"].filter(priority => ideas.some(item => item.priority === priority)).concat(uniqueValues("priority").filter(priority => !["Critical", "High", "Medium", "Low"].includes(priority))));
+      for (const [key, element] of [["owner", elements.ownerFilter], ["stage", elements.stageFilter], ["practice", elements.practiceFilter], ["priority", elements.priorityFilter]]) {
+        element.value = [...element.options].some(option => option.value === selected[key]) ? selected[key] : "all";
+        state[key] = element.value;
+      }
+      buildDatalist(elements.ownerOptions, uniqueValues("owner"));
+      buildDatalist(elements.pocOptions, uniqueValues("poc"));
+      buildDatalist(elements.practiceOptions, uniqueValues("practice"));
+    }
+
+    function filteredIdeas() {
+      const search = state.search.toLowerCase();
+      return ideas.filter(item => {
+        if (search && !item.searchText.includes(search)) return false;
+        if (state.owner !== "all" && item.owner !== state.owner) return false;
+        if (state.stage !== "all" && item.stage !== state.stage) return false;
+        if (state.practice !== "all" && item.practice !== state.practice) return false;
+        if (state.priority !== "all" && item.priority !== state.priority) return false;
+        return true;
+      });
+    }
+
+    function sortedIdeas(items) {
+      return [...items].sort((a, b) => {
+        const dir = sortState.direction === "asc" ? 1 : -1;
+        let av = a[sortState.field];
+        let bv = b[sortState.field];
+        if (sortState.field === "stage") {
+          av = STAGE_ORDER.indexOf(a.stage);
+          bv = STAGE_ORDER.indexOf(b.stage);
+          av = av < 0 ? 99 : av;
+          bv = bv < 0 ? 99 : bv;
+        } else if (sortState.field === "priority") {
+          av = PRIORITY_ORDER[a.priority] ?? 9;
+          bv = PRIORITY_ORDER[b.priority] ?? 9;
+        } else if (sortState.field === "progress" || sortState.field === "sort_order") {
+          av = Number(av) || 0;
+          bv = Number(bv) || 0;
+        } else {
+          av = String(av || "").toLowerCase();
+          bv = String(bv || "").toLowerCase();
+        }
+        if (av < bv) return -1 * dir;
+        if (av > bv) return 1 * dir;
+        return (a.sort_order - b.sort_order) || a.agent_name.localeCompare(b.agent_name);
+      });
+    }
+
+    function isActive(item) {
+      return ["Discovery", "Design", "Implementation Phase", "Testing", "Pilot"].includes(item.stage);
+    }
+
+    function daysSince(dateValue) {
+      if (!dateValue) return null;
+      const date = new Date(`${dateValue}T00:00:00`);
+      if (Number.isNaN(date.getTime())) return null;
+      const today = new Date();
+      const normalizedToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      return Math.floor((normalizedToday - date) / 86400000);
+    }
+
+    function isOverdue(dateValue) {
+      const days = daysSince(dateValue);
+      return days !== null && days > 0;
+    }
+
+    function attentionReasons(item) {
+      const reasons = [];
+      if (item.stage === "Blocked") reasons.push("blocked");
+      if (item.blockers) reasons.push("has blockers");
+      if (item.target_checkpoint && isOverdue(item.target_checkpoint) && item.stage !== "Completed") reasons.push("checkpoint overdue");
+      const checkpointAge = daysSince(item.last_checkpoint);
+      if (isActive(item) && checkpointAge !== null && checkpointAge > 15) reasons.push(`${checkpointAge} days since last checkpoint`);
+      if (isActive(item) && !item.last_checkpoint && item.stage !== "Idea Phase") reasons.push("no checkpoint recorded");
+      if (item.stage === "Implementation Phase" && item.progress < 70) reasons.push("implementation progress below 70%");
+      if (isActive(item) && !item.next_step) reasons.push("next step missing");
+      return reasons;
+    }
+
+    function renderStats(items) {
+      const total = items.length;
+      const owners = Object.keys(countBy(items, "owner")).length;
+      const active = items.filter(isActive).length;
+      const avgProgress = total ? Math.round(items.reduce((sum, item) => sum + item.progress, 0) / total) : 0;
+      const attention = items.filter(item => attentionReasons(item).length > 0).length;
+      elements.statTotal.textContent = total;
+      elements.statActive.textContent = active;
+      elements.statProgress.textContent = `${avgProgress}%`;
+      elements.statAttention.textContent = attention;
+      elements.statOwnersText.textContent = `${owners} owner${owners === 1 ? "" : "s"} represented`;
+    }
+
+    function renderStageSummary(items) {
+      const counts = countBy(items, "stage");
+      const stages = STAGE_ORDER.filter(stage => counts[stage]).concat(Object.keys(counts).filter(stage => !STAGE_ORDER.includes(stage)));
+      if (!stages.length) {
+        elements.stageSummaryGrid.innerHTML = `<div class="empty-state">No stage summary for the current selection.</div>`;
+        return;
+      }
+      elements.stageSummaryGrid.innerHTML = stages.map(stage => {
+        const stageItems = items.filter(item => item.stage === stage);
+        const avg = stageItems.length ? Math.round(stageItems.reduce((sum, item) => sum + item.progress, 0) / stageItems.length) : 0;
+        return `<article class="stage-summary-card">
+          <header><span>${escapeHtml(stage)}</span><strong>${stageItems.length}</strong></header>
+          <small>${avg}% average progress</small>
+          <div class="progress-track"><span class="progress-fill" style="width:${avg}%"></span></div>
+        </article>`;
+      }).join("");
+    }
+
+    function renderCards(items) {
+      const sorted = sortedIdeas(items);
+      if (!sorted.length) {
+        elements.cardsPane.innerHTML = `<div class="empty-state"><i class="bi bi-search"></i><br>No agent ideas match the current selection.</div>`;
+        return;
+      }
+      const byStage = STAGE_ORDER.filter(stage => sorted.some(item => item.stage === stage)).concat([...new Set(sorted.map(item => item.stage))].filter(stage => !STAGE_ORDER.includes(stage)));
+      elements.cardsPane.innerHTML = byStage.map(stage => {
+        const stageItems = sorted.filter(item => item.stage === stage);
+        return `<section class="stage-lane">
+          <header class="stage-lane-header">
+            <div><h2>${escapeHtml(stage)}</h2><span>${stageItems.length} idea${stageItems.length === 1 ? "" : "s"}</span></div>
+            <span>${Math.round(stageItems.reduce((sum, item) => sum + item.progress, 0) / stageItems.length)}% avg progress</span>
+          </header>
+          <div class="ideas-grid">
+            ${stageItems.map(renderIdeaCard).join("")}
+          </div>
+        </section>`;
+      }).join("");
+    }
+
+    function renderIdeaCard(item) {
+      const reasons = attentionReasons(item);
+      return `<article class="idea-card ${reasons.length ? "attention" : ""}">
+        <div>
+          ${badge(item.stage)}
+          ${badge(item.priority, "bi-flag")}
+        </div>
+        <h3>${escapeHtml(item.agent_name || "Untitled agent idea")}</h3>
+        <p class="idea-purpose">${escapeHtml(truncate(item.purpose, 360)) || "No purpose captured yet."}</p>
+        <div class="progress-track" title="${item.progress}% complete"><span class="progress-fill" style="width:${item.progress}%"></span></div>
+        <div class="idea-meta">
+          <div class="meta-box"><span>Owner</span><strong>${escapeHtml(item.owner)}</strong></div>
+          <div class="meta-box"><span>POC</span><strong>${escapeHtml(item.poc)}</strong></div>
+          <div class="meta-box"><span>Progress</span><strong>${item.progress}%</strong></div>
+          <div class="meta-box"><span>Target</span><strong>${escapeHtml(item.target_checkpoint || "Not set")}</strong></div>
+        </div>
+        ${item.checkpoint_notes ? `<div class="meta-box mt-2"><span>Latest note</span><strong>${escapeHtml(truncate(item.checkpoint_notes, 120))}</strong></div>` : ""}
+        ${reasons.length ? `<div class="meta-box mt-2"><span>Attention</span><strong>${escapeHtml(reasons.join(", "))}</strong></div>` : ""}
+        <div class="idea-actions editor-only" ${currentUser ? "" : "hidden"}>
+          <button class="btn btn-sm btn-outline-secondary" type="button" data-action="edit" data-id="${escapeHtml(item.dbId || item.id)}"><i class="bi bi-pencil-square"></i> Edit</button>
+          <button class="btn btn-sm danger-btn" type="button" data-action="delete" data-id="${escapeHtml(item.dbId || item.id)}"><i class="bi bi-trash3"></i> Delete</button>
+        </div>
+      </article>`;
+    }
+
+    function renderTable(items) {
+      const rows = sortedIdeas(items);
+      if (!rows.length) {
+        elements.tableBody.innerHTML = `<tr><td colspan="11"><div class="empty-state">No agent ideas match the current selection.</div></td></tr>`;
+        return;
+      }
+      elements.tableBody.innerHTML = rows.map(item => {
+        return `<tr>
+          <td><strong>${escapeHtml(item.agent_name)}</strong><br><small>${escapeHtml(item.practice)}</small></td>
+          <td>${escapeHtml(item.owner)}<br><small>POC: ${escapeHtml(item.poc)}</small></td>
+          <td>${badge(item.stage)}</td>
+          <td class="progress-cell"><div class="progress-track"><span class="progress-fill" style="width:${item.progress}%"></span></div><small>${item.progress}%</small></td>
+          <td>${badge(item.priority, "bi-flag")}</td>
+          <td class="purpose-cell">${escapeHtml(truncate(item.purpose, 260))}</td>
+          <td class="purpose-cell">${escapeHtml(truncate(item.checkpoint_notes || "No notes yet", 180))}</td>
+          <td class="purpose-cell">${escapeHtml(truncate(item.blockers || "None", 140))}</td>
+          <td class="purpose-cell">${escapeHtml(truncate(item.next_step || "Not set", 140))}</td>
+          <td>${escapeHtml(item.target_checkpoint || "Not set")}</td>
+          <td class="editor-only" ${currentUser ? "" : "hidden"}>
+            <div class="d-flex flex-wrap gap-2">
+              <button class="btn btn-sm btn-outline-secondary" type="button" data-action="edit" data-id="${escapeHtml(item.dbId || item.id)}">Edit</button>
+              <button class="btn btn-sm danger-btn" type="button" data-action="delete" data-id="${escapeHtml(item.dbId || item.id)}">Delete</button>
+            </div>
+          </td>
+        </tr>`;
+      }).join("");
+    }
+
+    function renderBars(container, counts, sortValues = null) {
+      const entries = Object.entries(counts);
+      if (sortValues) {
+        entries.sort((a, b) => (sortValues.indexOf(a[0]) < 0 ? 99 : sortValues.indexOf(a[0])) - (sortValues.indexOf(b[0]) < 0 ? 99 : sortValues.indexOf(b[0])));
+      } else {
+        entries.sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+      }
+      const max = Math.max(1, ...entries.map(([, value]) => value));
+      if (!entries.length) {
+        container.innerHTML = `<div class="empty-state">No data for the current selection.</div>`;
+        return;
+      }
+      container.innerHTML = entries.map(([label, value]) => `<div class="bar-row">
+        <span>${escapeHtml(label)}</span>
+        <div class="bar-track"><span class="bar-fill" style="width:${Math.round((value / max) * 100)}%"></span></div>
+        <strong>${value}</strong>
+      </div>`).join("");
+    }
+
+    function renderAttention(items) {
+      const attentionItems = sortedIdeas(items).map(item => ({ item, reasons: attentionReasons(item) })).filter(entry => entry.reasons.length).slice(0, 8);
+      if (!attentionItems.length) {
+        elements.attentionList.innerHTML = `<div class="empty-state">No attention items in the current selection.</div>`;
+        return;
+      }
+      elements.attentionList.innerHTML = attentionItems.map(({ item, reasons }) => `<div class="attention-item">
+        <strong>${escapeHtml(item.agent_name)}</strong>
+        <span>${escapeHtml(reasons.join(", "))}</span>
+      </div>`).join("");
+    }
+
+    function renderInsights(items) {
+      renderBars(elements.stageBars, countBy(items, "stage"), STAGE_ORDER);
+      renderBars(elements.priorityBars, countBy(items, "priority"), ["Critical", "High", "Medium", "Low"]);
+      renderBars(elements.ownerBars, countBy(items, "owner"));
+      renderAttention(items);
+    }
+
+    function render() {
+      refreshFilters();
+      updateAuthUi();
+      const items = filteredIdeas();
+      elements.filterCount.textContent = `${items.length} of ${ideas.length} agent ideas shown`;
+      renderStats(items);
+      renderStageSummary(items);
+      renderCards(items);
+      renderTable(items);
+      renderInsights(items);
+    }
+
+    function setDataStatus(message, type = "") {
+      clearTimeout(statusTimer);
+      elements.dataStatus.textContent = message || "";
+      elements.dataStatus.className = `data-status ${type}`.trim();
+      elements.dataStatus.hidden = !message;
+      if (message && type !== "error") {
+        statusTimer = setTimeout(() => {
+          elements.dataStatus.hidden = true;
+          elements.dataStatus.textContent = "";
+        }, 4200);
+      }
+    }
+
+    function isSupabaseConfigured() {
+      return Boolean(SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY && !SUPABASE_PUBLISHABLE_KEY.includes("PASTE"));
+    }
+
+    async function initializeSupabase() {
+      if (!isSupabaseConfigured()) {
+        elements.liveMeta.textContent = "Embedded workbook data";
+        setDataStatus("Supabase key not configured. Showing embedded workbook data.", "error");
+        return;
+      }
+      if (!window.supabase) {
+        elements.liveMeta.textContent = "Embedded workbook data";
+        setDataStatus("Supabase library did not load. Showing embedded workbook data.", "error");
+        return;
+      }
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+      const { data } = await supabaseClient.auth.getSession();
+      currentUser = data?.session?.user ?? null;
+      supabaseClient.auth.onAuthStateChange((_event, session) => {
+        currentUser = session?.user ?? null;
+        updateAuthUi();
+        render();
+      });
+      await loadRemoteIdeas();
+      subscribeToChanges();
+    }
+
+    async function loadRemoteIdeas() {
+      if (!supabaseClient) return;
+      setDataStatus("Loading BA agent ideas...");
+      const { data, error } = await supabaseClient
+        .from(SUPABASE_TABLE)
+        .select("id,agent_name,purpose,practice,poc,owner,stage,priority,progress,checkpoint_notes,blockers,next_step,last_checkpoint,target_checkpoint,sort_order,source_row,created_at,updated_at")
+        .order("sort_order", { ascending: true });
+      if (error) {
+        elements.liveMeta.textContent = "Embedded workbook data";
+        console.warn("Supabase load failed", error);
+        setDataStatus("Live database table is not ready yet. Showing embedded workbook data.");
+        render();
+        return;
+      }
+      if (data?.length) {
+        ideas = data.map(dbToIdea);
+        elements.sourceMeta.textContent = "BA AI Agent Ideas";
+        elements.liveMeta.textContent = "Live shared database";
+        setDataStatus(`Loaded ${ideas.length} agent ideas from Supabase.`, "success");
+      } else {
+        elements.liveMeta.textContent = "Live table is empty";
+        setDataStatus("Supabase table is empty. Showing embedded workbook data until seed data is loaded.", "error");
+      }
+      render();
+    }
+
+    function subscribeToChanges() {
+      if (!supabaseClient || realtimeChannel) return;
+      realtimeChannel = supabaseClient
+        .channel("ba_agent_ideas_changes")
+        .on("postgres_changes", { event: "*", schema: "public", table: SUPABASE_TABLE }, () => loadRemoteIdeas())
+        .subscribe();
+    }
+
+    function updateAuthUi() {
+      const signedIn = Boolean(currentUser);
+      elements.authEmail.hidden = signedIn;
+      elements.authPassword.hidden = signedIn;
+      elements.signInBtn.hidden = signedIn;
+      elements.signOutBtn.hidden = !signedIn;
+      elements.addItemBtn.hidden = !signedIn;
+      elements.authStatus.textContent = signedIn ? `Signed in: ${currentUser.email || "editor"}` : "Viewer mode";
+      document.querySelectorAll(".editor-only").forEach(element => {
+        element.hidden = !signedIn;
+      });
+    }
+
+    function openModal(item = null) {
+      if (!currentUser) {
+        setDataStatus("Sign in with an approved editor account before changing ideas.", "error");
+        return;
+      }
+      elements.itemForm.reset();
+      elements.modalTitle.textContent = item ? "Edit agent idea" : "Add agent idea";
+      elements.itemForm.elements.id.value = item?.dbId || item?.id || "";
+      elements.itemForm.elements.agent_name.value = item?.agent_name || "";
+      elements.itemForm.elements.owner.value = item?.owner || "";
+      elements.itemForm.elements.poc.value = item?.poc || "";
+      elements.itemForm.elements.practice.value = item?.practice || "Enabling Services";
+      elements.itemForm.elements.priority.value = item?.priority || "Medium";
+      elements.itemForm.elements.stage.value = item?.stage || "Idea Phase";
+      elements.itemForm.elements.progress.value = item?.progress ?? DEFAULT_PROGRESS[item?.stage || "Idea Phase"] ?? 10;
+      elements.progressNumber.value = elements.itemForm.elements.progress.value;
+      elements.itemForm.elements.last_checkpoint.value = item?.last_checkpoint || "";
+      elements.itemForm.elements.target_checkpoint.value = item?.target_checkpoint || "";
+      elements.itemForm.elements.purpose.value = item?.purpose || "";
+      elements.itemForm.elements.checkpoint_notes.value = item?.checkpoint_notes || "";
+      elements.itemForm.elements.blockers.value = item?.blockers || "";
+      elements.itemForm.elements.next_step.value = item?.next_step || "";
+      elements.itemForm.elements.sort_order.value = item?.sort_order || ideas.length + 1;
+      elements.itemModal.hidden = false;
+      setTimeout(() => elements.itemForm.elements.agent_name.focus(), 60);
+    }
+
+    function closeModal() {
+      elements.itemModal.hidden = true;
+    }
+
+    function findIdea(id) {
+      return ideas.find(item => String(item.dbId || item.id) === String(id));
+    }
+
+    async function saveIdea(event) {
+      event.preventDefault();
+      if (!supabaseClient) {
+        setDataStatus("Create the Supabase table and keep the publishable key configured before saving.", "error");
+        return;
+      }
+      if (!currentUser) {
+        setDataStatus("Sign in with an approved editor account before saving.", "error");
+        return;
+      }
+      const formData = new FormData(elements.itemForm);
+      const values = Object.fromEntries(formData.entries());
+      values.progress = elements.progressNumber.value;
+      const id = values.id;
+      const payload = ideaToDbPayload(values);
+      setDataStatus(id ? "Updating agent idea..." : "Creating agent idea...");
+      const request = id
+        ? supabaseClient.from(SUPABASE_TABLE).update(payload).eq("id", id)
+        : supabaseClient.from(SUPABASE_TABLE).insert(payload);
+      const { error } = await request;
+      if (error) {
+        setDataStatus(`Save failed: ${error.message}`, "error");
+        return;
+      }
+      closeModal();
+      await loadRemoteIdeas();
+      setDataStatus(id ? "Agent idea updated." : "Agent idea created.", "success");
+    }
+
+    async function deleteIdea(id) {
+      if (!supabaseClient || !currentUser) {
+        setDataStatus("Sign in with an approved editor account before deleting.", "error");
+        return;
+      }
+      const item = findIdea(id);
+      if (!item?.dbId) {
+        setDataStatus("This embedded workbook row cannot be deleted until it exists in Supabase.", "error");
+        return;
+      }
+      if (!confirm(`Delete "${item.agent_name}"? This change is saved for everyone.`)) return;
+      setDataStatus("Deleting agent idea...");
+      const { error } = await supabaseClient.from(SUPABASE_TABLE).delete().eq("id", item.dbId);
+      if (error) {
+        setDataStatus(`Delete failed: ${error.message}`, "error");
+        return;
+      }
+      await loadRemoteIdeas();
+      setDataStatus("Agent idea deleted.", "success");
+    }
+
+    async function signIn() {
+      if (!supabaseClient) {
+        setDataStatus("Supabase is not configured yet.", "error");
+        return;
+      }
+      const email = elements.authEmail.value.trim();
+      const password = elements.authPassword.value;
+      if (!email) {
+        setDataStatus("Enter an editor email address first.", "error");
+        return;
+      }
+      if (!password) {
+        setDataStatus("Enter your password first.", "error");
+        return;
+      }
+      setDataStatus("Signing in...");
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      if (error) {
+        setDataStatus(`Sign-in failed: ${error.message}`, "error");
+        return;
+      }
+      currentUser = data?.user ?? null;
+      elements.authPassword.value = "";
+      updateAuthUi();
+      render();
+      setDataStatus("Signed in.", "success");
+    }
+
+    async function signOut() {
+      if (!supabaseClient) return;
+      await supabaseClient.auth.signOut();
+      currentUser = null;
+      updateAuthUi();
+      render();
+      setDataStatus("Signed out.", "success");
+    }
+
+    function exportCsv() {
+      const rows = sortedIdeas(filteredIdeas());
+      const headers = ["Agent Name", "Purpose", "Practice", "POC", "Owner", "Stage", "Priority", "Progress", "Checkpoint Notes", "Blockers", "Next Step", "Last Checkpoint", "Target Checkpoint", "Source Row"];
+      const csv = [headers, ...rows.map(item => [
+        item.agent_name,
+        item.purpose,
+        item.practice,
+        item.poc,
+        item.owner,
+        item.stage,
+        item.priority,
+        `${item.progress}%`,
+        item.checkpoint_notes,
+        item.blockers,
+        item.next_step,
+        item.last_checkpoint,
+        item.target_checkpoint,
+        item.source_row
+      ])].map(row => row.map(value => {
+        const text = String(value ?? "");
+        return /[",\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+      }).join(",")).join("\n");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "ba-ai-agent-ideas.csv";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function bindEvents() {
+      elements.searchInput.addEventListener("input", event => {
+        state.search = event.target.value;
+        render();
+      });
+      elements.ownerFilter.addEventListener("change", event => {
+        state.owner = event.target.value;
+        render();
+      });
+      elements.stageFilter.addEventListener("change", event => {
+        state.stage = event.target.value;
+        render();
+      });
+      elements.practiceFilter.addEventListener("change", event => {
+        state.practice = event.target.value;
+        render();
+      });
+      elements.priorityFilter.addEventListener("change", event => {
+        state.priority = event.target.value;
+        render();
+      });
+      elements.resetBtn.addEventListener("click", () => {
+        Object.assign(state, { search: "", owner: "all", stage: "all", practice: "all", priority: "all" });
+        elements.searchInput.value = "";
+        render();
+      });
+      elements.exportBtn.addEventListener("click", exportCsv);
+      elements.addItemBtn.addEventListener("click", () => openModal());
+      elements.signInBtn.addEventListener("click", signIn);
+      elements.signOutBtn.addEventListener("click", signOut);
+      elements.closeModalBtn.addEventListener("click", closeModal);
+      elements.cancelModalBtn.addEventListener("click", closeModal);
+      elements.itemModal.addEventListener("click", event => {
+        if (event.target === elements.itemModal) closeModal();
+      });
+      elements.itemForm.addEventListener("submit", saveIdea);
+      elements.progressRange.addEventListener("input", event => {
+        elements.progressNumber.value = event.target.value;
+      });
+      elements.progressNumber.addEventListener("input", event => {
+        const value = Math.max(0, Math.min(100, Number.parseInt(event.target.value, 10) || 0));
+        elements.progressRange.value = value;
+      });
+      elements.itemForm.elements.stage.addEventListener("change", event => {
+        if (!elements.progressNumber.value || Number(elements.progressNumber.value) === Number(elements.progressRange.defaultValue)) {
+          const value = DEFAULT_PROGRESS[event.target.value] ?? 0;
+          elements.progressRange.value = value;
+          elements.progressNumber.value = value;
+        }
+      });
+      document.addEventListener("click", event => {
+        const actionButton = event.target.closest("[data-action]");
+        if (actionButton) {
+          const action = actionButton.dataset.action;
+          const id = actionButton.dataset.id;
+          if (action === "edit") openModal(findIdea(id));
+          if (action === "delete") deleteIdea(id);
+        }
+        const sortButton = event.target.closest("[data-sort]");
+        if (sortButton) {
+          const field = sortButton.dataset.sort;
+          sortState = {
+            field,
+            direction: sortState.field === field && sortState.direction === "asc" ? "desc" : "asc"
+          };
+          render();
+        }
+      });
+    }
+
+    bindEvents();
+    render();
+    initializeSupabase();
+  </script>
+</body>
+
+</html>
